@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Audition Street - Casting Agency</string>
+    <string name="action_settings">Setting</string>
+    <!--SignUp Fragment -->
+    <string name="str_login">Sign In Fragment</string>
+    <string name="str_welcome">Welcome,</string>
+    <string name="str_create_account">Create account to continue!</string>
+    <string name="str_email">Please enter email</string>
+    <string name="str_password">Please enter password</string>
+    <string name="str_phone_number">Please enter phone number</string>
+
+    <!--SignIn Fragment -->
+    <string name="str_sign_in">Sign in to continue!</string>
+    <string name="str_sign_in_text">Sign In</string>
+    <string name="str_email_tv">Email</string>
+    <string name="str_password_tv">Password</string>
+    <string name="str_or_via">or via</string>
+    <string name="str_dont_have">Don\'t have an account?<font fgcolor='#FF773B'> Sign Up</font> </string>
+    <string name="err_invalid_credentials">Invalid credentials</string>
+    <string name="err_no_network_available">Please check your internet connection and try again later.</string>
+    <string name="err_empty_email">Please enter email</string>
+    <string name="err_empty_password">Please enter password</string>
+
+
+
+</resources>

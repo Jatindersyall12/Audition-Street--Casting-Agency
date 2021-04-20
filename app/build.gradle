@@ -1,0 +1,99 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
+
+    defaultConfig {
+        applicationId "com.auditionstreet.castingagency"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+        buildConfigField 'String', 'BASE_URL', '"http://cryptoqaapi.appskeeper.in/"'
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    testImplementation deps.kotlin.junit
+    androidTestImplementation deps.kotlin.test
+    androidTestImplementation deps.kotlin.espresso
+
+    // Added Dependencies
+    implementation deps.kotlin.kotlin_stdlib
+    implementation deps.kotlin.core
+    implementation deps.app_compact
+    implementation deps.constraint_layout
+    implementation deps.recycler_view
+    implementation deps.activity_kotlin
+    implementation deps.viewpager2
+    implementation deps.material_component
+
+    //livedata
+    implementation deps.livedata.livedata
+    implementation deps.livedata.lifecycle_runtime
+
+    //lifecycle Scope
+    implementation deps.lifeCycleScope.extensions
+    implementation deps.lifeCycleScope.viewmodel_ktx
+    implementation deps.lifeCycleScope.java8
+
+    //Dagger
+    implementation deps.dagger_hilt.hilt_version
+    kapt deps.dagger_hilt.kotlin_compiler
+    /*implementation deps.dagger_hilt.hilt_version
+    kapt deps.dagger_hilt.kotlin_compiler*/
+    implementation deps.dagger_hilt.hilt_viewmodel
+    kapt deps.dagger_hilt.hilt_viewmodel_compiler
+
+    // Networking
+    implementation deps.network.gson
+    implementation deps.network.retrofit
+    implementation deps.network.okhttp
+    implementation deps.network.okhttp_loggin_interceptor
+
+    //Coroutine
+    implementation deps.coroutine.android
+    implementation deps.coroutine.core
+
+    //Navigation Graph
+    implementation deps.navigation_graph.navigation_fragment
+    implementation deps.navigation_graph.navigation_ui
+
+    //sdp for font size
+    implementation deps.sdp.ssp
+    implementation deps.sdp.sdp
+
+}
