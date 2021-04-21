@@ -9,5 +9,5 @@ enum class Status {
 }
 
 enum class IconPosition(val value: Int) {
-    HOME(0), MAP(1),PROFILE(2),NOTIFICATION(3)
+    HOME(0), PROJECTS(1),CHAT(2),ACCOUNT(3)
 }

@@ -4,7 +4,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
-import com.silo.utils.livedata.SingleLiveEvent
+import com.auditionstreet.castingagency.utils.livedata.SingleLiveEvent
 
 class SharedViewModel @ViewModelInject constructor() : ViewModel(){
 

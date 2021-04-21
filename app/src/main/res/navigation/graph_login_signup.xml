@@ -10,5 +10,17 @@
         android:label="@string/str_login"
         android:name="com.auditionstreet.castingagency.ui.login_signup.fragment.SignInFragment"
         tools:layout="@layout/fragment_signin">
+        <action
+            android:id="@+id/navigateToSignup"
+            app:destination="@id/signupFragment"
+            app:enterAnim="@anim/in_from_right"
+            app:exitAnim="@anim/out_to_left"
+            app:popEnterAnim="@anim/in_from_left"
+            app:popExitAnim="@anim/out_to_right" />
     </fragment>
+    <fragment
+        android:id="@+id/signupFragment"
+        tools:layout="@layout/fragment_signup"
+        android:name="com.auditionstreet.castingagency.ui.login_signup.fragment.SignUpFragment"
+        android:label="SignupFragment" />
 </navigation>

@@ -8,5 +8,6 @@ import javax.inject.Inject
 
 class LoginRepository @Inject constructor(val apiService: ApiService) {
     suspend fun loginUser(loginRequest: LoginRequest):Response<LoginResponse> =apiService.userLogin(loginRequest)
+
 }
 

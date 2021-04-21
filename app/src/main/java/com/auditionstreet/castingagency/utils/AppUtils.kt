@@ -1,10 +1,16 @@
 package com.silo.utils
 
+import android.app.Activity
 import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
 import android.text.TextUtils
 import android.util.Patterns
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import com.auditionstreet.castingagency.R
+import java.util.ArrayList
 import java.util.regex.Pattern
 
 /*private const val EMAIL = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9-]+\\.[A-Za-z]{2,}"
@@ -70,4 +76,23 @@ fun setMaxLength(editText: EditText?, length: Int){
 
 fun isTextEmpty(target: String): String {
     return if(!TextUtils.isEmpty(target)) target else ""
+}
+
+fun changeIcons(
+    imageButton: ArrayList<ImageView>, activeImage: ArrayList<Int>,
+    inActiveImage: ArrayList<Int>,
+    position: Int,
+    bottomBarText: ArrayList<TextView>,
+    homeActivity: Activity
+) {
+    for (k in 0 until imageButton.size) {
+        if (position == k) {
+
+            imageButton[k].setImageResource(activeImage[k])
+            bottomBarText[k].setTextColor(ContextCompat.getColor(homeActivity, R.color.orange))
+        } else {
+            bottomBarText[k].setTextColor(ContextCompat.getColor(homeActivity, R.color.gray))
+            imageButton[k].setImageResource(inActiveImage[k])
+        }
+    }
 }

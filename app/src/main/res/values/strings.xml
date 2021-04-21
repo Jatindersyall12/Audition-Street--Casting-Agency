@@ -6,8 +6,12 @@
     <string name="str_welcome">Welcome,</string>
     <string name="str_create_account">Create account to continue!</string>
     <string name="str_email">Please enter email</string>
+    <string name="str_user_name">Please enter user name</string>
     <string name="str_password">Please enter password</string>
-    <string name="str_phone_number">Please enter phone number</string>
+    <string name="str_confirm_password">Please enter password again</string>
+    <string name="str_sign_up">SignUp</string>
+    <string name="gallery_select_title_msg">Tap to select</string>
+    <string name="folder">Folder</string>
 
     <!--SignIn Fragment -->
     <string name="str_sign_in">Sign in to continue!</string>
@@ -21,6 +25,13 @@
     <string name="err_empty_email">Please enter email</string>
     <string name="err_empty_password">Please enter password</string>
 
+    <!-- Tab Bar -->
+    <string name="str_home">Home</string>
+    <string name="str_project">Projects</string>
+    <string name="str_chat">Chat</string>
+    <string name="str_account">Account</string>
+    <!-- Home Fragment -->
+    <string name="str_home_fragment">Home Fragment</string>
 
 
 </resources>

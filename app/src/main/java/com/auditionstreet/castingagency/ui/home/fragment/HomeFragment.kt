@@ -1,10 +1,10 @@
-package com.auditionstreet.castingagency.ui.login_signup.fragment
+package com.auditionstreet.castingagency.ui.home.fragment
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.auditionstreet.castingagency.R
-import com.auditionstreet.castingagency.databinding.FragmentSigninBinding
+import com.auditionstreet.castingagency.databinding.FragmentHomeBinding
 import com.auditionstreet.castingagency.ui.login_signup.viewmodel.LoginViewModel
 import com.silo.utils.AppBaseFragment
 import com.silo.utils.network.Resource
@@ -14,21 +14,20 @@ import com.silo.utils.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickListener {
-    private val binding by viewBinding(FragmentSigninBinding::bind)
+class HomeFragment : AppBaseFragment(R.layout.fragment_home) {
+    private val binding by viewBinding(FragmentHomeBinding::bind)
 
     private val viewModel: LoginViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setListeners()
-        setObservers()
+        //setListeners()
+        //setObservers()
     }
 
 
-    private fun setListeners() {
+   /* private fun setListeners() {
         binding.btnSignIn.setOnClickListener(this)
-        binding.tvDontHaveAcocunt.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -38,10 +37,6 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
                     binding.etxEmail.text!!.trim().toString(),
                     binding.etxPassword.text!!.trim().toString()
                 )
-            }
-            binding.tvDontHaveAcocunt->
-            {
-                sharedViewModel.setDirection(SignInFragmentDirections.navigateToSignup())
             }
         }
     }
@@ -71,5 +66,5 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
                 showToast(requireContext(), getString(apiResponse.resourceId!!))
             }
         }
-    }
+    }*/
 }

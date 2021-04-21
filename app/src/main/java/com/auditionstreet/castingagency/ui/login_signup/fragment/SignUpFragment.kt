@@ -1,69 +1,58 @@
 package com.auditionstreet.castingagency.ui.login_signup.fragment
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.databinding.FragmentSignupBinding
+import com.auditionstreet.castingagency.ui.login_signup.viewmodel.SignUpViewModel
+import com.auditionstreet.castingagency.utils.CompressFile
+import com.bumptech.glide.Glide
+import com.esafirm.imagepicker.features.ImagePicker
+import com.esafirm.imagepicker.features.ReturnMode
+import com.leo.wikireviews.utils.livedata.EventObserver
 import com.silo.utils.AppBaseFragment
+import com.silo.utils.network.Resource
+import com.silo.utils.network.Status
+import com.silo.utils.showToast
 import com.silo.utils.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
 
 @AndroidEntryPoint
 class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickListener {
     private val binding by viewBinding(FragmentSignupBinding::bind)
-
-    // private val viewModel: LoginViewModel by viewModels()
-    private var isPasswordVisible: Boolean = false
+    private val RC_CODE_PICKER = 2000
+    private var images: MutableList<com.esafirm.imagepicker.model.Image> = mutableListOf()
+    private var profileImageFile: File? = null
+    private var selectedImage = ""
+    private val viewModel: SignUpViewModel by viewModels()
+    private var compressImage = CompressFile()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        /*setListeners()
+        setListeners()
         setObservers()
-        enableButtonClick(0.3f, false)*/
     }
 
-    override fun onClick(p0: View?) {
-        TODO("Not yet implemented")
-    }
+    private fun setListeners() {
+        binding.imgProfileImage.setOnClickListener(this)
 
-    /*private fun setListeners() {
-        binding.txtUserName.addTextChangedListener(TextChangeWatcher(binding.txtUserName))
-        binding.txtPassword.addTextChangedListener(TextChangeWatcher(binding.txtPassword))
-        binding.imgShowPassword.setOnClickListener(this)
-        binding.btnLogin.setOnClickListener(this)
-        binding.txtSignup.setOnClickListener(this)
-        binding.forgotPassword.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when (v) {
-            binding.btnLogin -> {
-                viewModel.apiLogin()
-            }
-
-            binding.txtSignup -> {
-                sharedViewModel.setDirection(LoginFragmentDirections.navigateToSignup())
-            }
-            binding.forgotPassword -> {
-                sharedViewModel.setDirection(LoginFragmentDirections.navigateToForgotPassword())
-            }
-            binding.imgShowPassword -> {
-                if (!isPasswordVisible) {
-                    isPasswordVisible = true
-                    binding.imgShowPassword.setImageResource(R.drawable.ic_show_password)
-                    binding.txtPassword.transformationMethod = null
-                } else {
-                    isPasswordVisible = false
-                    binding.imgShowPassword.setImageResource(R.drawable.ic_hide_password)
-                    binding.txtPassword.transformationMethod = PasswordTransformationMethod()
-                }
-                binding.txtPassword.setSelection(binding.txtPassword.text!!.length)
+            binding.imgProfileImage -> {
+                pickImage()
             }
         }
     }
 
     private fun setObservers() {
-        viewModel.userAuthenticationApiResponse.observe(viewLifecycleOwner, {
+        viewModel.signUp.observe(viewLifecycleOwner, EventObserver {
             handleApiCallback(it)
         })
     }
@@ -73,10 +62,7 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
             Status.SUCCESS -> {
                 hideProgress()
                 when (apiResponse.apiConstant) {
-                    LOGIN -> {
-                        // val response = apiResponse.data as LoginResponse
-                        startActivity(Intent(requireContext(), CreateProfileActivity::class.java))
-                    }
+
                 }
             }
             Status.LOADING -> {
@@ -90,20 +76,28 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
                 hideProgress()
                 showToast(requireContext(), getString(apiResponse.resourceId!!))
             }
-            Status.ALPHA -> {
-                if (getString(apiResponse.resourceId!!).equals(
-                        getString(R.string.alpha_true),
-                        true
-                    )
-                ) {
-                    enableButtonClick(1.0f, true)
-                } else enableButtonClick(0.3f, false)
-            }
+
         }
     }
 
-    private fun enableButtonClick(alpha: Float, clickable: Boolean) {
-        binding.btnLogin.isEnabled = clickable
-        binding.btnLogin.alpha = alpha
-    }*/
+    private fun pickImage() {
+        ImagePicker.create(this)
+            .returnMode(ReturnMode.ALL)
+            .folderMode(true)
+            .single()
+            .limit(1)
+            .toolbarFolderTitle(getString(R.string.folder))
+            .toolbarImageTitle(getString(R.string.gallery_select_title_msg))
+            .start(RC_CODE_PICKER)
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == RC_CODE_PICKER && resultCode == AppCompatActivity.RESULT_OK && data != null) {
+            images = ImagePicker.getImages(data)
+            profileImageFile = File(images.get(0).path)
+            selectedImage = images.get(0).name
+            profileImageFile = compressImage.getCompressedImageFile(profileImageFile!!, activity as Context)
+            Glide.with(this).load(profileImageFile)
+                .into(binding.imgProfileImage)
+        }
+    }
 }
