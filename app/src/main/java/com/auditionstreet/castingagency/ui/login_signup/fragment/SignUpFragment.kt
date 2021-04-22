@@ -20,7 +20,11 @@ import com.silo.utils.network.Status
 import com.silo.utils.showToast
 import com.silo.utils.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import java.util.*
 
 @AndroidEntryPoint
 class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickListener {
@@ -40,6 +44,8 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
 
     private fun setListeners() {
         binding.imgProfileImage.setOnClickListener(this)
+        binding.btnSignUp.setOnClickListener(this)
+
 
     }
 
@@ -47,6 +53,9 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
         when (v) {
             binding.imgProfileImage -> {
                 pickImage()
+            }
+            binding.btnSignUp -> {
+            viewModel.isValidate(binding.etxUserName.text.toString(),binding.etxEmail.text.toString(),binding.etxPassword.text.toString(),binding.etxConfirmPassword.text.toString(),requestSignUp(),profileImageFile,selectedImage)
             }
         }
     }
@@ -90,14 +99,33 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
             .toolbarImageTitle(getString(R.string.gallery_select_title_msg))
             .start(RC_CODE_PICKER)
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == RC_CODE_PICKER && resultCode == AppCompatActivity.RESULT_OK && data != null) {
             images = ImagePicker.getImages(data)
+            binding.imgProfileImage.visibility = View.GONE
             profileImageFile = File(images.get(0).path)
             selectedImage = images.get(0).name
-            profileImageFile = compressImage.getCompressedImageFile(profileImageFile!!, activity as Context)
+            profileImageFile =
+                compressImage.getCompressedImageFile(profileImageFile!!, activity as Context)
             Glide.with(this).load(profileImageFile)
-                .into(binding.imgProfileImage)
+                .into(binding.imgRound)
         }
+    }
+
+    fun requestSignUp(): HashMap<String, RequestBody> {
+        val map = HashMap<String, RequestBody>()
+        map[resources.getString(R.string.str_username)] =
+            toRequestBody(binding.etxUserName.text.toString().trim())
+        map[resources.getString(R.string.str_useremail)] =
+            toRequestBody(binding.etxEmail.text.toString().trim())
+        map[resources.getString(R.string.str_password)] =
+            toRequestBody(binding.etxPassword.text.toString().trim())
+
+        return map
+    }
+
+    fun toRequestBody(value: String): RequestBody {
+        return value.toRequestBody("text/plain".toMediaTypeOrNull())
     }
 }

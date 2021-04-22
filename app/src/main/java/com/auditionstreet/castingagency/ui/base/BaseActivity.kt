@@ -11,6 +11,7 @@ import com.silo.listeners.DialogHelper
 import com.silo.listeners.DialogProvider
 import com.silo.ui.base.viewmodel.SharedViewModel
 import com.silo.utils.DialogHelperImpl
+import kotlinx.android.synthetic.main.fragment_signup.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 abstract class BaseActivity : AppCompatActivity(), DialogProvider {
@@ -34,11 +35,11 @@ abstract class BaseActivity : AppCompatActivity(), DialogProvider {
     fun setUpToolbar(toolbar: Toolbar, title: String, backBtnVisibility: Boolean = true) {
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
-        backBtn.visibility = if (backBtnVisibility) View.VISIBLE else View.GONE
+        imgLogo.visibility = if (backBtnVisibility) View.VISIBLE else View.GONE
         if (!TextUtils.isEmpty(title)) {
             toolbarTitle.text = title
         }
-        backBtn.setOnClickListener {
+        imgLogo.setOnClickListener {
             finish()
         }
     }

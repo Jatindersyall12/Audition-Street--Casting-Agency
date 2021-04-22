@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import com.auditionstreet.castingagency.databinding.ActivitySplashBinding
-import com.auditionstreet.castingagency.ui.login_signup.AuthorizedUserActivity
+import com.auditionstreet.castingagency.ui.home.activity.HomeActivity
 import com.silo.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -19,7 +19,7 @@ class SplashActivity : BaseActivity() {
         setContentView(binding.root)
         lifecycleScope.launch {
             delay(3000)
-            startActivity(Intent(this@SplashActivity, AuthorizedUserActivity::class.java))
+            startActivity(Intent(this@SplashActivity, HomeActivity::class.java))
             finish()
         }
     }

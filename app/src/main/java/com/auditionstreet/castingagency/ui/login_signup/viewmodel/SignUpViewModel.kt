@@ -8,12 +8,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
-import com.auditionstreet.castingagency.ui.login_signup.repository.LoginRepository
 import com.auditionstreet.castingagency.ui.login_signup.repository.SignUpRepository
 import com.leo.wikireviews.utils.livedata.Event
 import com.silo.model.request.LoginRequest
-import com.silo.model.response.LoginResponse
 import com.silo.model.response.SignUpResponse
+import com.silo.utils.isValidEmail
 import com.silo.utils.network.NetworkHelper
 import com.silo.utils.network.Resource
 import kotlinx.coroutines.launch
@@ -21,11 +20,12 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.util.HashMap
 
 class SignUpViewModel @ViewModelInject constructor(
     private val signUpRepository: SignUpRepository,
     private val networkHelper: NetworkHelper,
-): ViewModel() {
+) : ViewModel() {
     val loginRequest = LoginRequest()
     private val IMAGE_EXTENSION = "/*"
 
@@ -89,28 +89,95 @@ class SignUpViewModel @ViewModelInject constructor(
                 )
             }
         }
+    }
 
-        /* fun isValidate(email: String, password: String) {
+    fun isValidate(
+        userName: String,
+        email: String,
+        password: String,
+        confirmPassword: String,
+        requestSignUp: HashMap<String, RequestBody>,
+        profileImageFile: File?,
+        selectedImage: String
+    ) {
         loginRequest.email = email
         loginRequest.password = password
-        if (TextUtils.isEmpty(loginRequest.email)) {
-            _users.postValue(
-                Resource.requiredResource(
-                    ApiConstant.LOGIN, R
-                        .string.err_empty_email
+        if (TextUtils.isEmpty(userName)) {
+            _sign_up.postValue(
+                Event(
+                    Resource.requiredResource(
+                        ApiConstant.SIGN_UP,
+                        R.string.err_user_name
+                    )
                 )
             )
             return
-        } else if (TextUtils.isEmpty(loginRequest.password)) {
-            _users.postValue(
-                Resource.requiredResource(
-                    ApiConstant.LOGIN,
-                    R.string.err_empty_password
+        } else if (TextUtils.isEmpty(email)) {
+            _sign_up.postValue(
+                Event(
+                    Resource.requiredResource(
+                        ApiConstant.SIGN_UP,
+                        R.string.err_email
+                    )
+                )
+            )
+            return
+        } else if (TextUtils.isEmpty(password)) {
+            _sign_up.postValue(
+                Event(
+                    Resource.requiredResource(
+                        ApiConstant.SIGN_UP,
+                        R.string.err_password
+                    )
+                )
+            )
+            return
+        } else if (TextUtils.isEmpty(confirmPassword)) {
+            _sign_up.postValue(
+                Event(
+                    Resource.requiredResource(
+                        ApiConstant.SIGN_UP,
+                        R.string.err_confirm_password
+                    )
                 )
             )
             return
         }
-        authorizedUser(loginRequest)
-    }*/
+        else if (!isValidEmail(email)) {
+            _sign_up.postValue(
+                Event(
+                    Resource.requiredResource(
+                        ApiConstant.SIGN_UP,
+                        R.string.err_valid_email
+                    )
+                )
+            )
+            return
+        }
+        else if (password.length<6) {
+            _sign_up.postValue(
+                Event(
+                    Resource.requiredResource(
+                        ApiConstant.SIGN_UP,
+                        R.string.err_password_lenght
+                    )
+                )
+            )
+            return
+        }
+        else if (!password.equals(confirmPassword)) {
+            _sign_up.postValue(
+                Event(
+                    Resource.requiredResource(
+                        ApiConstant.SIGN_UP,
+                        R.string.err_passwrd_confirm
+                    )
+                )
+            )
+            return
+        }
+        else
+            signUp(requestSignUp,profileImageFile,selectedImage)
     }
 }
+

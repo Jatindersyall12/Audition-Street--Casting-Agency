@@ -5,9 +5,9 @@
     <LinearLayout
         android:id="@+id/footer"
         android:layout_width="match_parent"
-        android:layout_height="78dp"
+        android:layout_height="@dimen/_75sdp"
         android:layout_gravity="bottom"
-        android:background="@color/white"
+        android:background="@drawable/ic_back_bottom"
         android:baselineAligned="false"
         android:gravity="bottom"
         android:orientation="vertical">

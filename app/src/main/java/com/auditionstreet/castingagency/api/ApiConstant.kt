@@ -31,7 +31,9 @@ class ApiConstant {
         const val PUBLIC_PROFILE = "&public_profile=true"
 
         const val LOGIN = "api/v1/user/login"
+        const val GET_PROJECTS = "api/v1/user/sign-up"
         const val SIGN_UP = "api/v1/user/sign-up"
+
         const val IS_USER_EXIST = "api/v1/user/check-username-exist"
     }}
 

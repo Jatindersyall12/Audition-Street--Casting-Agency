@@ -31,6 +31,7 @@ fun isValidUserName(target: CharSequence): Boolean {
     return USERNAME_PATTERN.matcher(target).matches()
 }
 
+
 fun String.validUserNameLength(): Boolean {
     return length in 2..34
 }

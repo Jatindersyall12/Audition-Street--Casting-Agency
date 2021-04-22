@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_16sdp"
-        android:layout_marginRight="@dimen/_16sdp"
-        >
+        android:layout_marginRight="@dimen/_6sdp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -15,31 +15,32 @@
             app:contentInsetLeft="0dp"
             app:contentInsetStart="0dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.auditionstreet.castingagency.customviews.CustomTextViewBold
             android:id="@+id/toolbarTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_13ssp"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-            app:layout_constraintEnd_toEndOf="@+id/toolbar"
-            app:layout_constraintStart_toStartOf="@+id/toolbar"
-            app:layout_constraintTop_toTopOf="@+id/toolbar" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/backBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbarTitle"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:gravity="left|center"
+            android:text="Home"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_20ssp"
+            app:layout_constraintEnd_toStartOf="@+id/toolBarImage"
             app:layout_constraintStart_toStartOf="parent"
-            android:paddingTop="@dimen/_8sdp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.github.siyamed.shapeimageview.RoundedImageView
+            android:id="@+id/toolBarImage"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:paddingEnd="@dimen/_16sdp"
-            android:paddingBottom="@dimen/_8sdp"
-            app:layout_constraintTop_toTopOf="@+id/toolbarTitle"
-            app:srcCompat="@drawable/ic_back" />
+            android:src="@drawable/image_round"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbarTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/toolbarTitle" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

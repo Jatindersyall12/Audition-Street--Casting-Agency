@@ -1,8 +1,11 @@
 package com.silo.api
 
+import com.auditionstreet.castingagency.api.ApiConstant.Companion.GET_PROJECTS
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.LOGIN
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.SIGN_UP
+import com.auditionstreet.castingagency.model.response.ProjectResponse
 import com.silo.model.request.LoginRequest
+import com.silo.model.request.ProjectRequest
 import com.silo.model.response.LoginResponse
 import com.silo.model.response.SignUpResponse
 import okhttp3.MultipartBody
@@ -16,6 +19,8 @@ interface ApiService {
     @POST(LOGIN)
     suspend fun userLogin(@Body loginRequest: LoginRequest): Response<LoginResponse>
 
+    @POST(GET_PROJECTS)
+    suspend fun getProjects(@Body projectRequest: ProjectRequest): Response<ProjectResponse>
 
     @Multipart
     @POST(SIGN_UP)

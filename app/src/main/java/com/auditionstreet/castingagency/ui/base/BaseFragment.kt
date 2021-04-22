@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.silo.listeners.DialogHelper
 import com.silo.listeners.DialogProvider
 import com.silo.ui.base.viewmodel.SharedViewModel
+import kotlinx.android.synthetic.main.fragment_signup.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 abstract class BaseFragment(@LayoutRes layoutResId: Int) : Fragment(layoutResId), DialogProvider {
@@ -34,11 +35,11 @@ abstract class BaseFragment(@LayoutRes layoutResId: Int) : Fragment(layoutResId)
     protected fun setUpToolbar(toolbar: Toolbar, title: String, backBtnVisibility: Boolean) {
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
         (requireActivity() as AppCompatActivity).supportActionBar!!.setDisplayShowTitleEnabled(false)
-        backBtn.visibility = if(backBtnVisibility) View.VISIBLE else View.GONE
+        imgLogo.visibility = if(backBtnVisibility) View.VISIBLE else View.GONE
         if(!TextUtils.isEmpty(title)){
             toolbarTitle.text = title
         }
-        backBtn.setOnClickListener {
+        imgLogo.setOnClickListener {
             findNavController().popBackStack()
         }
     }
