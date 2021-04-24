@@ -10,8 +10,8 @@ import com.auditionstreet.castingagency.api.ApiConstant.Companion.CONTENT_TYPE
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.PLATFORM
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.PLATFORM_TYPE
 import com.auditionstreet.castingagency.storage.UserManager
+import com.auditionstreet.castingagency.storage.preference.Preferences
 import com.google.gson.GsonBuilder
-import com.silo.storage.preference.Preferences
 import com.silo.api.*
 import com.silo.utils.network.InternetInterceptor
 import dagger.Module

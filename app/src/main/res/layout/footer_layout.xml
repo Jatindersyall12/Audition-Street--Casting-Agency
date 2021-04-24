@@ -5,17 +5,11 @@
     <LinearLayout
         android:id="@+id/footer"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_75sdp"
+        android:layout_height="match_parent"
         android:layout_gravity="bottom"
-        android:background="@drawable/ic_back_bottom"
-        android:baselineAligned="false"
         android:gravity="bottom"
+        android:background="@drawable/ic_back_bottom"
         android:orientation="vertical">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height=".5dp"
-            android:background="@color/white" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -66,6 +60,7 @@
                     android:layout_width="@dimen/_18sdp"
                     android:layout_height="@dimen/_18sdp"
                     android:layout_weight="1"
+                    android:layout_marginBottom="@dimen/_2ssp"
                     android:src="@drawable/ic_icon_project_unselected"
                     tools:ignore="NestedWeights" />
 
@@ -93,6 +88,7 @@
                     android:layout_width="@dimen/_18sdp"
                     android:layout_height="@dimen/_18sdp"
                     android:layout_weight="1"
+                    android:layout_marginBottom="@dimen/_2sdp"
                     android:src="@drawable/ic_icon_chat_unselected"
                     tools:ignore="NestedWeights" />
 
@@ -120,6 +116,7 @@
                     android:layout_width="@dimen/_18sdp"
                     android:layout_height="@dimen/_18sdp"
                     android:layout_weight="1"
+                    android:layout_marginBottom="@dimen/_2sdp"
                     android:src="@drawable/ic_icon_account_unselected"
                     tools:ignore="NestedWeights" />
 

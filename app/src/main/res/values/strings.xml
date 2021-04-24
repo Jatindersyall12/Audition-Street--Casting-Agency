@@ -7,12 +7,12 @@
     <string name="str_create_account">Create account to continue!</string>
     <string name="str_email">Please enter email</string>
     <string name="str_user_name">Please enter user name</string>
-    <string name="str_password">Please enter password</string>
+    <string name="str_password">password</string>
     <string name="str_confirm_password">Please enter password again</string>
     <string name="str_sign_up">SignUp</string>
     <string name="gallery_select_title_msg">Tap to select</string>
     <string name="folder">Folder</string>
-    <string name="str_username">user_name</string>
+    <string name="str_username">name</string>
     <string name="str_useremail">email</string>
     <string name="err_user_name">Please enter user name</string>
     <string name="err_email">Please enter email</string>
@@ -45,6 +45,11 @@
     <string name="str_shortlist">Shortlisted</string>
     <string name="str_application">Applications</string>
     <string name="str_view_all">View All</string>
+
+    <!-- Facebook -->
+
+    <string name="facebook_app_id">204922881173526</string>
+    <string name="fb_login_protocol_scheme">fb204922881173526</string>
 
 
 </resources>

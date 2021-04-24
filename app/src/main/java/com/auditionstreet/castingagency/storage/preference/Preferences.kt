@@ -1,15 +1,15 @@
-package com.silo.storage.preference
+package com.auditionstreet.castingagency.storage.preference
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.auditionstreet.castingagency.utils.AppConstants
 import com.google.gson.GsonBuilder
-import com.silo.utils.APP_PREFERENCE
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class Preferences @Inject constructor(@ApplicationContext context: Context) {
 
-    val sharedPreferences: SharedPreferences = context.getSharedPreferences(APP_PREFERENCE, Context.MODE_PRIVATE)
+    val sharedPreferences: SharedPreferences = context.getSharedPreferences(AppConstants.PREFERENCE_CASTING_DIRETOR, Context.MODE_PRIVATE)
 
     fun setString(key: String, value: String?) {
         with(sharedPreferences.edit()) {

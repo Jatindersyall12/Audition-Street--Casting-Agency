@@ -33,7 +33,7 @@ class LoginViewModel @ViewModelInject constructor(
                     if (it.isSuccessful && it.body()!=null) {
                         _users.postValue(Resource.success(ApiConstant.LOGIN,it.body()))
                     }else {
-                        if (it.code() == ApiConstant.STATUS_201) {
+                        if (it.code() == ApiConstant.STATUS_302) {
                         _users.postValue(Resource.requiredResource(ApiConstant.LOGIN, R.string.err_invalid_credentials))
                         }
                         else

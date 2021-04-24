@@ -2,12 +2,31 @@ package com.silo.model.response
 import com.google.gson.annotations.SerializedName
 
 data class SignUpResponse(
-    @SerializedName("message")
-    var message: String,
-    @SerializedName("statusCode")
-    var statusCode: Int,
-    @SerializedName("type")
-    var type: String,
-    @SerializedName("user")
-    var user: Any
-)
+    @SerializedName("code")
+    val code: Int,
+    @SerializedName("data")
+    val `data`: List<Data>,
+    @SerializedName("msg")
+    val msg: String
+) {
+    data class Data(
+        @SerializedName("bio")
+        val bio: String,
+        @SerializedName("created_at")
+        val createdAt: String,
+        @SerializedName("email")
+        val email: String,
+        @SerializedName("id")
+        val id: Int,
+        @SerializedName("logo")
+        val logo: String,
+        @SerializedName("name")
+        val name: String,
+        @SerializedName("pastWork")
+        val pastWork: String,
+        @SerializedName("updated_at")
+        val updatedAt: String,
+        @SerializedName("year")
+        val year: String
+    )
+}

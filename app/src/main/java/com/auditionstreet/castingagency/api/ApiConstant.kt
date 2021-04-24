@@ -13,7 +13,7 @@ class ApiConstant {
         const val PLATFORM_TYPE = "1"
 
         const val STATUS_200 = 200
-        const val STATUS_201 = 201
+        const val STATUS_302 = 302
 
         const val STATUS_400 = 400
         const val STATUS_404 = 400
@@ -30,9 +30,9 @@ class ApiConstant {
         const val FORM_DATA = "multipart/form-data"
         const val PUBLIC_PROFILE = "&public_profile=true"
 
-        const val LOGIN = "api/v1/user/login"
-        const val GET_PROJECTS = "api/v1/user/sign-up"
-        const val SIGN_UP = "api/v1/user/sign-up"
+        const val LOGIN = "castingLogin"
+        const val GET_PROJECTS = ""
+        const val SIGN_UP = "createCasting"
 
         const val IS_USER_EXIST = "api/v1/user/check-username-exist"
     }}

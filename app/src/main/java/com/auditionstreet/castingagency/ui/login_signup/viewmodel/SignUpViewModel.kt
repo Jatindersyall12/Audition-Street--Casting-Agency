@@ -26,7 +26,6 @@ class SignUpViewModel @ViewModelInject constructor(
     private val signUpRepository: SignUpRepository,
     private val networkHelper: NetworkHelper,
 ) : ViewModel() {
-    val loginRequest = LoginRequest()
     private val IMAGE_EXTENSION = "/*"
 
     private val _sign_up = MutableLiveData<Event<Resource<SignUpResponse>>>()
@@ -49,7 +48,7 @@ class SignUpViewModel @ViewModelInject constructor(
                         )
                     photo =
                         MultipartBody.Part.createFormData(
-                            "photo",
+                            "image",
                             selectedImage,
                             profileImage
                         )
@@ -100,8 +99,6 @@ class SignUpViewModel @ViewModelInject constructor(
         profileImageFile: File?,
         selectedImage: String
     ) {
-        loginRequest.email = email
-        loginRequest.password = password
         if (TextUtils.isEmpty(userName)) {
             _sign_up.postValue(
                 Event(

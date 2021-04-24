@@ -60,7 +60,7 @@
                 android:inputType="textEmailAddress"
                 android:paddingLeft="@dimen/_10sdp"
                 android:textSize="@dimen/_14sdp"
-                android:maxLength="15"
+                android:maxLength="20"
                 android:imeOptions="actionNext"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvCreateAccount" />
@@ -73,7 +73,7 @@
                 android:layout_marginLeft="@dimen/_30sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginRight="@dimen/_30sdp"
-                android:maxLength="15"
+                android:maxLength="20"
                 android:background="@drawable/edittext_round_layout"
                 android:gravity="center_vertical"
                 android:inputType="textPassword"
@@ -136,8 +136,8 @@
                     android:id="@+id/viewSecond"
                     android:layout_width="@dimen/_80sdp"
                     android:layout_height="@dimen/_2sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@color/light_grey"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tvOr"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -145,7 +145,8 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView
-                android:id="@+id/imgInsta"
+                android:id="@+id/imgFacebook"
+                android:visibility="visible"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
                 android:layout_marginTop="@dimen/_20sdp"
@@ -164,7 +165,7 @@
                 android:textColor="@color/gray"
                 android:paddingBottom="@dimen/_20sdp"
                 android:textSize="@dimen/_14sdp"
-                app:layout_constraintTop_toBottomOf="@+id/imgInsta"
+                app:layout_constraintTop_toBottomOf="@+id/imgFacebook"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 

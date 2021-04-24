@@ -4,11 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_marginBottom="@dimen/_15sdp"
+    android:layout_marginTop="@dimen/_30ssp"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/_30ssp"
         android:layout_height="match_parent"
         android:background="@color/white"
         tools:context=".MainActivity">
@@ -52,7 +53,7 @@
             android:layout_height="wrap_content"
             android:text="@string/str_shortlist"
             android:textColor="@color/black"
-            android:textSize="@dimen/_20sdp"
+            android:textSize="@dimen/_14sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginLeft="@dimen/_20sdp"
             app:layout_constraintStart_toStartOf="parent"

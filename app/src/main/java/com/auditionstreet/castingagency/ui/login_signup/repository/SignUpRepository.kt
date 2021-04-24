@@ -10,7 +10,6 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class SignUpRepository @Inject constructor(val apiService: ApiService) {
-    suspend fun updateProfile(params: HashMap<String, RequestBody>, photo: MultipartBody.Part?
-    ): Response<SignUpResponse> = apiService.signUp(params, photo)
+    suspend fun updateProfile(params: HashMap<String, RequestBody>, photo: MultipartBody.Part?): Response<SignUpResponse> = apiService.signUp(params, photo)
 }
 

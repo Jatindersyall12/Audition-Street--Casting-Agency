@@ -7,13 +7,20 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import com.auditionstreet.castingagency.R
+import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentSignupBinding
+import com.auditionstreet.castingagency.storage.preference.Preferences
+import com.auditionstreet.castingagency.ui.home.activity.HomeActivity
+import com.auditionstreet.castingagency.ui.login_signup.AuthorizedUserActivity
 import com.auditionstreet.castingagency.ui.login_signup.viewmodel.SignUpViewModel
+import com.auditionstreet.castingagency.utils.AppConstants
 import com.auditionstreet.castingagency.utils.CompressFile
 import com.bumptech.glide.Glide
 import com.esafirm.imagepicker.features.ImagePicker
 import com.esafirm.imagepicker.features.ReturnMode
 import com.leo.wikireviews.utils.livedata.EventObserver
+import com.silo.model.response.LoginResponse
+import com.silo.model.response.SignUpResponse
 import com.silo.utils.AppBaseFragment
 import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
@@ -25,6 +32,8 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.util.*
+import javax.inject.Inject
+import kotlin.math.sign
 
 @AndroidEntryPoint
 class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickListener {
@@ -35,6 +44,9 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
     private var selectedImage = ""
     private val viewModel: SignUpViewModel by viewModels()
     private var compressImage = CompressFile()
+
+    @Inject
+    lateinit var preferences: Preferences
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -71,7 +83,16 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
             Status.SUCCESS -> {
                 hideProgress()
                 when (apiResponse.apiConstant) {
-
+                    ApiConstant.SIGN_UP -> {
+                        val signUpResponse = apiResponse.data as SignUpResponse
+                        showToast(requireActivity(), signUpResponse.msg)
+                        preferences.setString(
+                            AppConstants.USER_ID,
+                            signUpResponse.data[0].id.toString()
+                        )
+                        startActivity(Intent(requireActivity(), HomeActivity::class.java))
+                        requireActivity().finish()
+                    }
                 }
             }
             Status.LOADING -> {

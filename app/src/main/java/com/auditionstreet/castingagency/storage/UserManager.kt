@@ -1,5 +1,5 @@
 package com.auditionstreet.castingagency.storage
-import com.silo.storage.preference.Preferences
+import com.auditionstreet.castingagency.storage.preference.Preferences
 import javax.inject.Inject
 import javax.inject.Singleton
 
