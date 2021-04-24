@@ -11,11 +11,11 @@ import com.auditionstreet.castingagency.databinding.FragmentHomeBinding
 import com.auditionstreet.castingagency.model.response.ProjectResponse
 import com.auditionstreet.castingagency.ui.home.adapter.ProjectListAdapter
 import com.auditionstreet.castingagency.ui.home.viewmodel.ProjectViewModel
+import com.auditionstreet.castingagency.utils.showToast
 import com.leo.wikireviews.utils.livedata.EventObserver
 import com.silo.utils.AppBaseFragment
 import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
-import com.silo.utils.showToast
 import com.silo.utils.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 

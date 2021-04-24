@@ -1,4 +1,4 @@
-package com.auditionstreet.castingagency.ui.home.activity
+package com.auditionstreet.castingagency.ui.projects.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,24 +7,26 @@ import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.auditionstreet.castingagency.R
-import com.auditionstreet.castingagency.databinding.ActivityHomeBinding
-import com.auditionstreet.castingagency.ui.projects.activity.ProjectsActivity
+import com.auditionstreet.castingagency.databinding.ActivityProjectsBinding
+import com.auditionstreet.castingagency.storage.preference.Preferences
+import com.auditionstreet.castingagency.ui.home.activity.HomeActivity
 import com.auditionstreet.castingagency.utils.DataHelper
-import com.auditionstreet.castingagency.utils.closeAppDialog
 import com.silo.ui.base.BaseActivity
 import com.silo.utils.changeIcons
 import com.silo.utils.network.IconPosition
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeActivity : BaseActivity() {
-    private val binding by viewBinding(ActivityHomeBinding::inflate)
+class ProjectsActivity : BaseActivity() {
+    private val binding by viewBinding(ActivityProjectsBinding::inflate)
     private lateinit var imageIcons: ArrayList<ImageView>
     private lateinit var bottomBarText: ArrayList<TextView>
-
     private lateinit var activeIcons: ArrayList<Int>
     private lateinit var inActiveIcons: ArrayList<Int>
 
+    @Inject
+    lateinit var preferences: Preferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -43,25 +45,24 @@ class HomeActivity : BaseActivity() {
         activeIcons = DataHelper.activeIcons
         inActiveIcons = DataHelper.inActiveIcons
         onTabClicks()
-
     }
 
     private fun onTabClicks() {
         binding.footerHome.llHome.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
+            finish()
             changeIcons(
                 imageIcons,
                 activeIcons,
                 inActiveIcons,
-                IconPosition.HOME.value,
+                IconPosition.PROJECTS.value,
                 bottomBarText,
                 this
             )
         }
         binding.footerHome.llProjects.setOnClickListener {
-            val intent = Intent(this, ProjectsActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(intent)
-            finish()
             changeIcons(
                 imageIcons,
                 activeIcons,
@@ -99,20 +100,21 @@ class HomeActivity : BaseActivity() {
             imageIcons,
             activeIcons,
             inActiveIcons,
-            IconPosition.HOME.value,
+            IconPosition.PROJECTS.value,
             bottomBarText,
             this
         )
 
     }
-
     override fun onBackPressed() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.navHostHomeFragment) as NavHostFragment
         val navController: NavController = navHostFragment.navController
-        if (navController.graph.startDestination == navController.currentDestination?.id)
-            closeAppDialog(this)
-        else
+        if (navController.graph.startDestination == navController.currentDestination?.id) {
+            val i = Intent(this@ProjectsActivity, HomeActivity::class.java)
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(i)
+        } else
             super.onBackPressed()
     }
 }

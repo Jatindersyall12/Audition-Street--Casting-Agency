@@ -7,9 +7,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewbinding.ViewBinding
+import com.auditionstreet.castingagency.ui.base.viewmodel.SharedViewModel
 import com.silo.listeners.DialogHelper
 import com.silo.listeners.DialogProvider
-import com.silo.ui.base.viewmodel.SharedViewModel
 import com.silo.utils.DialogHelperImpl
 import kotlinx.android.synthetic.main.fragment_signup.*
 import kotlinx.android.synthetic.main.toolbar.*

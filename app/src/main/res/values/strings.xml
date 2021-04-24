@@ -51,5 +51,12 @@
     <string name="facebook_app_id">204922881173526</string>
     <string name="fb_login_protocol_scheme">fb204922881173526</string>
 
+    <!-- Projects Fragment -->
+    <string name="str_projects">Project Fragment</string>
+    <string name="str_no_projects">You Don\'t have any active Project</string>
+    <string name="str_create_project">Create Project</string>
+    <string name="str_add_project">Add Project</string>
+
+
 
 </resources>

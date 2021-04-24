@@ -1,4 +1,4 @@
-package com.silo.utils
+package com.auditionstreet.castingagency.utils
 
 import android.annotation.SuppressLint
 import android.content.Context

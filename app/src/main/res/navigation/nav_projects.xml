@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/ProjectsFragment">
+    <fragment
+        android:id="@+id/ProjectsFragment"
+        android:label="@string/str_projects"
+        android:name="com.auditionstreet.castingagency.ui.projects.fragment.MyProjectsListingFragment"
+        tools:layout="@layout/fragment_my_projects">
+        <action
+            android:id="@+id/action_my_account"
+            app:destination="@id/addProjectFragment"
+            app:enterAnim="@anim/in_from_right"
+            app:exitAnim="@anim/out_to_left"
+            app:popEnterAnim="@anim/in_from_left"
+            app:popExitAnim="@anim/out_to_right"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/addProjectFragment"
+        android:label="@string/str_add_project"
+        android:name="com.auditionstreet.castingagency.ui.projects.fragment.AddProjectFragment"
+        tools:layout="@layout/fragment_add_project"/>
+
+</navigation>

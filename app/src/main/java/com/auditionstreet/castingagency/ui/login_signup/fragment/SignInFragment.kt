@@ -13,6 +13,7 @@ import com.auditionstreet.castingagency.ui.home.activity.HomeActivity
 import com.auditionstreet.castingagency.ui.login_signup.AuthorizedUserActivity
 import com.auditionstreet.castingagency.ui.login_signup.viewmodel.LoginViewModel
 import com.auditionstreet.castingagency.utils.AppConstants
+import com.auditionstreet.castingagency.utils.showToast
 import com.facebook.*
 import com.facebook.appevents.AppEventsConstants
 import com.facebook.login.LoginManager
@@ -21,7 +22,6 @@ import com.silo.model.response.LoginResponse
 import com.silo.utils.AppBaseFragment
 import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
-import com.silo.utils.showToast
 import com.silo.utils.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONException

@@ -9,9 +9,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.auditionstreet.castingagency.ui.base.viewmodel.SharedViewModel
 import com.silo.listeners.DialogHelper
 import com.silo.listeners.DialogProvider
-import com.silo.ui.base.viewmodel.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_signup.*
 import kotlinx.android.synthetic.main.toolbar.*
 

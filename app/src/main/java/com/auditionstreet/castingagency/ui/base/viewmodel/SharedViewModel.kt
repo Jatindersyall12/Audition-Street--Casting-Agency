@@ -1,4 +1,4 @@
-package com.silo.ui.base.viewmodel
+package com.auditionstreet.castingagency.ui.base.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData

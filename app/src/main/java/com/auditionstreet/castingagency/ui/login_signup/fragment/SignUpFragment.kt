@@ -15,6 +15,7 @@ import com.auditionstreet.castingagency.ui.login_signup.AuthorizedUserActivity
 import com.auditionstreet.castingagency.ui.login_signup.viewmodel.SignUpViewModel
 import com.auditionstreet.castingagency.utils.AppConstants
 import com.auditionstreet.castingagency.utils.CompressFile
+import com.auditionstreet.castingagency.utils.showToast
 import com.bumptech.glide.Glide
 import com.esafirm.imagepicker.features.ImagePicker
 import com.esafirm.imagepicker.features.ReturnMode
@@ -24,7 +25,6 @@ import com.silo.model.response.SignUpResponse
 import com.silo.utils.AppBaseFragment
 import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
-import com.silo.utils.showToast
 import com.silo.utils.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
