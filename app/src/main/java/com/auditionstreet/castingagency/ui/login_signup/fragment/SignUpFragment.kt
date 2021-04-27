@@ -11,7 +11,6 @@ import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentSignupBinding
 import com.auditionstreet.castingagency.storage.preference.Preferences
 import com.auditionstreet.castingagency.ui.home.activity.HomeActivity
-import com.auditionstreet.castingagency.ui.login_signup.AuthorizedUserActivity
 import com.auditionstreet.castingagency.ui.login_signup.viewmodel.SignUpViewModel
 import com.auditionstreet.castingagency.utils.AppConstants
 import com.auditionstreet.castingagency.utils.CompressFile
@@ -19,8 +18,10 @@ import com.auditionstreet.castingagency.utils.showToast
 import com.bumptech.glide.Glide
 import com.esafirm.imagepicker.features.ImagePicker
 import com.esafirm.imagepicker.features.ReturnMode
+import com.facebook.*
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.leo.wikireviews.utils.livedata.EventObserver
-import com.silo.model.response.LoginResponse
 import com.silo.model.response.SignUpResponse
 import com.silo.utils.AppBaseFragment
 import com.silo.utils.network.Resource
@@ -30,26 +31,29 @@ import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONException
 import java.io.File
 import java.util.*
 import javax.inject.Inject
-import kotlin.math.sign
 
 @AndroidEntryPoint
 class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickListener {
     private val binding by viewBinding(FragmentSignupBinding::bind)
-    private val RC_CODE_PICKER = 2000
+    private val RCCODEPICKER = 2000
     private var images: MutableList<com.esafirm.imagepicker.model.Image> = mutableListOf()
     private var profileImageFile: File? = null
     private var selectedImage = ""
     private val viewModel: SignUpViewModel by viewModels()
     private var compressImage = CompressFile()
+    private var callbackManager: CallbackManager? = null
 
     @Inject
     lateinit var preferences: Preferences
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        LoginManager.getInstance().logOut()
+        initializeFacebookCallback()
         setListeners()
         setObservers()
     }
@@ -57,8 +61,7 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
     private fun setListeners() {
         binding.imgProfileImage.setOnClickListener(this)
         binding.btnSignUp.setOnClickListener(this)
-
-
+        binding.imgFacebook.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -67,7 +70,16 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
                 pickImage()
             }
             binding.btnSignUp -> {
-            viewModel.isValidate(binding.etxUserName.text.toString(),binding.etxEmail.text.toString(),binding.etxPassword.text.toString(),binding.etxConfirmPassword.text.toString(),requestSignUp(),profileImageFile,selectedImage)
+                viewModel.isValidate(
+                    binding.etxUserName.text.toString(),
+                    binding.etxEmail.text.toString(),
+                    binding.etxPassword.text.toString(),
+                    binding.etxConfirmPassword.text.toString(),
+                    requestSignUp(resources.getString(R.string.str_facebook), "", resources.getString(R.string.str_false), "", ""),profileImageFile,selectedImage
+                )
+            }
+            binding.imgFacebook -> {
+                fbLogin()
             }
         }
     }
@@ -107,6 +119,10 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
                 showToast(requireContext(), getString(apiResponse.resourceId!!))
             }
 
+            else ->
+            {
+
+            }
         }
     }
 
@@ -118,11 +134,11 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
             .limit(1)
             .toolbarFolderTitle(getString(R.string.folder))
             .toolbarImageTitle(getString(R.string.gallery_select_title_msg))
-            .start(RC_CODE_PICKER)
+            .start(RCCODEPICKER)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == RC_CODE_PICKER && resultCode == AppCompatActivity.RESULT_OK && data != null) {
+        if (requestCode == RCCODEPICKER && resultCode == AppCompatActivity.RESULT_OK && data != null) {
             images = ImagePicker.getImages(data)
             binding.imgProfileImage.visibility = View.GONE
             profileImageFile = File(images.get(0).path)
@@ -131,17 +147,41 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
                 compressImage.getCompressedImageFile(profileImageFile!!, activity as Context)
             Glide.with(this).load(profileImageFile)
                 .into(binding.imgRound)
+        } else {
+            callbackManager?.onActivityResult(requestCode, resultCode, data)
         }
     }
 
-    fun requestSignUp(): HashMap<String, RequestBody> {
+    private fun requestSignUp(
+        socialType: String,
+        socialId: String,
+        isSocial: String,
+        email: String,
+        userName: String
+    ): HashMap<String, RequestBody> {
         val map = HashMap<String, RequestBody>()
-        map[resources.getString(R.string.str_username)] =
-            toRequestBody(binding.etxUserName.text.toString().trim())
-        map[resources.getString(R.string.str_useremail)] =
-            toRequestBody(binding.etxEmail.text.toString().trim())
-        map[resources.getString(R.string.str_password)] =
-            toRequestBody(binding.etxPassword.text.toString().trim())
+        if (socialId.isEmpty()) {
+            map[resources.getString(R.string.str_username)] =
+                toRequestBody(binding.etxUserName.text.toString().trim())
+            map[resources.getString(R.string.str_useremail)] =
+                toRequestBody(binding.etxEmail.text.toString().trim())
+            map[resources.getString(R.string.str_password)] =
+                toRequestBody(binding.etxPassword.text.toString().trim())
+        } else {
+            map[resources.getString(R.string.str_username)] =
+                toRequestBody(userName)
+            map[resources.getString(R.string.str_useremail)] =
+                toRequestBody(email)
+            map[resources.getString(R.string.str_password)] =
+                toRequestBody("")
+            selectedImage=""
+        }
+        map[resources.getString(R.string.str_social_type)] =
+            toRequestBody(socialType)
+        map[resources.getString(R.string.str_socialId)] =
+            toRequestBody(socialId)
+        map[resources.getString(R.string.str_isSocial)] =
+            toRequestBody(isSocial)
 
         return map
     }
@@ -149,4 +189,63 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
     fun toRequestBody(value: String): RequestBody {
         return value.toRequestBody("text/plain".toMediaTypeOrNull())
     }
+
+    private fun initializeFacebookCallback() {
+        callbackManager = CallbackManager.Factory.create()
+        LoginManager.getInstance()
+            .registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+                override fun onSuccess(loginResult: LoginResult) {
+                    if (loginResult.accessToken != null) {
+                        setFacebookData(loginResult)
+                    }
+                }
+
+                override fun onCancel() {
+                    showToast(
+                        requireActivity(),
+                        getString(R.string.err_facebook_authentication_fail)
+                    )
+                }
+
+                override fun onError(error: FacebookException) {
+                    showToast(
+                        requireActivity(),
+                        getString(R.string.err_facebook_authentication_fail)
+                    )
+                }
+
+            })
+    }
+
+    private fun setFacebookData(loginResult: LoginResult) {
+        val request = GraphRequest.newMeRequest(
+            loginResult.accessToken
+        ) { `object`, response ->
+            try {
+                viewModel.signUp(
+                    requestSignUp(
+                        resources.getString(R.string.str_facebook),
+                        response.jsonObject.getString(resources.getString(R.string.str_social_id)),
+                        resources.getString(R.string.str_true),
+                        response.jsonObject.getString(resources.getString(R.string.str_social_email)),
+                        response.jsonObject.getString(resources.getString(R.string.str_social_first_name)) + " " + resources.getString(R.string.str_social_last_name)
+                    ), profileImageFile, selectedImage
+                )
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        }
+        val parameters = Bundle()
+        parameters.putString("fields", "id,email,first_name,last_name")
+        request.parameters = parameters
+        request.executeAsync()
+    }
+
+    private fun fbLogin() {
+        val accessToken = AccessToken.getCurrentAccessToken()
+        if (accessToken == null || accessToken.isExpired)
+            LoginManager.getInstance()
+                .logInWithReadPermissions(this, listOf("public_profile", "email"))
+    }
+
 }

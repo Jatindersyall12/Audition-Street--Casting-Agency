@@ -8,6 +8,15 @@
     <string name="str_email">Please enter email</string>
     <string name="str_user_name">Please enter user name</string>
     <string name="str_password">password</string>
+    <string name="str_social_type">socialType</string>
+    <string name="str_socialId">socialId</string>
+    <string name="str_isSocial">isSocial</string>
+    <string name="str_facebook">Facebook</string>
+    <string name="str_social_email">email</string>
+    <string name="str_social_id">id</string>
+    <string name="str_social_first_name">first_name</string>
+    <string name="str_social_last_name">last_name</string>
+
     <string name="str_confirm_password">Please enter password again</string>
     <string name="str_sign_up">SignUp</string>
     <string name="gallery_select_title_msg">Tap to select</string>
@@ -21,9 +30,13 @@
     <string name="err_valid_email">Please enter valid email</string>
     <string name="err_password_lenght">Password should be 6 characters</string>
     <string name="err_passwrd_confirm">Password and confirm password does not match</string>
+    <string name="err_facebook_authentication_fail">Please try again later</string>
 
 
     <!--SignIn Fragment -->
+    <string name="str_true">true</string>
+    <string name="str_false">false</string>
+
     <string name="str_sign_in">Sign in to continue!</string>
     <string name="str_sign_in_text">Sign In</string>
     <string name="str_email_tv">Email</string>
@@ -56,6 +69,9 @@
     <string name="str_no_projects">You Don\'t have any active Project</string>
     <string name="str_create_project">Create Project</string>
     <string name="str_add_project">Add Project</string>
+    <string name="str_view_detail">View Details</string>
+    <string name="str_project_heading">Project:</string>
+    <string name="str_project_detail">Project Detail</string>
 
 
 

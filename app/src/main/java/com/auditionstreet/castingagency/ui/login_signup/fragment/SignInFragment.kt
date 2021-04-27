@@ -2,7 +2,6 @@ package com.auditionstreet.castingagency.ui.login_signup.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.auditionstreet.castingagency.R
@@ -10,14 +9,13 @@ import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentSigninBinding
 import com.auditionstreet.castingagency.storage.preference.Preferences
 import com.auditionstreet.castingagency.ui.home.activity.HomeActivity
-import com.auditionstreet.castingagency.ui.login_signup.AuthorizedUserActivity
 import com.auditionstreet.castingagency.ui.login_signup.viewmodel.LoginViewModel
 import com.auditionstreet.castingagency.utils.AppConstants
 import com.auditionstreet.castingagency.utils.showToast
 import com.facebook.*
-import com.facebook.appevents.AppEventsConstants
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
+import com.silo.model.request.LoginRequest
 import com.silo.model.response.LoginResponse
 import com.silo.utils.AppBaseFragment
 import com.silo.utils.network.Resource
@@ -57,7 +55,8 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
             binding.btnSignIn -> {
                 viewModel.isValidate(
                     binding.etxEmail.text!!.trim().toString(),
-                    binding.etxPassword.text!!.trim().toString()
+                    binding.etxPassword.text!!.trim().toString(),
+                    resources.getString(R.string.str_false)
                 )
             }
             binding.tvDontHaveAcocunt -> {
@@ -124,18 +123,17 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
                 }
 
                 override fun onCancel() {
-                    /*showToast(
+                    showToast(
                         requireActivity(),
                         getString(R.string.err_facebook_authentication_fail)
-                    )*/
+                    )
                 }
 
                 override fun onError(error: FacebookException) {
-                    Log.e("error", error.message.toString())
-                    /*showToast(
-                        this@SocialLoginActivity,
+                    showToast(
+                        requireActivity(),
                         getString(R.string.err_facebook_authentication_fail)
-                    )*/
+                    )
                 }
 
             })
@@ -152,16 +150,12 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
             loginResult.accessToken
         ) { `object`, response ->
             try {
-                Log.e("resultttt", response.jsonObject.getString("id"))
-                /*viewModel.socialSignIn(
-                    viewModel.getSocialSignInRequest(
-                        response.jsonObject.getString(
-                            "email"
-                        ),
-                        response.jsonObject.getString("id"),
-                        resources.getString(R.string.facebook)
-                    )
-                )*/
+                val loginRequest = LoginRequest()
+                loginRequest.email =
+                    response.jsonObject.getString(resources.getString(R.string.str_social_email))
+                loginRequest.password = ""
+                loginRequest.isSocial = resources.getString(R.string.str_true)
+                viewModel.authorizedUser(loginRequest)
             } catch (e: JSONException) {
                 e.printStackTrace()
             }

@@ -3,13 +3,12 @@ package com.auditionstreet.castingagency.ui.projects.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import com.auditionstreet.castingagency.BuildConfig
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
-import com.auditionstreet.castingagency.databinding.FragmentAddProjectBinding
-import com.auditionstreet.castingagency.model.response.MyProjectResponse
+import com.auditionstreet.castingagency.databinding.FragmentMyProjectDetailBinding
 import com.auditionstreet.castingagency.storage.preference.Preferences
-import com.auditionstreet.castingagency.ui.projects.viewmodel.MyProjectViewModel
-import com.auditionstreet.castingagency.utils.AppConstants
+import com.auditionstreet.castingagency.ui.projects.viewmodel.MyProjectDetailViewModel
 import com.auditionstreet.castingagency.utils.showToast
 import com.leo.wikireviews.utils.livedata.EventObserver
 import com.silo.model.request.MyProjectRequest
@@ -21,10 +20,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.OnClickListener {
-    private val binding by viewBinding(FragmentAddProjectBinding::bind)
+class MyProjectDetailFragment : AppBaseFragment(R.layout.fragment_my_project_detail),
+    View.OnClickListener {
+    private val binding by viewBinding(FragmentMyProjectDetailBinding::bind)
 
-    private val viewModel: MyProjectViewModel by viewModels()
+    private val viewModel: MyProjectDetailViewModel by viewModels()
 
     @Inject
     lateinit var preferences: Preferences
@@ -33,14 +33,15 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
         super.onViewCreated(view, savedInstanceState)
         setListeners()
         setObservers()
-        //init()
-        getMyProjects()
+        getMyProjectDetail()
     }
 
-    private fun getMyProjects() {
-        var request = MyProjectRequest()
-       // request.userid = preferences.getString(AppConstants.USER_ID)
-            //viewModel.getMyProject(request)
+    private fun getMyProjectDetail() {
+        /* preferences.getString(
+            AppConstants.USER_ID)*/
+        viewModel.getMyProjectDetail(
+            BuildConfig.BASE_URL + ApiConstant.GET_MY_PROJECTS_DETAILS + "/" + "1"
+        )
     }
 
     private fun setListeners() {
@@ -59,8 +60,8 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
             Status.SUCCESS -> {
                 hideProgress()
                 when (apiResponse.apiConstant) {
-                    ApiConstant.GET_MY_PROJECTS -> {
-                       // setAdapter(apiResponse.data as MyProjectResponse)
+                    ApiConstant.GET_MY_PROJECTS_DETAILS -> {
+                        // setAdapter(apiResponse.data as MyProjectResponse)
                     }
                 }
             }
@@ -78,33 +79,11 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
         }
     }
 
-    /*private fun init() {
-        binding.rvProjects.apply {
-            layoutManager = LinearLayoutManager(activity)
-            myProjectListAdapter = MyProjectListAdapter(requireActivity())
-            { position: Int ->
-                Log.e("position", "" + position)
-            }
-            adapter = myProjectListAdapter
-        }
-    }
-
-    private fun setAdapter(projectResponse: MyProjectResponse) {
-        if (projectResponse.data.size > 0) {
-            myProjectListAdapter.submitList(projectResponse.data)
-            binding.rvProjects.visibility = View.VISIBLE
-            //binding.tvNoRecordFound.visibility = View.GONE
-        } else {
-            binding.rvProjects.visibility = View.GONE
-            // binding.tvNoRecordFound.visibility = View.VISIBLE
-        }
-    }*/
-
     override fun onClick(v: View?) {
         when (v) {
-         //   binding.btnAddProject -> {
+            //   binding.btnAddProject -> {
 
-            }
         }
-  //  }
+    }
+    //  }
 }

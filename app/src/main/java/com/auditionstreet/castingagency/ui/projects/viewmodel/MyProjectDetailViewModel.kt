@@ -6,35 +6,32 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.auditionstreet.castingagency.api.ApiConstant
-import com.auditionstreet.castingagency.model.response.MyProjectResponse
-import com.auditionstreet.castingagency.ui.projects.repository.MyProjectRepository
+import com.auditionstreet.castingagency.model.response.MyProjectDetailResponse
+import com.auditionstreet.castingagency.ui.projects.repository.MyProjectDetailRepository
 import com.leo.wikireviews.utils.livedata.Event
-import com.silo.model.request.LoginRequest
-import com.silo.model.request.MyProjectRequest
-import com.silo.model.request.ProjectRequest
 import com.silo.utils.network.NetworkHelper
 import com.silo.utils.network.Resource
 import kotlinx.coroutines.launch
 
-class AddProjectViewModel @ViewModelInject constructor(
-    private val myProjectRepository: MyProjectRepository,
+class MyProjectDetailViewModel @ViewModelInject constructor(
+    private val myProjectDetailRepository: MyProjectDetailRepository,
     private val networkHelper: NetworkHelper,
 ) : ViewModel() {
 
-    private val _users = MutableLiveData<Event<Resource<MyProjectResponse>>>()
-    val users: LiveData<Event<Resource<MyProjectResponse>>>
+    private val _users = MutableLiveData<Event<Resource<MyProjectDetailResponse>>>()
+    val users: LiveData<Event<Resource<MyProjectDetailResponse>>>
         get() = _users
 
-     /*fun getMyProject(myProjectRequest: MyProjectRequest) {
+     fun getMyProjectDetail(url: String) {
         viewModelScope.launch {
-            _users.postValue(Event(Resource.loading(ApiConstant.GET_PROJECTS, null)))
+            _users.postValue(Event(Resource.loading(ApiConstant.GET_MY_PROJECTS, null)))
             if (networkHelper.isNetworkConnected()) {
-                myProjectRepository.getMyProjects(myProjectRequest).let {
+                myProjectDetailRepository.getMyProjectDetail(url).let {
                     if (it.isSuccessful && it.body() != null) {
                         _users.postValue(
-                            Event(S
+                            Event(
                                 Resource.success(
-                                    ApiConstant.GET_PROJECTS,
+                                    ApiConstant.GET_MY_PROJECTS,
                                     it.body()
                                 )
                             )
@@ -43,7 +40,7 @@ class AddProjectViewModel @ViewModelInject constructor(
                         _users.postValue(
                             Event(
                                 Resource.error(
-                                    ApiConstant.GET_PROJECTS,
+                                    ApiConstant.GET_MY_PROJECTS,
                                     it.code(),
                                     it.errorBody().toString(),
                                     null
@@ -54,5 +51,5 @@ class AddProjectViewModel @ViewModelInject constructor(
                 }
             }
         }
-    }*/
+    }
 }

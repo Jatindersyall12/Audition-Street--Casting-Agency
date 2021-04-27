@@ -25,7 +25,7 @@ class LoginViewModel @ViewModelInject constructor(
     val users: LiveData<Resource<LoginResponse>>
         get() = _users
 
-    private fun authorizedUser(loginRequest: LoginRequest) {
+     fun authorizedUser(loginRequest: LoginRequest) {
         viewModelScope.launch {
             _users.postValue(Resource.loading(ApiConstant.LOGIN,null))
             if (networkHelper.isNetworkConnected()) {
@@ -46,9 +46,10 @@ class LoginViewModel @ViewModelInject constructor(
         }
     }
 
-    fun isValidate(email: String, password: String) {
+    fun isValidate(email: String, password: String, isSocial: String) {
         loginRequest.email = email
         loginRequest.password = password
+        loginRequest.isSocial=isSocial
         if (TextUtils.isEmpty(loginRequest.email)) {
             _users.postValue(
                 Resource.requiredResource(

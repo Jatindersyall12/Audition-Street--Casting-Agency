@@ -4,6 +4,7 @@ import com.auditionstreet.castingagency.api.ApiConstant.Companion.GET_MY_PROJECT
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.GET_PROJECTS
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.LOGIN
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.SIGN_UP
+import com.auditionstreet.castingagency.model.response.MyProjectDetailResponse
 import com.auditionstreet.castingagency.model.response.MyProjectResponse
 import com.auditionstreet.castingagency.model.response.ProjectResponse
 import com.silo.model.request.LoginRequest
@@ -22,8 +23,11 @@ interface ApiService {
     @POST(LOGIN)
     suspend fun userLogin(@Body loginRequest: LoginRequest): Response<LoginResponse>
 
-    @POST(GET_MY_PROJECTS)
-    suspend fun getMyProjects(@Body projectRequest: MyProjectRequest): Response<MyProjectResponse>
+    @GET
+    suspend fun getMyProjects(@Url url: String): Response<MyProjectResponse>
+
+    @GET
+    suspend fun getMyProjectDetail(@Url url: String): Response<MyProjectDetailResponse>
 
     @POST(GET_PROJECTS)
     suspend fun getProjects(@Body projectRequest: ProjectRequest): Response<ProjectResponse>

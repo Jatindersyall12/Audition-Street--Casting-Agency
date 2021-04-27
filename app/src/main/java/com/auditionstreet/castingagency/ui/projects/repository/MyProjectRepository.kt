@@ -8,10 +8,11 @@ import com.silo.model.request.MyProjectRequest
 import com.silo.model.request.ProjectRequest
 import com.silo.model.response.LoginResponse
 import retrofit2.Response
+import retrofit2.http.Url
 import javax.inject.Inject
 
 class MyProjectRepository @Inject constructor(val apiService: ApiService) {
-    suspend fun getMyProjects(projectRequest: MyProjectRequest):Response<MyProjectResponse> =apiService.getMyProjects(projectRequest)
+    suspend fun getMyProjects(url: String):Response<MyProjectResponse> =apiService.getMyProjects(url)
 
 }
 

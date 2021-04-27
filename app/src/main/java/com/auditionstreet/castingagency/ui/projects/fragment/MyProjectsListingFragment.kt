@@ -5,18 +5,16 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.auditionstreet.castingagency.BuildConfig
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentMyProjectsBinding
 import com.auditionstreet.castingagency.model.response.MyProjectResponse
 import com.auditionstreet.castingagency.storage.preference.Preferences
-import com.auditionstreet.castingagency.ui.login_signup.fragment.SignInFragmentDirections
 import com.auditionstreet.castingagency.ui.projects.adapter.MyProjectListAdapter
 import com.auditionstreet.castingagency.ui.projects.viewmodel.MyProjectViewModel
-import com.auditionstreet.castingagency.utils.AppConstants
 import com.auditionstreet.castingagency.utils.showToast
 import com.leo.wikireviews.utils.livedata.EventObserver
-import com.silo.model.request.MyProjectRequest
 import com.silo.utils.AppBaseFragment
 import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
@@ -25,7 +23,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects),View.OnClickListener {
+class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects),
+    View.OnClickListener {
     private val binding by viewBinding(FragmentMyProjectsBinding::bind)
     private lateinit var myProjectListAdapter: MyProjectListAdapter
 
@@ -43,9 +42,11 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
     }
 
     private fun getMyProjects() {
-        var request=MyProjectRequest()
-        request.userid=preferences.getString(AppConstants.USER_ID)
-        viewModel.getMyProject(request)
+       /* preferences.getString(
+            AppConstants.USER_ID)*/
+        viewModel.getMyProject(
+            BuildConfig.BASE_URL + ApiConstant.GET_MY_PROJECTS + "/" + "1"
+                )
     }
 
     private fun setListeners() {
@@ -88,7 +89,7 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
             layoutManager = LinearLayoutManager(activity)
             myProjectListAdapter = MyProjectListAdapter(requireActivity())
             { position: Int ->
-                Log.e("position", "" + position)
+                sharedViewModel.setDirection(MyProjectsListingFragmentDirections.actionProjectDetail())
             }
             adapter = myProjectListAdapter
         }
@@ -98,18 +99,17 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
         if (projectResponse.data.size > 0) {
             myProjectListAdapter.submitList(projectResponse.data)
             binding.rvProjects.visibility = View.VISIBLE
-            //binding.tvNoRecordFound.visibility = View.GONE
+            binding.layNoRecord.visibility = View.GONE
         } else {
             binding.rvProjects.visibility = View.GONE
-            // binding.tvNoRecordFound.visibility = View.VISIBLE
+             binding.layNoRecord.visibility = View.VISIBLE
         }
     }
 
     override fun onClick(v: View?) {
         when (v) {
             binding.btnAddProject -> {
-                sharedViewModel.setDirection(SignInFragmentDirections.navigateToSignup())
-
+                sharedViewModel.setDirection(MyProjectsListingFragmentDirections.actionAddProject())
             }
         }
     }

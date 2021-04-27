@@ -2,6 +2,7 @@ package com.auditionstreet.castingagency.ui.projects.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +12,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.model.response.MyProjectResponse
-import com.auditionstreet.castingagency.model.response.ProjectResponse
-import kotlinx.android.synthetic.main.project_item.view.*
+import kotlinx.android.synthetic.main.my_project_item.view.*
+import java.util.*
 
 class MyProjectListAdapter(
-    val mContext: FragmentActivity,private val mCallback: (
+    val mContext: FragmentActivity, private val mCallback: (
         mposition: Int
     ) -> Unit
 ) :
@@ -44,7 +45,7 @@ class MyProjectListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ConnectionHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.project_item,
+                R.layout.my_project_item,
                 parent,
                 false
             ),
@@ -55,14 +56,16 @@ class MyProjectListAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ConnectionHolder -> {
-//                holder.bind(differ.currentList[position])
+                holder.bind(differ.currentList[position])
+                holder.itemView.btnViewDetail.setOnClickListener {
+                    mCallback.invoke(position)
+                }
             }
         }
     }
 
     override fun getItemCount(): Int {
-        //return differ.currentList.size
-        return 6
+        return differ.currentList.size
     }
 
     fun submitList(projectResponse: List<MyProjectResponse.Data>) {
@@ -75,8 +78,12 @@ class MyProjectListAdapter(
         val mContext: Context
     ) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(item: ProjectResponse.Data) = with(itemView) {
-                itemView.tvActor.text= "d"
+        fun bind(item: MyProjectResponse.Data) = with(itemView) {
+            val rnd = Random()
+            val color: Int = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
+            itemView.btnViewDetail.background.setTint(color)
+            itemView.tvProject.setTextColor(color)
+
         }
     }
 }

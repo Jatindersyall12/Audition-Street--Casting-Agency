@@ -1,5 +1,6 @@
 package com.auditionstreet.castingagency.ui.home.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -18,6 +19,7 @@ import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
 import com.silo.utils.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment : AppBaseFragment(R.layout.fragment_home) {
@@ -72,7 +74,7 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home) {
             layoutManager = LinearLayoutManager(activity)
             projectListAdapter = ProjectListAdapter(requireActivity())
             { position: Int ->
-                Log.e("position",""+position)
+                Log.e("position", "" + position)
             }
             adapter = projectListAdapter
         }

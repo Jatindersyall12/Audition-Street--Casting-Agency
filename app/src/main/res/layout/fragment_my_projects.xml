@@ -8,6 +8,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layNoRecord"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_200sdp"
             android:layout_marginLeft="@dimen/_20sdp"
@@ -17,8 +18,8 @@
 
             <ImageView
                 android:id="@+id/imgNoProject"
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="@dimen/_80sdp"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_70sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/ic_no_project"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -55,6 +56,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvProjects"
+            android:layout_marginTop="@dimen/_16sdp"
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

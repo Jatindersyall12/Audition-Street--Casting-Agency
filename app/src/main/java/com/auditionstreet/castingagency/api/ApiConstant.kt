@@ -32,10 +32,12 @@ class ApiConstant {
 
         const val LOGIN = "castingLogin"
         const val GET_PROJECTS = ""
-        const val GET_MY_PROJECTS = ""
+        const val GET_MY_PROJECTS = "projectList"
+        const val GET_MY_PROJECTS_DETAILS = "projectDetail"
+
         const val ADD_PROJECT = ""
 
-        const val SIGN_UP = "createCasting"
+        const val SIGN_UP = "castingSignup"
 
         const val IS_USER_EXIST = "api/v1/user/check-username-exist"
     }}

@@ -4,21 +4,22 @@
 
     <ScrollView
         android:layout_width="match_parent"
+        android:scrollbars="none"
+        android:background="@color/white"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white">
+            >
 
             <ImageView
                 android:id="@+id/imgLogo"
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="@dimen/_80sdp"
+                android:layout_width="@dimen/_65sdp"
+                android:layout_height="@dimen/_65sdp"
                 android:layout_marginLeft="@dimen/_30sdp"
-                android:layout_marginTop="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:src="@drawable/ic_login_logo"
-                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,10 +28,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_30sdp"
-                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:text="@string/str_welcome"
-                android:textSize="@dimen/_24sdp"
-                android:visibility="gone"
+                android:textSize="@dimen/_26sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imgLogo" />
 
@@ -39,144 +39,66 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_30sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="@string/str_create_account"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:text="@string/str_sign_in"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/_20sdp"
-                android:visibility="gone"
+                android:textSize="@dimen/_18sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvWelcome" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layConstraint"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_80sdp"
-                android:layout_marginTop="@dimen/_30sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvCreateAccount">
-
-                <com.github.siyamed.shapeimageview.RoundedImageView
-                    android:id="@+id/imgRound"
-                    android:layout_width="@dimen/_80sdp"
-                    android:layout_height="@dimen/_80sdp"
-                    android:src="@drawable/image_round"
-                    app:siBorderColor="@color/black"
-                    app:siBorderWidth="2dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:siRadius="6dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:siSquare="true" />
-
-                <ImageView
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:id="@+id/imgProfileImage"
-                    android:layout_width="@dimen/_80sdp"
-                    android:layout_height="@dimen/_80sdp"
-                    android:src="@drawable/ic_dummy_profile_image"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <com.auditionstreet.castingagency.customviews.CustomTextView
-                android:id="@+id/tvAddProfileImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_30sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="@string/str_create_account"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/_20sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layConstraint" />
-
-            <com.auditionstreet.castingagency.customviews.CustomEditText
-                android:id="@+id/etxUserName"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_marginLeft="@dimen/_30sdp"
-                android:maxLength="20"
-                android:imeOptions="actionNext"
-                android:inputType="textEmailAddress"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:layout_marginRight="@dimen/_30sdp"
-                android:background="@drawable/edittext_round_layout"
-                android:gravity="center_vertical"
-                android:hint="@string/str_user_name"
-                android:paddingLeft="@dimen/_10sdp"
-                android:textSize="@dimen/_13sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvAddProfileImage" />
 
             <com.auditionstreet.castingagency.customviews.CustomEditText
                 android:id="@+id/etxEmail"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginLeft="@dimen/_30sdp"
-                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_30sdp"
                 android:layout_marginRight="@dimen/_30sdp"
                 android:background="@drawable/edittext_round_layout"
                 android:gravity="center_vertical"
-                android:hint="@string/str_email"
+                android:maxLines="1"
+                android:hint="@string/str_email_tv"
+                android:inputType="textEmailAddress"
                 android:paddingLeft="@dimen/_10sdp"
+                android:textSize="@dimen/_14sdp"
                 android:maxLength="20"
                 android:imeOptions="actionNext"
-                android:inputType="textEmailAddress"
-                android:textSize="@dimen/_13sdp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etxUserName" />
+                app:layout_constraintTop_toBottomOf="@+id/tvCreateAccount" />
 
             <com.auditionstreet.castingagency.customviews.CustomEditText
                 android:id="@+id/etxPassword"
                 android:layout_width="match_parent"
+                android:maxLines="1"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginLeft="@dimen/_30sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginRight="@dimen/_30sdp"
+                android:maxLength="20"
                 android:background="@drawable/edittext_round_layout"
                 android:gravity="center_vertical"
-                android:maxLength="20"
-                android:imeOptions="actionNext"
                 android:inputType="textPassword"
-                android:hint="@string/str_password"
+                android:hint="@string/str_password_tv"
+                android:imeOptions="actionDone"
                 android:paddingLeft="@dimen/_10sdp"
-                android:textSize="@dimen/_13sdp"
+                android:textSize="@dimen/_14sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etxEmail" />
 
-            <com.auditionstreet.castingagency.customviews.CustomEditText
-                android:id="@+id/etxConfirmPassword"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_marginLeft="@dimen/_30sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:layout_marginRight="@dimen/_30sdp"
-                android:background="@drawable/edittext_round_layout"
-                android:gravity="center_vertical"
-                android:hint="@string/str_confirm_password"
-                android:paddingLeft="@dimen/_10sdp"
-                android:maxLength="20"
-                android:imeOptions="actionDone"
-                android:inputType="textPassword"
-                android:textSize="@dimen/_13sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etxPassword" />
-
             <com.auditionstreet.castingagency.customviews.CustomButton
-                android:id="@+id/btnSignUp"
+                android:id="@+id/btnSignIn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginLeft="@dimen/_30sdp"
-                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_34sdp"
                 android:layout_marginRight="@dimen/_30sdp"
                 android:background="@drawable/button_round_background"
                 android:gravity="center"
-                android:text="@string/str_sign_up"
+                android:paddingLeft="@dimen/_10sdp"
+                android:text="@string/str_sign_in_text"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_16sdp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etxConfirmPassword" />
+                app:layout_constraintTop_toBottomOf="@+id/etxPassword" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layOr"
@@ -185,7 +107,7 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnSignUp">
+                app:layout_constraintTop_toBottomOf="@id/btnSignIn">
 
                 <View
                     android:id="@+id/viewFirst"
@@ -230,10 +152,22 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:src="@drawable/ic_icon_insta_logo"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginBottom="@dimen/_20sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layOr" />
 
+            <com.auditionstreet.castingagency.customviews.CustomTextView
+                android:id="@+id/tvDontHaveAcocunt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/str_dont_have"
+                android:textColor="@color/gray"
+                android:paddingBottom="@dimen/_20sdp"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintTop_toBottomOf="@+id/imgFacebook"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
