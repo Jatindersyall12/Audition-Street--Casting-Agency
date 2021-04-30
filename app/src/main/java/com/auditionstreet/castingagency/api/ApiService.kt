@@ -4,6 +4,7 @@ import com.auditionstreet.castingagency.api.ApiConstant.Companion.GET_MY_PROJECT
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.GET_PROJECTS
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.LOGIN
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.SIGN_UP
+import com.auditionstreet.castingagency.model.response.AllUsersResponse
 import com.auditionstreet.castingagency.model.response.MyProjectDetailResponse
 import com.auditionstreet.castingagency.model.response.MyProjectResponse
 import com.auditionstreet.castingagency.model.response.ProjectResponse
@@ -25,6 +26,9 @@ interface ApiService {
 
     @GET
     suspend fun getMyProjects(@Url url: String): Response<MyProjectResponse>
+
+    @GET
+    suspend fun getAllUsers(@Url url: String): Response<AllUsersResponse>
 
     @GET
     suspend fun getMyProjectDetail(@Url url: String): Response<MyProjectDetailResponse>

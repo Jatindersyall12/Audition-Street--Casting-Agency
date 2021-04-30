@@ -3,21 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/ProjectsFragment">
+    app:startDestination="@id/projectsFragment">
     <fragment
-        android:id="@+id/ProjectsFragment"
+        android:id="@+id/projectsFragment"
         android:name="com.auditionstreet.castingagency.ui.projects.fragment.MyProjectsListingFragment"
         android:label="@string/str_projects"
         tools:layout="@layout/fragment_my_projects">
         <action
-            android:id="@+id/action_add_project"
+            android:id="@+id/navigateToAddProject"
             app:destination="@id/addProjectFragment"
             app:enterAnim="@anim/in_from_right"
             app:exitAnim="@anim/out_to_left"
             app:popEnterAnim="@anim/in_from_left"
             app:popExitAnim="@anim/out_to_right" />
         <action
-            android:id="@+id/action_project_detail"
+            android:id="@+id/navigateToProjectDetail"
             app:destination="@id/addProjectDetail"
             app:enterAnim="@anim/in_from_right"
             app:exitAnim="@anim/out_to_left"
@@ -29,11 +29,21 @@
         android:id="@+id/addProjectFragment"
         android:name="com.auditionstreet.castingagency.ui.projects.fragment.AddProjectFragment"
         android:label="@string/str_add_project"
-        tools:layout="@layout/fragment_add_project" />
+        tools:layout="@layout/fragment_add_project" >
+        <argument
+            android:name="projectId"
+            app:argType="string"
+            android:defaultValue='""' />
+    </fragment>
     <fragment
         android:id="@+id/addProjectDetail"
         android:name="com.auditionstreet.castingagency.ui.projects.fragment.MyProjectDetailFragment"
         android:label="@string/str_project_detail"
-        tools:layout="@layout/fragment_my_project_detail" />
+        tools:layout="@layout/fragment_my_project_detail" >
+        <argument
+            android:name="projectId"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
 
 </navigation>

@@ -6,7 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.auditionstreet.castingagency.api.ApiConstant
+import com.auditionstreet.castingagency.model.response.AllUsersResponse
 import com.auditionstreet.castingagency.model.response.MyProjectResponse
+import com.auditionstreet.castingagency.ui.projects.repository.AddProjectRepository
 import com.auditionstreet.castingagency.ui.projects.repository.MyProjectRepository
 import com.leo.wikireviews.utils.livedata.Event
 import com.silo.model.request.LoginRequest
@@ -17,33 +19,33 @@ import com.silo.utils.network.Resource
 import kotlinx.coroutines.launch
 
 class AddProjectViewModel @ViewModelInject constructor(
-    private val myProjectRepository: MyProjectRepository,
+    private val addProjectRepository: AddProjectRepository,
     private val networkHelper: NetworkHelper,
 ) : ViewModel() {
 
-    private val _users = MutableLiveData<Event<Resource<MyProjectResponse>>>()
-    val users: LiveData<Event<Resource<MyProjectResponse>>>
-        get() = _users
+    private val _all_user = MutableLiveData<Event<Resource<AllUsersResponse>>>()
+    val allUsers: LiveData<Event<Resource<AllUsersResponse>>>
+        get() = _all_user
 
-     /*fun getMyProject(myProjectRequest: MyProjectRequest) {
+    fun getAllUsers(url: String) {
         viewModelScope.launch {
-            _users.postValue(Event(Resource.loading(ApiConstant.GET_PROJECTS, null)))
+            _all_user.postValue(Event(Resource.loading(ApiConstant.GET_ALL_USERS, null)))
             if (networkHelper.isNetworkConnected()) {
-                myProjectRepository.getMyProjects(myProjectRequest).let {
+                addProjectRepository.getAllUsers(url).let {
                     if (it.isSuccessful && it.body() != null) {
-                        _users.postValue(
-                            Event(S
+                        _all_user.postValue(
+                            Event(
                                 Resource.success(
-                                    ApiConstant.GET_PROJECTS,
+                                    ApiConstant.GET_ALL_USERS,
                                     it.body()
                                 )
                             )
                         )
                     } else {
-                        _users.postValue(
+                        _all_user.postValue(
                             Event(
                                 Resource.error(
-                                    ApiConstant.GET_PROJECTS,
+                                    ApiConstant.GET_ALL_USERS,
                                     it.code(),
                                     it.errorBody().toString(),
                                     null
@@ -54,5 +56,5 @@ class AddProjectViewModel @ViewModelInject constructor(
                 }
             }
         }
-    }*/
+    }
 }

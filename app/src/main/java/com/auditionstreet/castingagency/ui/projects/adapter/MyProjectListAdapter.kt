@@ -17,7 +17,7 @@ import java.util.*
 
 class MyProjectListAdapter(
     val mContext: FragmentActivity, private val mCallback: (
-        mposition: Int
+        mposition: String
     ) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -58,7 +58,7 @@ class MyProjectListAdapter(
             is ConnectionHolder -> {
                 holder.bind(differ.currentList[position])
                 holder.itemView.btnViewDetail.setOnClickListener {
-                    mCallback.invoke(position)
+                    mCallback.invoke(differ.currentList[position].id.toString())
                 }
             }
         }

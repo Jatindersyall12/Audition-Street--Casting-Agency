@@ -18,6 +18,8 @@
     <string name="str_social_last_name">last_name</string>
 
     <string name="str_confirm_password">Please enter password again</string>
+    <string name="str_pwd">Please enter password</string>
+
     <string name="str_sign_up">SignUp</string>
     <string name="gallery_select_title_msg">Tap to select</string>
     <string name="folder">Folder</string>
@@ -73,6 +75,19 @@
     <string name="str_project_heading">Project:</string>
     <string name="str_project_detail">Project Detail</string>
 
+    <!-- Projects detail -->
+    <string name="str_criteria">Criteria:</string>
+    <string name="str_age">Age:</string>
+    <string name="str_height">Height:</string>
+    <string name="str_languages">Languages:</string>
+    <string name="str_dates">Shooting Dates:</string>
+    <string name="str_location">Location:</string>
+    <string name="str_description">Description:</string>
+    <string name="str_to">\u0020to\u0020</string>
 
+    <!-- Add Project -->
+    <string name="str_title">Title of Project</string>
+    <string name="str_add_title">Add Title</string>
+    <string name="str_crtria">Criteria</string>
 
 </resources>

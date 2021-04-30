@@ -28,6 +28,7 @@ class HomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        setNavigationController()
         imageIcons = arrayListOf(
             binding.footerHome.homeButton,
             binding.footerHome.projectButton,
@@ -114,5 +115,12 @@ class HomeActivity : BaseActivity() {
             closeAppDialog(this)
         else
             super.onBackPressed()
+    }
+    private fun setNavigationController() {
+        val navController = (supportFragmentManager.findFragmentById(R.id.navHostHomeFragment) as NavHostFragment)
+            .navController
+        sharedViewModel.navDirectionLiveData.observe(this){
+            navController.navigate(it)
+        }
     }
 }

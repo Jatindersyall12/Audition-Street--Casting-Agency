@@ -1,5 +1,6 @@
 package com.auditionstreet.castingagency.ui.projects.repository
 
+import com.auditionstreet.castingagency.model.response.AllUsersResponse
 import com.auditionstreet.castingagency.model.response.MyProjectResponse
 import com.auditionstreet.castingagency.model.response.ProjectResponse
 import com.silo.api.ApiService
@@ -11,6 +12,6 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class AddProjectRepository @Inject constructor(val apiService: ApiService) {
-   // suspend fun getMyProjects(url: String):Response<MyProjectResponse> =apiService.getMyProjects(url)
+    suspend fun getAllUsers(url: String):Response<AllUsersResponse> =apiService.getAllUsers(url)
 
 }

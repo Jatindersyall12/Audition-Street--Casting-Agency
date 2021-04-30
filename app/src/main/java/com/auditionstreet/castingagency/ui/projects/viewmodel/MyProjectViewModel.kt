@@ -27,14 +27,14 @@ class MyProjectViewModel @ViewModelInject constructor(
 
      fun getMyProject(url: String) {
         viewModelScope.launch {
-            _users.postValue(Event(Resource.loading(ApiConstant.GET_MY_PROJECTS, null)))
+            _users.postValue(Event(Resource.loading(ApiConstant.GET_PROJECTS, null)))
             if (networkHelper.isNetworkConnected()) {
                 myProjectRepository.getMyProjects(url).let {
                     if (it.isSuccessful && it.body() != null) {
                         _users.postValue(
                             Event(
                                 Resource.success(
-                                    ApiConstant.GET_MY_PROJECTS,
+                                    ApiConstant.GET_PROJECTS,
                                     it.body()
                                 )
                             )
@@ -43,7 +43,7 @@ class MyProjectViewModel @ViewModelInject constructor(
                         _users.postValue(
                             Event(
                                 Resource.error(
-                                    ApiConstant.GET_MY_PROJECTS,
+                                    ApiConstant.GET_PROJECTS,
                                     it.code(),
                                     it.errorBody().toString(),
                                     null

@@ -1,7 +1,6 @@
 package com.auditionstreet.castingagency.ui.projects.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,11 +41,11 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
     }
 
     private fun getMyProjects() {
-       /* preferences.getString(
-            AppConstants.USER_ID)*/
+        /* preferences.getString(
+             AppConstants.USER_ID)*/
         viewModel.getMyProject(
             BuildConfig.BASE_URL + ApiConstant.GET_MY_PROJECTS + "/" + "1"
-                )
+        )
     }
 
     private fun setListeners() {
@@ -66,7 +65,7 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
                 hideProgress()
                 when (apiResponse.apiConstant) {
                     ApiConstant.GET_MY_PROJECTS -> {
-                        setAdapter(apiResponse.data as MyProjectResponse)
+                        //setAdapter(apiResponse.data as MyProjectResponse)
                     }
                 }
             }
@@ -88,8 +87,12 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
         binding.rvProjects.apply {
             layoutManager = LinearLayoutManager(activity)
             myProjectListAdapter = MyProjectListAdapter(requireActivity())
-            { position: Int ->
-                sharedViewModel.setDirection(MyProjectsListingFragmentDirections.actionProjectDetail())
+            { projectId: String ->
+                sharedViewModel.setDirection(
+                    MyProjectsListingFragmentDirections.navigateToProjectDetail(
+                        projectId
+                    )
+                )
             }
             adapter = myProjectListAdapter
         }
@@ -102,14 +105,14 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
             binding.layNoRecord.visibility = View.GONE
         } else {
             binding.rvProjects.visibility = View.GONE
-             binding.layNoRecord.visibility = View.VISIBLE
+            binding.layNoRecord.visibility = View.VISIBLE
         }
     }
 
     override fun onClick(v: View?) {
         when (v) {
             binding.btnAddProject -> {
-                sharedViewModel.setDirection(MyProjectsListingFragmentDirections.actionAddProject())
+                sharedViewModel.setDirection(MyProjectsListingFragmentDirections.navigateToAddProject())
             }
         }
     }

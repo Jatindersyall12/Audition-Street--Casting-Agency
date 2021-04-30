@@ -12,7 +12,7 @@ class CustomEditText:AppCompatEditText {
 
     private fun setTypeface() {
         if (!isInEditMode) {
-            super.setTypeface(Typeface.createFromAsset(context.assets, "rubik_variablefont_wght.ttf"))
+            super.setTypeface(Typeface.createFromAsset(context.assets, "ProximaNova-Regular.otf"))
         }
     }
 }

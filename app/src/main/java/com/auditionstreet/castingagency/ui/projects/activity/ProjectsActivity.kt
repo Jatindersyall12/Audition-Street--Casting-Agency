@@ -30,6 +30,7 @@ class ProjectsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        setNavigationController()
         imageIcons = arrayListOf(
             binding.footerHome.homeButton,
             binding.footerHome.projectButton,
@@ -108,7 +109,7 @@ class ProjectsActivity : BaseActivity() {
     }
     override fun onBackPressed() {
         val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.navHostHomeFragment) as NavHostFragment
+            supportFragmentManager.findFragmentById(R.id.navProject) as NavHostFragment
         val navController: NavController = navHostFragment.navController
         if (navController.graph.startDestination == navController.currentDestination?.id) {
             val i = Intent(this@ProjectsActivity, HomeActivity::class.java)
@@ -116,5 +117,13 @@ class ProjectsActivity : BaseActivity() {
             startActivity(i)
         } else
             super.onBackPressed()
+    }
+
+    private fun setNavigationController() {
+        val navController = (supportFragmentManager.findFragmentById(R.id.navProject) as NavHostFragment)
+            .navController
+        sharedViewModel.navDirectionLiveData.observe(this){
+            navController.navigate(it)
+        }
     }
 }

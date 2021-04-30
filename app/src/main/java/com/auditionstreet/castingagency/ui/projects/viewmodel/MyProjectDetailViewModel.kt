@@ -31,7 +31,7 @@ class MyProjectDetailViewModel @ViewModelInject constructor(
                         _users.postValue(
                             Event(
                                 Resource.success(
-                                    ApiConstant.GET_MY_PROJECTS,
+                                    ApiConstant.GET_MY_PROJECTS_DETAILS,
                                     it.body()
                                 )
                             )
@@ -40,7 +40,7 @@ class MyProjectDetailViewModel @ViewModelInject constructor(
                         _users.postValue(
                             Event(
                                 Resource.error(
-                                    ApiConstant.GET_MY_PROJECTS,
+                                    ApiConstant.GET_MY_PROJECTS_DETAILS,
                                     it.code(),
                                     it.errorBody().toString(),
                                     null

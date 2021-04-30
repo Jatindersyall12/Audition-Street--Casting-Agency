@@ -3,13 +3,13 @@ package com.auditionstreet.castingagency.ui.projects.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import com.auditionstreet.castingagency.BuildConfig
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentAddProjectBinding
-import com.auditionstreet.castingagency.model.response.MyProjectResponse
 import com.auditionstreet.castingagency.storage.preference.Preferences
+import com.auditionstreet.castingagency.ui.projects.viewmodel.AddProjectViewModel
 import com.auditionstreet.castingagency.ui.projects.viewmodel.MyProjectViewModel
-import com.auditionstreet.castingagency.utils.AppConstants
 import com.auditionstreet.castingagency.utils.showToast
 import com.leo.wikireviews.utils.livedata.EventObserver
 import com.silo.model.request.MyProjectRequest
@@ -24,7 +24,7 @@ import javax.inject.Inject
 class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.OnClickListener {
     private val binding by viewBinding(FragmentAddProjectBinding::bind)
 
-    private val viewModel: MyProjectViewModel by viewModels()
+    private val viewModel: AddProjectViewModel by viewModels()
 
     @Inject
     lateinit var preferences: Preferences
@@ -33,14 +33,13 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
         super.onViewCreated(view, savedInstanceState)
         setListeners()
         setObservers()
-        //init()
-        getMyProjects()
+        getAllUsers()
     }
 
-    private fun getMyProjects() {
-        var request = MyProjectRequest()
-       // request.userid = preferences.getString(AppConstants.USER_ID)
-            //viewModel.getMyProject(request)
+    private fun getAllUsers() {
+        viewModel.getAllUsers(
+            BuildConfig.BASE_URL + ApiConstant.GET_ALL_USERS
+        )
     }
 
     private fun setListeners() {
@@ -49,7 +48,7 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
 
 
     private fun setObservers() {
-        viewModel.users.observe(viewLifecycleOwner, EventObserver {
+        viewModel.allUsers.observe(viewLifecycleOwner, EventObserver {
             handleApiCallback(it)
         })
     }
