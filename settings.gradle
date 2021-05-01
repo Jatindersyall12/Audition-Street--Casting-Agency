@@ -1,2 +1,3 @@
+include ':crystalrangeseekbar'
 include ':app'
 rootProject.name = "Audition Street - Casting Agency"

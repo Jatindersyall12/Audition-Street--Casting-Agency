@@ -86,8 +86,29 @@
     <string name="str_to">\u0020to\u0020</string>
 
     <!-- Add Project -->
+
     <string name="str_title">Title of Project</string>
     <string name="str_add_title">Add Title</string>
     <string name="str_crtria">Criteria</string>
+    <string name="str_male">Male</string>
+    <string name="str_female">Female</string>
+    <string name="str_age_range">Age Range :\u0020</string>
+    <string name="str_height_ft">Height(Ft)</string>
+    <string name="str_height_In">Height(In)</string>
+    <string name="str_body_type">Body Type</string>
+    <string name="str_experiance">Experiance</string>
+    <string name="str_language">Language</string>
+    <string name="str_shooting_Date">Shooting Date</string>
+    <string name="str_date_start">Select Start Date</string>
+    <string name="str_date_end">Select End Date</string>
+
+    <string name="str_divider">-</string>
+    <string name="str_locatn">Add Location</string>
+    <string name="str_dates_project">Shooting Dates</string>
+    <string name="str_location_project">Location</string>
+    <string name="str_desc">Description</string>
+    <string name="str_type">Type here...</string>
+    <string name="str_subadmin">Add Sub-Admins</string>
+    <string name="str_create">Create</string>
 
 </resources>

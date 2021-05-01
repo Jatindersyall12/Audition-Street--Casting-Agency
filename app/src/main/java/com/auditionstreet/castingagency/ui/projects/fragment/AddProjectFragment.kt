@@ -9,10 +9,8 @@ import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentAddProjectBinding
 import com.auditionstreet.castingagency.storage.preference.Preferences
 import com.auditionstreet.castingagency.ui.projects.viewmodel.AddProjectViewModel
-import com.auditionstreet.castingagency.ui.projects.viewmodel.MyProjectViewModel
 import com.auditionstreet.castingagency.utils.showToast
 import com.leo.wikireviews.utils.livedata.EventObserver
-import com.silo.model.request.MyProjectRequest
 import com.silo.utils.AppBaseFragment
 import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
@@ -21,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.OnClickListener {
+class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.OnClickListener{
     private val binding by viewBinding(FragmentAddProjectBinding::bind)
 
     private val viewModel: AddProjectViewModel by viewModels()
@@ -34,6 +32,17 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
         setListeners()
         setObservers()
         getAllUsers()
+        setSeekBarListsener()
+    }
+
+    private fun setSeekBarListsener() {
+        binding.rangeSeekbar.setOnRangeSeekbarChangeListener { minValue, maxValue ->
+            binding.tvAge.text =
+                resources.getString(R.string.str_age_range) + minValue.toString() + "-" + maxValue.toString()
+        }
+        binding.rangeSeekbar.setMinValue(18f).setMaxValue(50f).setMinStartValue(25f)
+            .setMaxStartValue(40f)
+            .apply()
     }
 
     private fun getAllUsers() {
@@ -59,7 +68,7 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
                 hideProgress()
                 when (apiResponse.apiConstant) {
                     ApiConstant.GET_MY_PROJECTS -> {
-                       // setAdapter(apiResponse.data as MyProjectResponse)
+                        // setAdapter(apiResponse.data as MyProjectResponse)
                     }
                 }
             }
@@ -101,9 +110,8 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
 
     override fun onClick(v: View?) {
         when (v) {
-         //   binding.btnAddProject -> {
+            //   binding.btnAddProject -> {
 
-            }
         }
-  //  }
-}
+    }
+    }
