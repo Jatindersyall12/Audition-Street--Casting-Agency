@@ -55,7 +55,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etxTitle" />
-
+            
             <RadioGroup
                 android:id="@+id/groupRadio"
                 android:layout_width="match_parent"
@@ -140,10 +140,11 @@
                 android:layout_marginEnd="@dimen/_20sdp"
                 android:background="@drawable/edittext_round_layout"
                 android:hint="@string/str_height_ft"
+                android:maxLength="2"
                 android:inputType="number"
                 android:paddingLeft="@dimen/_10sdp"
                 android:paddingRight="@dimen/_10sdp"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_14sdp"
                 app:layout_constraintEnd_toStartOf="@+id/etxHeightIn"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rangeSeekbar" />
@@ -158,7 +159,9 @@
                 android:hint="@string/str_height_In"
                 android:paddingLeft="@dimen/_10sdp"
                 android:paddingRight="@dimen/_10sdp"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_14sdp"
+                android:inputType="numberDecimal"
+                android:maxLength="4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/etxHeightFt"
                 app:layout_constraintTop_toBottomOf="@+id/rangeSeekbar" />
@@ -174,7 +177,7 @@
                 android:hint="@string/str_body_type"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_14sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etxHeightFt" />
@@ -190,7 +193,7 @@
                 android:hint="@string/str_experiance"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_14sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etxBodyType" />
@@ -206,7 +209,7 @@
                 android:hint="@string/str_language"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_14sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etxExperiance" />
@@ -233,7 +236,7 @@
                 android:background="@drawable/edittext_round_layout"
                 android:gravity="center"
                 android:hint="@string/str_date_start"
-                android:textSize="@dimen/_15ssp"
+                android:textSize="@dimen/_14sdp"
                 app:layout_constraintEnd_toStartOf="@+id/tvDivider"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvDate" />
@@ -252,7 +255,7 @@
                 app:layout_constraintStart_toEndOf="@+id/tvStartDate"
                 app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
-            <com.auditionstreet.castingagency.customviews.CustomEditText
+            <com.auditionstreet.castingagency.customviews.CustomTextView
                 android:id="@+id/tvEndDate"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
@@ -261,7 +264,7 @@
                 android:background="@drawable/edittext_round_layout"
                 android:gravity="center"
                 android:hint="@string/str_date_end"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_14sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tvDivider"
                 app:layout_constraintTop_toBottomOf="@+id/tvDate" />
@@ -291,7 +294,7 @@
                 android:hint="@string/str_locatn"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_14sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvLocation" />
@@ -310,19 +313,19 @@
                 app:layout_constraintTop_toBottomOf="@+id/etxLocation" />
 
             <com.auditionstreet.castingagency.customviews.CustomEditText
-                android:id="@+id/Description"
+                android:id="@+id/etxDescription"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_100sdp"
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_20sdp"
                 android:background="@drawable/edittext_round_layout"
-                android:gravity="left|top"
+                android:gravity="start|top"
                 android:hint="@string/str_type"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_14sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvDesc" />
@@ -330,7 +333,7 @@
             <com.auditionstreet.castingagency.customviews.CustomTextViewBold
                 android:id="@+id/tvSubAdmin"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="wrap_content"
                 android:text="@string/str_subadmin"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_17sdp"
@@ -338,20 +341,39 @@
                 android:layout_marginTop="@dimen/_15sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Description" />
+                app:layout_constraintTop_toBottomOf="@+id/etxDescription" />
 
-            <com.auditionstreet.castingagency.customviews.CustomEditText
-                android:id="@+id/SubDomain"
+            <com.auditionstreet.castingagency.customviews.CustomTextView
+                android:id="@+id/etxSubDomain"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:hint="Search Name"
-                android:padding="10dp"
-                android:textSize="15dp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:hint="@string/str_admin"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:drawablePadding="@dimen/_10sdp"
+                android:gravity="start|center"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:textSize="@dimen/_14sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
+                android:background="@drawable/edittext_round_layout"
                 app:layout_constraintTop_toBottomOf="@+id/tvSubAdmin" />
+
+            <com.auditionstreet.castingagency.customviews.CustomTextViewBold
+                android:id="@+id/tvAddOrEditAdmin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/etxSubDomain"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:gravity="end"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_20ssp"
+                android:text="@string/str_add_edit_admins"
+                android:textSize="@dimen/_15sdp"
+                />
 
             <com.auditionstreet.castingagency.customviews.CustomButton
                 android:id="@+id/btnSubmit"
@@ -360,13 +382,14 @@
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_20sdp"
                 android:gravity="center"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:textSize="@dimen/_15sdp"
                 android:background="@drawable/button_round_background"
                 android:text="@string/str_create"
                 android:textColor="@color/white"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/SubDomain" />
+                app:layout_constraintTop_toBottomOf="@+id/tvAddOrEditAdmin" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

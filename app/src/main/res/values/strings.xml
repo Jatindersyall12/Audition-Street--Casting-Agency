@@ -55,11 +55,15 @@
     <string name="str_project">Projects</string>
     <string name="str_chat">Chat</string>
     <string name="str_account">Account</string>
+
     <!-- Home Fragment -->
     <string name="str_home_fragment">Home Fragment</string>
     <string name="str_shortlist">Shortlisted</string>
     <string name="str_application">Applications</string>
     <string name="str_view_all">View All</string>
+    <string name="str_coming_soon">Coming Soon..</string>
+    <string name="str_view_details">View Details</string>
+    <string name="str_view_profile">View Profile</string>
 
     <!-- Facebook -->
 
@@ -108,7 +112,18 @@
     <string name="str_location_project">Location</string>
     <string name="str_desc">Description</string>
     <string name="str_type">Type here...</string>
-    <string name="str_subadmin">Add Sub-Admins</string>
+    <string name="str_subadmin">Sub-Admins</string>
     <string name="str_create">Create</string>
+    <string name="str_admin">Please select admins</string>
+    <string name="str_select_admin">Select Admins</string>
+    <string name="str_done">Done</string>
+    <string name="str_start_Date">Please select start date first</string>
+    <string name="dd_mm_yy">dd/MM/yy</string>
+    <string name="mm_dd_yy">MMM, dd yyyy</string>
+    <string name="str_add_edit_admins">Add or edit admin members</string>
+    <string name="str_create_edit_group">Select members to add or update</string>
+    <string name="str_error_title">Please enter title</string>
+    <string name="str_error_desc">Please enter Description</string>
+    <string name="str_error_body_type">Please enter body type</string>
 
 </resources>

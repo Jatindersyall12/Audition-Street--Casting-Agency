@@ -77,7 +77,7 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
     private fun handleApiCallback(apiResponse: Resource<Any>) {
         when (apiResponse.status) {
             Status.SUCCESS -> {
-                hideProgress()
+                this.hideProgress()
                 when (apiResponse.apiConstant) {
                     ApiConstant.LOGIN -> {
                         val loginResponse = apiResponse.data as LoginResponse
@@ -101,6 +101,10 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
             Status.RESOURCE -> {
                 hideProgress()
                 showToast(requireContext(), getString(apiResponse.resourceId!!))
+            }
+            else ->
+            {
+
             }
         }
     }
@@ -132,7 +136,7 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
                 override fun onError(error: FacebookException) {
                     showToast(
                         requireActivity(),
-                        getString(R.string.err_facebook_authentication_fail)
+                        this@SignInFragment.getString(R.string.err_facebook_authentication_fail)
                     )
                 }
 
@@ -140,7 +144,6 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
         callbackManager?.onActivityResult(requestCode, resultCode, data)
 
     }
@@ -148,7 +151,7 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
     private fun setFacebookData(loginResult: LoginResult) {
         val request = GraphRequest.newMeRequest(
             loginResult.accessToken
-        ) { `object`, response ->
+        ) { _, response ->
             try {
                 val loginRequest = LoginRequest()
                 loginRequest.email =

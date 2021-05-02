@@ -1,6 +1,5 @@
 package com.auditionstreet.castingagency.ui.home.fragment
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,6 +9,7 @@ import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentHomeBinding
 import com.auditionstreet.castingagency.model.response.ProjectResponse
+import com.auditionstreet.castingagency.ui.home.adapter.ApplicationListAdapter
 import com.auditionstreet.castingagency.ui.home.adapter.ProjectListAdapter
 import com.auditionstreet.castingagency.ui.home.viewmodel.ProjectViewModel
 import com.auditionstreet.castingagency.utils.showToast
@@ -25,6 +25,7 @@ import java.util.*
 class HomeFragment : AppBaseFragment(R.layout.fragment_home) {
     private val binding by viewBinding(FragmentHomeBinding::bind)
     private lateinit var projectListAdapter: ProjectListAdapter
+    private lateinit var applicationListAdapter: ApplicationListAdapter
 
     private val viewModel: ProjectViewModel by viewModels()
 
@@ -52,6 +53,8 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home) {
                 when (apiResponse.apiConstant) {
                     ApiConstant.GET_PROJECTS -> {
                         setAdapter(apiResponse.data as ProjectResponse)
+                        setApplicationAdapter(apiResponse.data as ProjectResponse)
+
                     }
                 }
             }
@@ -77,6 +80,29 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home) {
                 Log.e("position", "" + position)
             }
             adapter = projectListAdapter
+            binding.rvSlidingProject.setLayoutManager(
+                LinearLayoutManager(
+                    requireActivity(),
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+            )
+        }
+
+        binding.rvApplication.apply {
+            layoutManager = LinearLayoutManager(activity)
+            applicationListAdapter = ApplicationListAdapter(requireActivity())
+            { position: Int ->
+                Log.e("position", "" + position)
+            }
+            adapter = applicationListAdapter
+            binding.rvApplication.setLayoutManager(
+                LinearLayoutManager(
+                    requireActivity(),
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+            )
         }
     }
     private fun setAdapter(projectResponse: ProjectResponse) {
@@ -88,5 +114,16 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home) {
             binding.rvSlidingProject.visibility = View.GONE
            // binding.tvNoRecordFound.visibility = View.VISIBLE
         }
+    }
+    private fun setApplicationAdapter(projectResponse: ProjectResponse) {
+        if (projectResponse.data.size > 0) {
+            applicationListAdapter.submitList(projectResponse.data)
+            binding.rvApplication.visibility = View.VISIBLE
+            //binding.tvNoRecordFound.visibility = View.GONE
+        } else {
+            binding.rvApplication.visibility = View.GONE
+            // binding.tvNoRecordFound.visibility = View.VISIBLE
+        }
+
     }
 }

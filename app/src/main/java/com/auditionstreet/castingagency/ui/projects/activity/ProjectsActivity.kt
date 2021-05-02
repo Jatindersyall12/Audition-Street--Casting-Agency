@@ -11,6 +11,7 @@ import com.auditionstreet.castingagency.databinding.ActivityProjectsBinding
 import com.auditionstreet.castingagency.storage.preference.Preferences
 import com.auditionstreet.castingagency.ui.home.activity.HomeActivity
 import com.auditionstreet.castingagency.utils.DataHelper
+import com.auditionstreet.castingagency.utils.showToast
 import com.silo.ui.base.BaseActivity
 import com.silo.utils.changeIcons
 import com.silo.utils.network.IconPosition
@@ -74,6 +75,7 @@ class ProjectsActivity : BaseActivity() {
             )
         }
         binding.footerHome.llChat.setOnClickListener {
+            showToast(this,resources.getString(R.string.str_coming_soon))
             changeIcons(
                 imageIcons,
                 activeIcons,
@@ -84,6 +86,7 @@ class ProjectsActivity : BaseActivity() {
             )
         }
         binding.footerHome.llAccount.setOnClickListener {
+            showToast(this,resources.getString(R.string.str_coming_soon))
             changeIcons(
                 imageIcons,
                 activeIcons,

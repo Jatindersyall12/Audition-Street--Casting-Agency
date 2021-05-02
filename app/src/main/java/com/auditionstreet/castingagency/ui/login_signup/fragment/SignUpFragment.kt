@@ -39,7 +39,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickListener {
     private val binding by viewBinding(FragmentSignupBinding::bind)
-    private val RCCODEPICKER = 2000
+    private val picker = 2000
     private var images: MutableList<com.esafirm.imagepicker.model.Image> = mutableListOf()
     private var profileImageFile: File? = null
     private var selectedImage = ""
@@ -134,15 +134,15 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
             .limit(1)
             .toolbarFolderTitle(getString(R.string.folder))
             .toolbarImageTitle(getString(R.string.gallery_select_title_msg))
-            .start(RCCODEPICKER)
+            .start(picker)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == RCCODEPICKER && resultCode == AppCompatActivity.RESULT_OK && data != null) {
+        if (requestCode == picker && resultCode == AppCompatActivity.RESULT_OK && data != null) {
             images = ImagePicker.getImages(data)
             binding.imgProfileImage.visibility = View.GONE
-            profileImageFile = File(images.get(0).path)
-            selectedImage = images.get(0).name
+            profileImageFile = File(images[0].path)
+            selectedImage = images[0].name
             profileImageFile =
                 compressImage.getCompressedImageFile(profileImageFile!!, activity as Context)
             Glide.with(this).load(profileImageFile)
@@ -186,7 +186,7 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
         return map
     }
 
-    fun toRequestBody(value: String): RequestBody {
+    private fun toRequestBody(value: String): RequestBody {
         return value.toRequestBody("text/plain".toMediaTypeOrNull())
     }
 
@@ -220,9 +220,9 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
     private fun setFacebookData(loginResult: LoginResult) {
         val request = GraphRequest.newMeRequest(
             loginResult.accessToken
-        ) { `object`, response ->
+        ) { _, response ->
             try {
-                viewModel.signUp(
+                this.viewModel.signUp(
                     requestSignUp(
                         resources.getString(R.string.str_facebook),
                         response.jsonObject.getString(resources.getString(R.string.str_social_id)),

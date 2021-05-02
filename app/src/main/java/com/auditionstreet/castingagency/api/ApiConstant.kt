@@ -2,6 +2,7 @@
 @file:JvmMultifileClass
 
 package com.auditionstreet.castingagency.api
+
 class ApiConstant {
 
     companion object {
@@ -34,13 +35,13 @@ class ApiConstant {
         const val GET_PROJECTS = ""
         const val GET_MY_PROJECTS = "projectList"
         const val GET_MY_PROJECTS_DETAILS = "projectDetail"
-        const val GET_ALL_USERS = "castingList"
-
-        const val ADD_PROJECT = ""
-
+        const val GET_ALL_ADMINS = "castingList"
+        const val GET_ALL_USER = "castingList1"
+        const val ADD_PROJECT = "projectCreate"
         const val SIGN_UP = "castingSignup"
 
         const val IS_USER_EXIST = "api/v1/user/check-username-exist"
-    }}
+    }
+}
 
 

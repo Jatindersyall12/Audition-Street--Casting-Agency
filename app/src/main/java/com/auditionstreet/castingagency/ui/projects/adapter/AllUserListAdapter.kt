@@ -1,43 +1,45 @@
-package com.auditionstreet.castingagency.ui.home.adapter
+package com.auditionstreet.castingagency.ui.projects.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.castingagency.R
-import com.auditionstreet.castingagency.model.response.ProjectResponse
+import com.auditionstreet.castingagency.model.response.AllAdminResponse
+import com.auditionstreet.castingagency.model.response.AllUsersResponse
+import kotlinx.android.synthetic.main.all_admin_item.view.*
 import kotlinx.android.synthetic.main.my_project_item.view.*
-import kotlinx.android.synthetic.main.project_item.view.*
-import kotlinx.android.synthetic.main.project_item.view.btnViewDetail
-import java.util.*
 
-class ProjectListAdapter(
-    val mContext: FragmentActivity,private val mCallback: (
-        mposition: Int
+class AllUserListAdapter(
+    val mContext: FragmentActivity, private val mCallback: (
+        mposition: String
     ) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ProjectResponse.Data>() {
+    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<AllUsersResponse.Data>() {
 
         override fun areItemsTheSame(
-            oldItem: ProjectResponse.Data,
-            newItem: ProjectResponse.Data
+            oldItem: AllUsersResponse.Data,
+            newItem: AllUsersResponse.Data
         ): Boolean {
-            return oldItem == newItem
+             return oldItem == newItem
+
+            //return false
         }
 
         @SuppressLint("DiffUtilEquals")
         override fun areContentsTheSame(
-            oldItem: ProjectResponse.Data,
-            newItem: ProjectResponse.Data
+            oldItem: AllUsersResponse.Data,
+            newItem: AllUsersResponse.Data
         ): Boolean {
             return oldItem == newItem
+             // return false
         }
 
     }
@@ -47,7 +49,7 @@ class ProjectListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ConnectionHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.project_item,
+                R.layout.all_admin_item,
                 parent,
                 false
             ),
@@ -58,17 +60,22 @@ class ProjectListAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ConnectionHolder -> {
-//                holder.bind(differ.currentList[position])
+                holder.bind(differ.currentList[position])
+
+                holder.itemView.chkUser.setOnCheckedChangeListener { buttonView, isChecked ->
+                    differ.currentList[position].isChecked = !differ.currentList[position].isChecked
+                   // holder.itemView.chkUser.isChecked=!differ.currentList[position].isChecked
+                   // notifyDataSetChanged()
+                }
             }
         }
     }
 
     override fun getItemCount(): Int {
-        //return differ.currentList.size
-        return 6
+        return differ.currentList.size
     }
 
-    fun submitList(projectResponse: List<ProjectResponse.Data>) {
+    fun submitList(projectResponse: List<AllUsersResponse.Data>) {
         differ.submitList(projectResponse)
         notifyDataSetChanged()
     }
@@ -78,11 +85,10 @@ class ProjectListAdapter(
         val mContext: Context
     ) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(item: ProjectResponse.Data) = with(itemView) {
-            val rnd = Random()
-            val color: Int = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
-            itemView.btnViewDetail.background.setTint(color)
-            //itemView.tvProject.setTextColor(color)
+        fun bind(item: AllUsersResponse.Data) = with(itemView) {
+            itemView.chkUser.isChecked=item.isChecked
+            itemView.tvAdmin.text=item.name
+
         }
     }
 }

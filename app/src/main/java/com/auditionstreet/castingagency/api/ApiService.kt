@@ -1,15 +1,12 @@
 package com.silo.api
 
-import com.auditionstreet.castingagency.api.ApiConstant.Companion.GET_MY_PROJECTS
+import com.auditionstreet.castingagency.api.ApiConstant.Companion.ADD_PROJECT
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.GET_PROJECTS
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.LOGIN
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.SIGN_UP
-import com.auditionstreet.castingagency.model.response.AllUsersResponse
-import com.auditionstreet.castingagency.model.response.MyProjectDetailResponse
-import com.auditionstreet.castingagency.model.response.MyProjectResponse
-import com.auditionstreet.castingagency.model.response.ProjectResponse
+import com.auditionstreet.castingagency.model.response.*
+import com.silo.model.request.AddProjectRequest
 import com.silo.model.request.LoginRequest
-import com.silo.model.request.MyProjectRequest
 import com.silo.model.request.ProjectRequest
 import com.silo.model.response.LoginResponse
 import com.silo.model.response.SignUpResponse
@@ -24,11 +21,18 @@ interface ApiService {
     @POST(LOGIN)
     suspend fun userLogin(@Body loginRequest: LoginRequest): Response<LoginResponse>
 
+    @POST(ADD_PROJECT)
+    suspend fun addProject(@Body request: AddProjectRequest): Response<AddProjectResponse>
+
     @GET
     suspend fun getMyProjects(@Url url: String): Response<MyProjectResponse>
 
     @GET
-    suspend fun getAllUsers(@Url url: String): Response<AllUsersResponse>
+    suspend fun getAllAdmin(@Url url: String): Response<AllAdminResponse>
+
+
+    @GET
+    suspend fun getAllUser(@Url url: String): Response<AllUsersResponse>
 
     @GET
     suspend fun getMyProjectDetail(@Url url: String): Response<MyProjectDetailResponse>

@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.project_item.view.*
 import kotlinx.android.synthetic.main.project_item.view.btnViewDetail
 import java.util.*
 
-class ProjectListAdapter(
+class ApplicationListAdapter(
     val mContext: FragmentActivity,private val mCallback: (
         mposition: Int
     ) -> Unit
@@ -47,7 +47,7 @@ class ProjectListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ConnectionHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.project_item,
+                R.layout.application_item,
                 parent,
                 false
             ),
