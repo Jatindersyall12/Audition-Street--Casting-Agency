@@ -10,6 +10,7 @@ import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentHomeBinding
 import com.auditionstreet.castingagency.model.response.ProjectResponse
+import com.auditionstreet.castingagency.ui.home.activity.OtherUserProfileActivity
 import com.auditionstreet.castingagency.ui.home.activity.ShortlistedActivity
 import com.auditionstreet.castingagency.ui.home.adapter.ApplicationListAdapter
 import com.auditionstreet.castingagency.ui.home.adapter.ProjectListAdapter
@@ -41,6 +42,7 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
 
     private fun setListeners() {
         binding.tvShortListMore.setOnClickListener(this)
+        binding.tvViewAllApplication.setOnClickListener(this)
     }
 
 
@@ -57,8 +59,8 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
                 when (apiResponse.apiConstant) {
                     ApiConstant.GET_PROJECTS -> {
                         setAdapter(apiResponse.data as ProjectResponse)
-                        setApplicationAdapter(apiResponse.data as ProjectResponse)
-                        setShortListAdapter(apiResponse.data as ProjectResponse)
+                        setApplicationAdapter(apiResponse.data)
+                        setShortListAdapter(apiResponse.data)
 
                     }
                 }
@@ -73,6 +75,10 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
             Status.RESOURCE -> {
                 hideProgress()
                 showToast(requireContext(), getString(apiResponse.resourceId!!))
+            }
+            else ->
+            {
+
             }
         }
     }
@@ -166,6 +172,12 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
         when (p0!!.id) {
             R.id.tvShortListMore -> {
                 val i = Intent(requireActivity(), ShortlistedActivity::class.java)
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(i)
+                requireActivity().finish()
+            }
+            R.id.tvViewAllApplication -> {
+                val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(i)
                 requireActivity().finish()

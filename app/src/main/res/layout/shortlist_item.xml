@@ -36,6 +36,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+
                 <com.auditionstreet.castingagency.customviews.CustomTextView
                     android:id="@+id/tvActress"
                     android:layout_width="wrap_content"
@@ -86,6 +87,32 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     />
+
+                <ImageView
+                    android:layout_width="@dimen/_17sdp"
+                    android:layout_height="@dimen/_17sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/ic_heart_unselected"
+                    android:layout_marginTop="@dimen/_14sdp"
+                    android:contentDescription="@string/str_chat"/>
+
+                <com.auditionstreet.castingagency.customviews.CustomTextView
+                    android:id="@+id/tvChat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_7ssp"
+                    android:text="@string/str_chat"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tvViewProfile"
+                    />
+
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

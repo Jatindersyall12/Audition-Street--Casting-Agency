@@ -75,6 +75,7 @@ class ProjectsActivity : BaseActivity() {
             )
         }
         binding.footerHome.llChat.setOnClickListener {
+
             showToast(this,resources.getString(R.string.str_coming_soon))
             changeIcons(
                 imageIcons,
@@ -86,7 +87,9 @@ class ProjectsActivity : BaseActivity() {
             )
         }
         binding.footerHome.llAccount.setOnClickListener {
-            showToast(this,resources.getString(R.string.str_coming_soon))
+            val intent = Intent(this, ProfileActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
             changeIcons(
                 imageIcons,
                 activeIcons,
@@ -115,7 +118,7 @@ class ProjectsActivity : BaseActivity() {
             supportFragmentManager.findFragmentById(R.id.navProject) as NavHostFragment
         val navController: NavController = navHostFragment.navController
         if (navController.graph.startDestination == navController.currentDestination?.id) {
-            val i = Intent(this@ProjectsActivity, HomeActivity::class.java)
+            val i = Intent(this, HomeActivity::class.java)
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(i)
         } else

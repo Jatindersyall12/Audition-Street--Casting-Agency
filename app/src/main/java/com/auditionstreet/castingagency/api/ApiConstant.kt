@@ -39,8 +39,8 @@ class ApiConstant {
         const val GET_ALL_USER = "castingList1"
         const val ADD_PROJECT = "projectCreate"
         const val SIGN_UP = "castingSignup"
+        const val GET_PROFILE = "profile"
 
-        const val IS_USER_EXIST = "api/v1/user/check-username-exist"
     }
 }
 

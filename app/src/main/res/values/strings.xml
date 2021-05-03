@@ -56,6 +56,14 @@
     <string name="str_chat">Chat</string>
     <string name="str_account">Account</string>
 
+    <!-- other user  -->
+    <string name="str_experiances">Experiance</string>
+    <string name="str_applied_project">Applied Projects</string>
+    <string name="str_home_selected_project">Selected Projects</string>
+    <string name="str_image">Images</string>
+    <string name="str_video">Videos</string>
+    <string name="str_bio">Bio</string>
+
     <!-- Home Fragment -->
 
     <string name="str_home_fragment">Home Fragment</string>
@@ -74,6 +82,11 @@
 
     <string name="facebook_app_id">204922881173526</string>
     <string name="fb_login_protocol_scheme">fb204922881173526</string>
+
+    <!-- Profile Fragment -->
+    <string name="str_profile">Profile Fragment</string>
+    <!-- other user profile Fragment -->
+    <string name="str_other_user_profile">Other User Profile Fragment</string>
 
     <!-- Projects Fragment -->
     <string name="str_projects">Project Fragment</string>

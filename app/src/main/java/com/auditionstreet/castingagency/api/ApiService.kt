@@ -28,6 +28,9 @@ interface ApiService {
     suspend fun getMyProjects(@Url url: String): Response<MyProjectResponse>
 
     @GET
+    suspend fun getProfile(@Url url: String): Response<ProfileResponse>
+
+    @GET
     suspend fun getAllAdmin(@Url url: String): Response<AllAdminResponse>
 
 
