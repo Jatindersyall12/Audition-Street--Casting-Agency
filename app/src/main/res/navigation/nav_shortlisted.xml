@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/shortListFragment">
+    <fragment
+        android:id="@+id/shortListFragment"
+        android:label="@string/str_shortlist_frag"
+        android:name="com.auditionstreet.castingagency.ui.home.fragment.ShortListedFragment"
+        tools:layout="@layout/fragment_short_list">
+    </fragment>
+</navigation>

@@ -1,5 +1,6 @@
 package com.auditionstreet.castingagency.ui.home.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,8 +10,10 @@ import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentHomeBinding
 import com.auditionstreet.castingagency.model.response.ProjectResponse
+import com.auditionstreet.castingagency.ui.home.activity.ShortlistedActivity
 import com.auditionstreet.castingagency.ui.home.adapter.ApplicationListAdapter
 import com.auditionstreet.castingagency.ui.home.adapter.ProjectListAdapter
+import com.auditionstreet.castingagency.ui.home.adapter.HomeShortListAdapter
 import com.auditionstreet.castingagency.ui.home.viewmodel.ProjectViewModel
 import com.auditionstreet.castingagency.utils.showToast
 import com.leo.wikireviews.utils.livedata.EventObserver
@@ -19,13 +22,13 @@ import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
 import com.silo.utils.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
-class HomeFragment : AppBaseFragment(R.layout.fragment_home) {
+class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListener {
     private val binding by viewBinding(FragmentHomeBinding::bind)
     private lateinit var projectListAdapter: ProjectListAdapter
     private lateinit var applicationListAdapter: ApplicationListAdapter
+    private lateinit var shortListAdapter: HomeShortListAdapter
 
     private val viewModel: ProjectViewModel by viewModels()
 
@@ -37,6 +40,7 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home) {
     }
 
     private fun setListeners() {
+        binding.tvShortListMore.setOnClickListener(this)
     }
 
 
@@ -54,6 +58,7 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home) {
                     ApiConstant.GET_PROJECTS -> {
                         setAdapter(apiResponse.data as ProjectResponse)
                         setApplicationAdapter(apiResponse.data as ProjectResponse)
+                        setShortListAdapter(apiResponse.data as ProjectResponse)
 
                     }
                 }
@@ -104,7 +109,24 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home) {
                 )
             )
         }
+
+        binding.rvShortlist.apply {
+            layoutManager = LinearLayoutManager(activity)
+            shortListAdapter = HomeShortListAdapter(requireActivity())
+            { position: Int ->
+                Log.e("position", "" + position)
+            }
+            adapter = shortListAdapter
+            binding.rvShortlist.setLayoutManager(
+                LinearLayoutManager(
+                    requireActivity(),
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+            )
+        }
     }
+
     private fun setAdapter(projectResponse: ProjectResponse) {
         if (projectResponse.data.size > 0) {
             projectListAdapter.submitList(projectResponse.data)
@@ -112,9 +134,10 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home) {
             //binding.tvNoRecordFound.visibility = View.GONE
         } else {
             binding.rvSlidingProject.visibility = View.GONE
-           // binding.tvNoRecordFound.visibility = View.VISIBLE
+            // binding.tvNoRecordFound.visibility = View.VISIBLE
         }
     }
+
     private fun setApplicationAdapter(projectResponse: ProjectResponse) {
         if (projectResponse.data.size > 0) {
             applicationListAdapter.submitList(projectResponse.data)
@@ -125,5 +148,28 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home) {
             // binding.tvNoRecordFound.visibility = View.VISIBLE
         }
 
+    }
+
+    private fun setShortListAdapter(projectResponse: ProjectResponse) {
+        if (projectResponse.data.size > 0) {
+            shortListAdapter.submitList(projectResponse.data)
+            binding.rvShortlist.visibility = View.VISIBLE
+            //binding.tvNoRecordFound.visibility = View.GONE
+        } else {
+            binding.rvShortlist.visibility = View.GONE
+            // binding.tvNoRecordFound.visibility = View.VISIBLE
+        }
+
+    }
+
+    override fun onClick(p0: View?) {
+        when (p0!!.id) {
+            R.id.tvShortListMore -> {
+                val i = Intent(requireActivity(), ShortlistedActivity::class.java)
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(i)
+                requireActivity().finish()
+            }
+        }
     }
 }
