@@ -17,6 +17,7 @@ import com.silo.ui.base.BaseActivity
 import com.silo.utils.changeIcons
 import com.silo.utils.network.IconPosition
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.toolbar.*
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity() {
@@ -30,7 +31,9 @@ class HomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        setUpToolbar(toolbar,getString(R.string.str_home),false,true)
         setNavigationController()
+        toolBarImage.setImageResource(R.drawable.dummy_image)
         imageIcons = arrayListOf(
             binding.footerHome.homeButton,
             binding.footerHome.projectButton,

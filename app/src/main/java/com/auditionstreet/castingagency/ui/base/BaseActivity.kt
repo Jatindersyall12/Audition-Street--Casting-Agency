@@ -11,7 +11,6 @@ import com.auditionstreet.castingagency.ui.base.viewmodel.SharedViewModel
 import com.silo.listeners.DialogHelper
 import com.silo.listeners.DialogProvider
 import com.silo.utils.DialogHelperImpl
-import kotlinx.android.synthetic.main.fragment_signup.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 abstract class BaseActivity : AppCompatActivity(), DialogProvider {
@@ -32,14 +31,27 @@ abstract class BaseActivity : AppCompatActivity(), DialogProvider {
             bindingInflater.invoke(layoutInflater)
         }
 
-    fun setUpToolbar(toolbar: Toolbar, title: String, backBtnVisibility: Boolean = true) {
+    fun setUpToolbar(
+        toolbar: Toolbar,
+        title: String,
+        backBtnVisibility: Boolean = true,
+        profilePic: Boolean = true
+    ) {
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
-        imgLogo.visibility = if (backBtnVisibility) View.VISIBLE else View.GONE
+        if (backBtnVisibility) {
+            toolbarTitle.visibility = View.GONE
+            imgBack.visibility = View.VISIBLE
+        } else {
+            toolbarTitle.visibility = View.VISIBLE
+            imgBack.visibility = View.GONE
+        }
+        if (!profilePic)
+            toolBarImage.visibility = View.GONE
         if (!TextUtils.isEmpty(title)) {
             toolbarTitle.text = title
         }
-        imgLogo.setOnClickListener {
+        imgBack.setOnClickListener {
             finish()
         }
     }

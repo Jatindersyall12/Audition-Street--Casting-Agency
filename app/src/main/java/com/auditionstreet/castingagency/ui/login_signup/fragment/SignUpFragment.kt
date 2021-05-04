@@ -3,6 +3,7 @@ package com.auditionstreet.castingagency.ui.login_signup.fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
@@ -97,11 +98,12 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
                 when (apiResponse.apiConstant) {
                     ApiConstant.SIGN_UP -> {
                         val signUpResponse = apiResponse.data as SignUpResponse
-                        showToast(requireActivity(), signUpResponse.msg)
+                        showToast(requireActivity(), signUpResponse.msg.toString())
                         preferences.setString(
                             AppConstants.USER_ID,
-                            signUpResponse.data[0].id.toString()
+                            signUpResponse.data!![0]!!.id.toString()
                         )
+                        preferences.setString(AppConstants.USER_IMAGE, signUpResponse.data[0]!!.image)
                         startActivity(Intent(requireActivity(), HomeActivity::class.java))
                         requireActivity().finish()
                     }
@@ -222,13 +224,15 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
             loginResult.accessToken
         ) { _, response ->
             try {
+                val first_name =
+                    response.jsonObject.getString(resources.getString(R.string.str_social_first_name))
                 this.viewModel.signUp(
                     requestSignUp(
                         resources.getString(R.string.str_facebook),
                         response.jsonObject.getString(resources.getString(R.string.str_social_id)),
                         resources.getString(R.string.str_true),
                         response.jsonObject.getString(resources.getString(R.string.str_social_email)),
-                        response.jsonObject.getString(resources.getString(R.string.str_social_first_name)) + " " + resources.getString(R.string.str_social_last_name)
+                        first_name + " " + response.jsonObject.getString(resources.getString(R.string.str_social_last_name))
                     ), profileImageFile, selectedImage
                 )
             } catch (e: JSONException) {

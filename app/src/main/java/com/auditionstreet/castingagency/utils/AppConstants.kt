@@ -7,6 +7,8 @@ object AppConstants {
     var PROFILE_ID=0
     const val GOOGLE_SIGNIN = 9001
     var USER_ID = "userId"
+    var USER_IMAGE = "userImage"
+
     const val LOGIN_RESPONSE ="LoginResponse"
     const val VEHICLE_MAKE ="vehicle_make"
     const val VEHICLE_MODEL ="vehicle_model"

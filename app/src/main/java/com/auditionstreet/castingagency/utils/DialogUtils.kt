@@ -7,6 +7,7 @@ import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.view.LayoutInflater
+import android.view.View
 import android.view.Window
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -15,10 +16,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.customviews.CustomButton
+import com.auditionstreet.castingagency.customviews.CustomTextView
 import com.auditionstreet.castingagency.model.response.AllAdminResponse
 import com.auditionstreet.castingagency.model.response.AllUsersResponse
 import com.auditionstreet.castingagency.ui.projects.adapter.AllAdminListAdapter
-import com.auditionstreet.castingagency.ui.projects.adapter.WorkListAdapter
 import com.auditionstreet.castingagency.ui.projects.adapter.AllUserListAdapter
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -40,6 +41,7 @@ fun closeAppDialog(activity: Activity) {
     val alert = dialogBuilder.create()
     alert.show()
 }
+
 fun showAllUser(
     mContext: Context,
     allUserResponse: AllUsersResponse,
@@ -56,12 +58,22 @@ fun showAllUser(
             false
         )
     dialogView.setContentView(binding.root)
-    dialogView.setCancelable(true)
-    val rvAllUser = dialogView.findViewById<RecyclerView>(R.id.rvAdmin)
+    dialogView.setCancelable(false)
+    val rvAllUser = dialogView.findViewById<RecyclerView>(R.id.rvAllUser)
     val btnDone = dialogView.findViewById<CustomButton>(R.id.btnDone)
 
     btnDone.setOnClickListener {
+        dialogView.cancel()
         mCallback.invoke("Sd")
+    }
+    val tvNoRecord = dialogView.findViewById<CustomTextView>(R.id.tvNoRecord)
+
+    if (allUserResponse.data!!.size > 0) {
+        rvAllUser.visibility = View.VISIBLE
+        tvNoRecord.visibility = View.GONE
+    } else {
+        rvAllUser.visibility = View.GONE
+        tvNoRecord.visibility = View.VISIBLE
     }
     rvAllUser.apply {
         layoutManager = LinearLayoutManager(mContext)
@@ -96,12 +108,21 @@ fun showAdminPopUpAdmins(
             false
         )
     dialogView.setContentView(binding.root)
-    dialogView.setCancelable(true)
+    dialogView.setCancelable(false)
     val rvAllUser = dialogView.findViewById<RecyclerView>(R.id.rvAdmin)
     val btnDone = dialogView.findViewById<CustomButton>(R.id.btnDone)
+    val tvNoRecord = dialogView.findViewById<CustomTextView>(R.id.tvNoRecord)
 
     btnDone.setOnClickListener {
+        dialogView.cancel()
         mCallback.invoke("Sd")
+    }
+    if (allAdminResponse.data!!.size > 0) {
+        rvAllUser.visibility = View.VISIBLE
+        tvNoRecord.visibility = View.GONE
+    } else {
+        rvAllUser.visibility = View.GONE
+        tvNoRecord.visibility = View.VISIBLE
     }
     rvAllUser.apply {
         layoutManager = LinearLayoutManager(mContext)
@@ -110,6 +131,7 @@ fun showAdminPopUpAdmins(
 
         }
         adapter = rvAdminAdapter
+        allAdminResponse.data
         rvAdminAdapter.submitList(allAdminResponse.data)
     }
 
@@ -139,26 +161,26 @@ fun showFromDatePicker(
 
 fun showToDatePicker(
     requireActivity: FragmentActivity,
-    day:Int,
+    day: Int,
     month: Int,
-    year:Int,
+    year: Int,
     mCallback: (day: Int, month: Int, year: Int) -> Unit
 ) {
     val calendar = Calendar.getInstance()
 
-    calendar.set(Calendar.MONTH, month-1)
+    calendar.set(Calendar.MONTH, month - 1)
     calendar.set(Calendar.DAY_OF_MONTH, day)
     calendar.set(Calendar.YEAR, year)
 
     val dpd = DatePickerDialog(requireActivity, { view, year, monthOfYear, dayOfMonth ->
         monthOfYear
         mCallback.invoke(dayOfMonth, monthOfYear + 1, year)
-    }, year, month-1, day)
+    }, year, month - 1, day)
     dpd.getDatePicker().setMinDate(calendar.timeInMillis)
     dpd.show()
 }
 
-fun formatDate(context:Context, dayOfMonth: Int, monthOfYear: Int, year: Int): String {
+fun formatDate(context: Context, dayOfMonth: Int, monthOfYear: Int, year: Int): String {
     val date = "$dayOfMonth/$monthOfYear/$year"
     val input = SimpleDateFormat(context.resources.getString(R.string.dd_mm_yy))
     val output = SimpleDateFormat(context.resources.getString(R.string.mm_dd_yy))

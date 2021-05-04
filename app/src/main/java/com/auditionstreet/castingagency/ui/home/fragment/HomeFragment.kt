@@ -23,6 +23,7 @@ import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
 import com.silo.utils.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.toolbar.*
 
 @AndroidEntryPoint
 class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListener {

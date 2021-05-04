@@ -171,7 +171,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:text="High fashion modelling has strict guidelines; male models should generally be between 5'11″ and 6'3” in height, their waist should measure 29-32 inches and their chest 39-40 inches. These figures will vary slightly depending on the agency, but scouts will always be on the lookout for toned, slim physiques."
             android:textColor="@color/gray"
-            android:textSize="@dimen/_14sdp"
+            android:textSize="@dimen/_12sdp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvBio" />
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,11 +9,13 @@ import androidx.lifecycle.viewModelScope
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentAddProjectBinding
+import com.auditionstreet.castingagency.model.response.AddGroupResponse
 import com.auditionstreet.castingagency.model.response.AddProjectResponse
 import com.auditionstreet.castingagency.model.response.AllAdminResponse
 import com.auditionstreet.castingagency.model.response.AllUsersResponse
 import com.auditionstreet.castingagency.ui.projects.repository.AddProjectRepository
 import com.leo.wikireviews.utils.livedata.Event
+import com.silo.model.request.AddGroupRequest
 import com.silo.model.request.AddProjectRequest
 import com.silo.utils.network.NetworkHelper
 import com.silo.utils.network.Resource
@@ -31,6 +33,10 @@ class AddProjectViewModel @ViewModelInject constructor(
     private val user = MutableLiveData<Event<Resource<AllUsersResponse>>>()
     val allUser: LiveData<Event<Resource<AllUsersResponse>>>
         get() = user
+
+    private val addGroupMember = MutableLiveData<Event<Resource<AddGroupResponse>>>()
+    val addGroup: LiveData<Event<Resource<AddGroupResponse>>>
+        get() = addGroupMember
 
     private val project = MutableLiveData<Event<Resource<AddProjectResponse>>>()
     val addProject: LiveData<Event<Resource<AddProjectResponse>>>
@@ -86,6 +92,37 @@ class AddProjectViewModel @ViewModelInject constructor(
                             Event(
                                 content = Resource.error(
                                     ApiConstant.GET_ALL_USER,
+                                    it.code(),
+                                    it.errorBody().toString(),
+                                    null
+                                )
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    fun createGroup(request: AddGroupRequest) {
+        viewModelScope.launch {
+            addGroupMember.postValue(Event(Resource.loading(ApiConstant.ADD_GROUP, null)))
+            if (networkHelper.isNetworkConnected()) {
+                addProjectRepository.addGroup(request).let {
+                    if (it.isSuccessful && it.body() != null) {
+                        addGroupMember.postValue(
+                            Event(
+                                Resource.success(
+                                    ApiConstant.ADD_GROUP,
+                                    it.body()
+                                )
+                            )
+                        )
+                    } else {
+                        addGroupMember.postValue(
+                            Event(
+                                content = Resource.error(
+                                    ApiConstant.ADD_GROUP,
                                     it.code(),
                                     it.errorBody().toString(),
                                     null

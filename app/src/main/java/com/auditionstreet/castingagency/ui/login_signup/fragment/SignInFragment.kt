@@ -81,10 +81,14 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
                 when (apiResponse.apiConstant) {
                     ApiConstant.LOGIN -> {
                         val loginResponse = apiResponse.data as LoginResponse
-                        showToast(requireActivity(), loginResponse.msg)
+                        showToast(requireActivity(), loginResponse.msg.toString())
                         preferences.setString(
                             AppConstants.USER_ID,
-                            loginResponse.data[0].id.toString()
+                            loginResponse.data!![0]!!.id.toString()
+                        )
+                        preferences.setString(
+                            AppConstants.USER_IMAGE,
+                            loginResponse.data[0]!!.image.toString()
                         )
                         startActivity(Intent(requireActivity(), HomeActivity::class.java))
                         requireActivity().finish()
@@ -102,8 +106,7 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
                 hideProgress()
                 showToast(requireContext(), getString(apiResponse.resourceId!!))
             }
-            else ->
-            {
+            else -> {
 
             }
         }
@@ -158,6 +161,13 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
                     response.jsonObject.getString(resources.getString(R.string.str_social_email))
                 loginRequest.password = ""
                 loginRequest.isSocial = resources.getString(R.string.str_true)
+                val first_name = response.jsonObject.getString(
+                    resources.getString(R.string.str_social_first_name)
+                )
+                loginRequest.name =
+                    first_name + " " + response.jsonObject.getString(resources.getString(R.string.str_social_last_name))
+                loginRequest.socialType = resources.getString(R.string.str_social_type)
+                loginRequest.socialId = resources.getString(R.string.str_social_id)
                 viewModel.authorizedUser(loginRequest)
             } catch (e: JSONException) {
                 e.printStackTrace()

@@ -17,6 +17,7 @@ import com.silo.ui.base.BaseActivity
 import com.silo.utils.changeIcons
 import com.silo.utils.network.IconPosition
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -32,6 +33,7 @@ class ProfileActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        setUpToolbar(toolbar,getString(R.string.str_profile_heading),false,false)
         setNavigationController()
         imageIcons = arrayListOf(
             binding.footerHome.homeButton,

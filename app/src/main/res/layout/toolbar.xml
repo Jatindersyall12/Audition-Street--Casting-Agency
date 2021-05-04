@@ -5,28 +5,37 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_16sdp"
-        android:layout_marginRight="@dimen/_6sdp">
+        android:layout_marginEnd="@dimen/_6sdp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
+            android:layout_marginTop="@dimen/_15sdp"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:contentInsetLeft="0dp"
-            app:contentInsetStart="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_28sdp"
+            android:visibility="visible"
+            android:src="@drawable/ic_icon_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.auditionstreet.castingagency.customviews.CustomTextViewBold
             android:id="@+id/toolbarTitle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_28sdp"
+            android:layout_marginStart="@dimen/_17sdp"
             android:gravity="left|center"
+            android:visibility="invisible"
             android:text="Home"
             android:textColor="@color/black"
             android:textSize="@dimen/_20ssp"
-            app:layout_constraintEnd_toStartOf="@+id/toolBarImage"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,12 +43,11 @@
             android:id="@+id/toolBarImage"
             android:layout_width="@dimen/_60sdp"
             android:layout_height="@dimen/_45sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:paddingEnd="@dimen/_16sdp"
             android:src="@drawable/image_round"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbarTitle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/toolbarTitle" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

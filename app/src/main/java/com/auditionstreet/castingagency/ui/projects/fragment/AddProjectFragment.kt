@@ -8,12 +8,15 @@ import com.auditionstreet.castingagency.BuildConfig
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentAddProjectBinding
+import com.auditionstreet.castingagency.model.response.AddGroupResponse
 import com.auditionstreet.castingagency.model.response.AllAdminResponse
 import com.auditionstreet.castingagency.model.response.AllUsersResponse
 import com.auditionstreet.castingagency.storage.preference.Preferences
 import com.auditionstreet.castingagency.ui.projects.viewmodel.AddProjectViewModel
 import com.auditionstreet.castingagency.utils.*
 import com.leo.wikireviews.utils.livedata.EventObserver
+import com.silo.model.request.AddGroupRequest
+import com.silo.model.request.AddProjectRequest
 import com.silo.utils.AppBaseFragment
 import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
@@ -21,6 +24,7 @@ import com.silo.utils.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_add_project.*
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.OnClickListener {
@@ -31,10 +35,13 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
     private var minAge: Long = 25
     private var maxAge: Long = 40
 
+    var adminList = arrayListOf<String>()
+    var groupList = arrayListOf<String>()
 
     private val viewModel: AddProjectViewModel by viewModels()
     private lateinit var allAdminResponse: AllAdminResponse
     private lateinit var allUserResponse: AllUsersResponse
+    private lateinit var groupResponse: AddGroupResponse
 
     @Inject
     lateinit var preferences: Preferences
@@ -45,6 +52,8 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
         setObservers()
         getAllAdmins()
         setSeekBarListsener()
+
+
     }
 
     private fun setSeekBarListsener() {
@@ -60,8 +69,11 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
     }
 
     private fun getAllAdmins() {
+
         viewModel.getAllAdmin(
-            BuildConfig.BASE_URL + ApiConstant.GET_ALL_ADMINS
+            BuildConfig.BASE_URL + ApiConstant.GET_ALL_ADMINS + "/" + preferences.getString(
+                AppConstants.USER_ID
+            )
         )
         viewModel.getAllUser(
             BuildConfig.BASE_URL + ApiConstant.GET_ALL_USER
@@ -88,6 +100,9 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
         viewModel.addProject.observe(viewLifecycleOwner, EventObserver {
             handleApiCallback(it)
         })
+        viewModel.addGroup.observe(viewLifecycleOwner, EventObserver {
+            handleApiCallback(it)
+        })
     }
 
     private fun handleApiCallback(apiResponse: Resource<Any>) {
@@ -103,6 +118,15 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
                     }
                     ApiConstant.ADD_PROJECT -> {
                         showToast(requireActivity(), "add successfully")
+                    }
+                    ApiConstant.ADD_GROUP -> {
+                        groupResponse = apiResponse.data as AddGroupResponse
+                        showToast(requireActivity(), groupResponse.msg)
+                        viewModel.getAllAdmin(
+                            BuildConfig.BASE_URL + ApiConstant.GET_ALL_ADMINS + "/" + preferences.getString(
+                                AppConstants.USER_ID
+                            )
+                        )
                     }
                 }
             }
@@ -132,18 +156,26 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
             R.id.etxSubDomain -> {
                 showAdminPopUpAdmins(requireActivity(), allAdminResponse)
                 {
-                    for (i in 0 until allAdminResponse.data.size - 1) {
-                        Log.e("sd", allAdminResponse.data[i].isChecked.toString())
-
+                    adminList = arrayListOf<String>()
+                    for (i in 0 until allAdminResponse.data!!.size) {
+                        if (allAdminResponse.data!![i]!!.is_checked)
+                            adminList.add(allAdminResponse.data!![i]!!.id!!)
                     }
                 }
             }
             R.id.tvAddOrEditAdmin -> {
                 showAllUser(requireActivity(), allUserResponse)
                 {
+                    groupList = arrayListOf<String>()
                     for (i in 0 until allUserResponse.data.size - 1) {
-                        Log.e("sd", allUserResponse.data[i].isChecked.toString())
-
+                        if (allUserResponse.data[i].isChecked)
+                            groupList.add(allUserResponse.data[i].id.toString())
+                    }
+                    if (groupList.size > 0) {
+                        val request = AddGroupRequest()
+                        request.castingId = preferences.getString(AppConstants.USER_ID)
+                        request.anotherCastingId = groupList
+                        viewModel.createGroup(request)
                     }
                 }
             }
@@ -173,6 +205,10 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
     }
 
     private fun addProjectRequest(binding: FragmentAddProjectBinding) {
+        val request = AddProjectRequest()
+        request.age = "123"
+        request.admins = adminList
+
         Log.e("id", preferences.getString(AppConstants.USER_ID))
         Log.e("title", binding.etxTitle.text.toString())
         Log.e("desc", binding.etxDescription.text.toString())

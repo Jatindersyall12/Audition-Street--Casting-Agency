@@ -85,6 +85,8 @@
 
     <!-- Profile Fragment -->
     <string name="str_profile">Profile Fragment</string>
+    <string name="str_profile_heading">Profile</string>
+
     <!-- other user profile Fragment -->
     <string name="str_other_user_profile">Other User Profile Fragment</string>
 
@@ -123,6 +125,8 @@
     <string name="str_shooting_Date">Shooting Date</string>
     <string name="str_date_start">Select Start Date</string>
     <string name="str_date_end">Select End Date</string>
+    <string name="str_no_admin_found">No admin found.Please add admin first.</string>
+    <string name="str_no_user">No user found to create group admin</string>
 
     <string name="str_divider">-</string>
     <string name="str_locatn">Add Location</string>
@@ -134,7 +138,7 @@
     <string name="str_create">Create</string>
     <string name="str_admin">Please select admins</string>
     <string name="str_select_admin">Select Admins</string>
-    <string name="str_done">Done</string>
+    <string name="str_ok">Ok</string>
     <string name="str_start_Date">Please select start date first</string>
     <string name="dd_mm_yy">dd/MM/yy</string>
     <string name="mm_dd_yy">MMM, dd yyyy</string>

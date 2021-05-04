@@ -1,30 +1,44 @@
 package com.silo.model.request
+
 import com.google.gson.annotations.SerializedName
-data class AddProjectRequest(
+
+class AddProjectRequest {
     @SerializedName("admins")
-    val admins: List<Int?>?,
+    lateinit var admins: List<String>
+
     @SerializedName("age")
-    val age: String?,
+    var age: String = ""
+
     @SerializedName("bodyType")
-    val bodyType: String?,
+    var bodyType: String = ""
+
     @SerializedName("castingId")
-    val castingId: String?,
+    var castingId: String = ""
+
     @SerializedName("description")
-    val description: String?,
+    var description: String = ""
+
     @SerializedName("exp")
-    val exp: String?,
+    var exp: String = ""
+
     @SerializedName("fromDate")
-    val fromDate: String?,
+    var fromDate: String = ""
+
     @SerializedName("gender")
-    val gender: String?,
+    var gender: String = ""
+
     @SerializedName("height")
-    val height: String?,
+    var height: String = ""
+
     @SerializedName("lang")
-    val lang: String?,
+    var lang: String = ""
+
     @SerializedName("location")
-    val location: String?,
+    var location: String = ""
+
     @SerializedName("title")
-    val title: String?,
+    var title: String = ""
+
     @SerializedName("toDate")
-    val toDate: String?
-)
+    var toDate: String = ""
+}

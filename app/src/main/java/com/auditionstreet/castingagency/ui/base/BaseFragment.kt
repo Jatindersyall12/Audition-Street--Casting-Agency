@@ -35,11 +35,11 @@ abstract class BaseFragment(@LayoutRes layoutResId: Int) : Fragment(layoutResId)
     protected fun setUpToolbar(toolbar: Toolbar, title: String, backBtnVisibility: Boolean) {
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
         (requireActivity() as AppCompatActivity).supportActionBar!!.setDisplayShowTitleEnabled(false)
-        imgLogo.visibility = if(backBtnVisibility) View.VISIBLE else View.GONE
+        toolBarImage.visibility = if(backBtnVisibility) View.VISIBLE else View.GONE
         if(!TextUtils.isEmpty(title)){
             toolbarTitle.text = title
         }
-        imgLogo.setOnClickListener {
+        toolBarImage.setOnClickListener {
             findNavController().popBackStack()
         }
     }

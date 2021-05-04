@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.castingagency.BuildConfig
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
@@ -12,6 +13,7 @@ import com.auditionstreet.castingagency.model.response.MyProjectResponse
 import com.auditionstreet.castingagency.storage.preference.Preferences
 import com.auditionstreet.castingagency.ui.projects.adapter.MyProjectListAdapter
 import com.auditionstreet.castingagency.ui.projects.viewmodel.MyProjectViewModel
+import com.auditionstreet.castingagency.utils.AppConstants
 import com.auditionstreet.castingagency.utils.showToast
 import com.leo.wikireviews.utils.livedata.EventObserver
 import com.silo.utils.AppBaseFragment
@@ -38,18 +40,34 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
         setObservers()
         init()
         getMyProjects()
+        setRecyclerViewListener()
+    }
+
+    private fun setRecyclerViewListener() {
+        binding.rvProjects.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) {
+                    binding.imgAdd.visibility = View.GONE
+                } else if (dy < 0) {
+                    binding.imgAdd.visibility = View.VISIBLE
+                }
+            }
+        })
     }
 
     private fun getMyProjects() {
         /* preferences.getString(
              AppConstants.USER_ID)*/
         viewModel.getMyProject(
-            BuildConfig.BASE_URL + ApiConstant.GET_MY_PROJECTS + "/" + "1"
+            BuildConfig.BASE_URL + ApiConstant.GET_MY_PROJECTS + "/" + preferences.getString(
+                AppConstants.USER_ID
+            )
         )
     }
 
     private fun setListeners() {
         binding.btnAddProject.setOnClickListener(this)
+        binding.imgAdd.setOnClickListener(this)
     }
 
 
@@ -65,7 +83,7 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
                 hideProgress()
                 when (apiResponse.apiConstant) {
                     ApiConstant.GET_MY_PROJECTS -> {
-                        //setAdapter(apiResponse.data as MyProjectResponse)
+                        setAdapter(apiResponse.data as MyProjectResponse)
                     }
                 }
             }
@@ -112,6 +130,9 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
     override fun onClick(v: View?) {
         when (v) {
             binding.btnAddProject -> {
+                sharedViewModel.setDirection(MyProjectsListingFragmentDirections.navigateToAddProject())
+            }
+            binding.imgAdd -> {
                 sharedViewModel.setDirection(MyProjectsListingFragmentDirections.navigateToAddProject())
             }
         }

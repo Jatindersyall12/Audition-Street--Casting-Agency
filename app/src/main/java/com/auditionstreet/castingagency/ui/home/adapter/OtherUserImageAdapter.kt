@@ -10,35 +10,31 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.castingagency.R
-import com.auditionstreet.castingagency.model.response.AllAdminResponse
-import kotlinx.android.synthetic.main.all_admin_item.view.*
+import com.auditionstreet.castingagency.model.response.ProfileResponse
+import com.auditionstreet.castingagency.model.response.ProjectResponse
 
-class AllAdminListAdapter(
+class OtherUserImageAdapter(
     val mContext: FragmentActivity, private val mCallback: (
         mposition: String
     ) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<AllAdminResponse.Data>() {
+    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ProjectResponse.Data>() {
 
         override fun areItemsTheSame(
-            oldItem: AllAdminResponse.Data,
-            newItem: AllAdminResponse.Data
+            oldItem: ProjectResponse.Data,
+            newItem: ProjectResponse.Data
         ): Boolean {
             return oldItem == newItem
-
-            //return false
         }
 
         @SuppressLint("DiffUtilEquals")
         override fun areContentsTheSame(
-            oldItem: AllAdminResponse.Data,
-            newItem: AllAdminResponse.Data
+            oldItem: ProjectResponse.Data,
+            newItem: ProjectResponse.Data
         ): Boolean {
             return oldItem == newItem
-            // return false
         }
-
     }
     private val differ = AsyncListDiffer(this, DIFF_CALLBACK)
 
@@ -46,7 +42,7 @@ class AllAdminListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ConnectionHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.all_admin_item,
+                R.layout.other_user_image_item,
                 parent,
                 false
             ),
@@ -57,38 +53,36 @@ class AllAdminListAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ConnectionHolder -> {
-                holder.bind(differ.currentList[position])
-                // holder.itemView.chkUser.isChecked=differ.currentList[position].isChecked
+              //  holder.bind(differ.currentList[position])
 
-
+               /* holder.itemView.chkUser.setOnCheckedChangeListener { buttonView, isChecked ->
+                    differ.currentList[position].isChecked = !differ.currentList[position].isChecked
+                    // holder.itemView.chkUser.isChecked=!differ.currentList[position].isChecked
+                    // notifyDataSetChanged()
+                }*/
             }
         }
     }
 
-    /* override fun getItemViewType(position: Int): Int {
-         return 1
-     }*/
-
     override fun getItemCount(): Int {
-        return differ.currentList.size
+        //return differ.currentList.size
+        return 6
     }
 
-    fun submitList(projectResponse: List<AllAdminResponse.Data?>?) {
+    fun submitList(projectResponse: List<ProjectResponse.Data>) {
         differ.submitList(projectResponse)
         notifyDataSetChanged()
     }
 
-    inner class ConnectionHolder(
+    class ConnectionHolder(
         itemView: View,
         val mContext: Context
     ) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(item: AllAdminResponse.Data) = with(itemView) {
-            itemView.chkUser.setOnCheckedChangeListener { buttonView, isChecked ->
-                differ.currentList[adapterPosition].is_checked = isChecked
-            }
-            itemView.chkUser.isChecked = differ.currentList[adapterPosition].is_checked
-            itemView.tvAdmin.text = item.name
+        fun bind(item: ProjectResponse.Data) = with(itemView) {
+           // itemView.chkUser.isChecked = item.isChecked
+            //itemView.tvAdmin.text = item.name
+
         }
     }
 }

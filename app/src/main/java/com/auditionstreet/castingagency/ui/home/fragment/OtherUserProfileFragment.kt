@@ -11,6 +11,8 @@ import com.auditionstreet.castingagency.databinding.FragmentOtherUserBinding
 import com.auditionstreet.castingagency.model.response.ProjectResponse
 import com.auditionstreet.castingagency.ui.home.adapter.ShortListAdapter
 import com.auditionstreet.castingagency.ui.home.viewmodel.ProjectViewModel
+import com.auditionstreet.castingagency.ui.projects.adapter.OtherUserImageAdapter
+import com.auditionstreet.castingagency.ui.projects.adapter.OtherUserVideoAdapter
 import com.auditionstreet.castingagency.utils.showToast
 import com.leo.wikireviews.utils.livedata.EventObserver
 import com.silo.utils.AppBaseFragment
@@ -22,13 +24,15 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class OtherUserProfileFragment : AppBaseFragment(R.layout.fragment_other_user) {
     private val binding by viewBinding(FragmentOtherUserBinding::bind)
-    private lateinit var shortListAdapter: ShortListAdapter
+    private lateinit var otherUserImageAdapter: OtherUserImageAdapter
+    private lateinit var otherUserVideoAdapter: OtherUserVideoAdapter
+
     private val viewModel: ProjectViewModel by viewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
         setObservers()
-       // init()
+        init()
     }
 
     private fun setListeners() {
@@ -65,24 +69,47 @@ class OtherUserProfileFragment : AppBaseFragment(R.layout.fragment_other_user) {
         }
     }
 
-    /*private fun init() {
-        binding.rvShortList.apply {
+    private fun init() {
+        binding.rvImages.apply {
             layoutManager = LinearLayoutManager(activity)
-            shortListAdapter = ShortListAdapter(requireActivity())
-            { position: Int ->
+            otherUserImageAdapter = OtherUserImageAdapter(requireActivity())
+            { position: String ->
                 Log.e("position", "" + position)
             }
-            adapter = shortListAdapter
+            adapter = otherUserImageAdapter
+            binding.rvImages.setLayoutManager(
+                LinearLayoutManager(
+                    requireActivity(),
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+            )
+        }
+
+        binding.rvVideos.apply {
+            layoutManager = LinearLayoutManager(activity)
+            otherUserVideoAdapter = OtherUserVideoAdapter(requireActivity())
+            { position: String ->
+                Log.e("position", "" + position)
+            }
+            adapter = otherUserVideoAdapter
+            binding.rvVideos.setLayoutManager(
+                LinearLayoutManager(
+                    requireActivity(),
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+            )
         }
     }
     private fun setAdapter(projectResponse: ProjectResponse) {
         if (projectResponse.data.size > 0) {
-            shortListAdapter.submitList(projectResponse.data)
-            binding.rvShortList.visibility = View.VISIBLE
+            otherUserImageAdapter.submitList(projectResponse.data)
+            binding.rvImages.visibility = View.VISIBLE
             //binding.tvNoRecordFound.visibility = View.GONE
         } else {
-            binding.rvShortList.visibility = View.GONE
+            binding.rvImages.visibility = View.GONE
            // binding.tvNoRecordFound.visibility = View.VISIBLE
         }
-    }*/
+    }
 }

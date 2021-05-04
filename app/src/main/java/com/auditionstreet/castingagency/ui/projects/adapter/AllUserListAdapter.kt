@@ -61,12 +61,6 @@ class AllUserListAdapter(
         when (holder) {
             is ConnectionHolder -> {
                 holder.bind(differ.currentList[position])
-
-                holder.itemView.chkUser.setOnCheckedChangeListener { buttonView, isChecked ->
-                    differ.currentList[position].isChecked = !differ.currentList[position].isChecked
-                   // holder.itemView.chkUser.isChecked=!differ.currentList[position].isChecked
-                   // notifyDataSetChanged()
-                }
             }
         }
     }
@@ -80,13 +74,16 @@ class AllUserListAdapter(
         notifyDataSetChanged()
     }
 
-    class ConnectionHolder(
+    inner class ConnectionHolder(
         itemView: View,
         val mContext: Context
     ) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: AllUsersResponse.Data) = with(itemView) {
-            itemView.chkUser.isChecked=item.isChecked
+            itemView.chkUser.setOnCheckedChangeListener { buttonView, isChecked ->
+                differ.currentList[adapterPosition].isChecked = isChecked
+            }
+            itemView.chkUser.isChecked = differ.currentList[adapterPosition].isChecked
             itemView.tvAdmin.text=item.name
 
         }
