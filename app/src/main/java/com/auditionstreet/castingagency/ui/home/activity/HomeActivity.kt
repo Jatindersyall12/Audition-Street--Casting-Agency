@@ -8,16 +8,20 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.databinding.ActivityHomeBinding
+import com.auditionstreet.castingagency.storage.preference.Preferences
 import com.auditionstreet.castingagency.ui.projects.activity.ProfileActivity
 import com.auditionstreet.castingagency.ui.projects.activity.ProjectsActivity
+import com.auditionstreet.castingagency.utils.AppConstants
 import com.auditionstreet.castingagency.utils.DataHelper
 import com.auditionstreet.castingagency.utils.closeAppDialog
 import com.auditionstreet.castingagency.utils.showToast
+import com.bumptech.glide.Glide
 import com.silo.ui.base.BaseActivity
 import com.silo.utils.changeIcons
 import com.silo.utils.network.IconPosition
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.toolbar.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity() {
@@ -28,12 +32,14 @@ class HomeActivity : BaseActivity() {
     private lateinit var activeIcons: ArrayList<Int>
     private lateinit var inActiveIcons: ArrayList<Int>
 
+    @Inject
+    lateinit var preferences: Preferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        setUpToolbar(toolbar,getString(R.string.str_home),false,true)
         setNavigationController()
-        toolBarImage.setImageResource(R.drawable.dummy_image)
+        setUpToolbar()
         imageIcons = arrayListOf(
             binding.footerHome.homeButton,
             binding.footerHome.projectButton,
@@ -50,6 +56,20 @@ class HomeActivity : BaseActivity() {
         inActiveIcons = DataHelper.inActiveIcons
         onTabClicks()
 
+    }
+
+    private fun setUpToolbar() {
+        setUpToolbar(toolbar, getString(R.string.str_home), false, true)
+        if (preferences.getString(AppConstants.USER_IMAGE).isEmpty())
+            toolBarImage.setImageResource(R.drawable.ic_dummy_profile_image)
+        else
+            Glide.with(this).load(preferences.getString(AppConstants.USER_IMAGE))
+                .into(toolBarImage)
+        toolBarImage.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
+        }
     }
 
     private fun onTabClicks() {
@@ -78,7 +98,7 @@ class HomeActivity : BaseActivity() {
             )
         }
         binding.footerHome.llChat.setOnClickListener {
-            showToast(this,resources.getString(R.string.str_coming_soon))
+            showToast(this, resources.getString(R.string.str_coming_soon))
             changeIcons(
                 imageIcons,
                 activeIcons,
@@ -126,10 +146,12 @@ class HomeActivity : BaseActivity() {
         else
             super.onBackPressed()
     }
+
     private fun setNavigationController() {
-        val navController = (supportFragmentManager.findFragmentById(R.id.navHostHomeFragment) as NavHostFragment)
-            .navController
-        sharedViewModel.navDirectionLiveData.observe(this){
+        val navController =
+            (supportFragmentManager.findFragmentById(R.id.navHostHomeFragment) as NavHostFragment)
+                .navController
+        sharedViewModel.navDirectionLiveData.observe(this) {
             navController.navigate(it)
         }
     }

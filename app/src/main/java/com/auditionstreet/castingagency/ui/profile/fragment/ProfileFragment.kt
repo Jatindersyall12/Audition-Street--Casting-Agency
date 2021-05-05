@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.auditionstreet.castingagency.BuildConfig
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentProfileBinding
@@ -41,18 +40,19 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
     }
 
     private fun getUserProfile() {
-        viewModel.getProfile(
+        /*viewModel.getProfile(
             BuildConfig.BASE_URL + ApiConstant.GET_PROFILE
-        )
+        )*/
     }
 
     private fun setListeners() {
+        binding.tvViewAll.setOnClickListener(this)
 
     }
 
 
     private fun setObservers() {
-       viewModel.getProfile.observe(viewLifecycleOwner, EventObserver {
+        viewModel.getProfile.observe(viewLifecycleOwner, EventObserver {
             handleApiCallback(it)
         })
 
@@ -64,7 +64,7 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                 hideProgress()
                 when (apiResponse.apiConstant) {
                     ApiConstant.GET_PROFILE -> {
-                        profileResponse=apiResponse.data as ProfileResponse
+                        profileResponse = apiResponse.data as ProfileResponse
                         setWorkAdapter(profileResponse)
                     }
 
@@ -91,18 +91,21 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
         if (profileResponse.data.size > 0) {
             profileAdapter.submitList(profileResponse.data)
             binding.rvWork.visibility = View.VISIBLE
-           // binding.layNoRecord.visibility = View.GONE
+            // binding.layNoRecord.visibility = View.GONE
         } else {
             binding.rvWork.visibility = View.GONE
-          //  binding.layNoRecord.visibility = View.VISIBLE
+            //  binding.layNoRecord.visibility = View.VISIBLE
         }
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-
+            R.id.tvViewAll -> {
+                showToast(requireActivity(), resources.getString(R.string.str_coming_soon))
+            }
         }
     }
+
     private fun init() {
         binding.rvWork.apply {
             layoutManager = LinearLayoutManager(activity)

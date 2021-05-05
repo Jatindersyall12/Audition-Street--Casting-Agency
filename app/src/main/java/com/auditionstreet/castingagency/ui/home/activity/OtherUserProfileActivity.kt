@@ -6,9 +6,9 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.databinding.ActivityOtherUserProfileBinding
-import com.auditionstreet.castingagency.databinding.ActivityShortlistedBinding
 import com.silo.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.toolbar.*
 
 @AndroidEntryPoint
 class OtherUserProfileActivity : BaseActivity() {
@@ -17,6 +17,7 @@ class OtherUserProfileActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setNavigationController()
+        setUpToolbar()
     }
 
     override fun onBackPressed() {
@@ -37,6 +38,13 @@ class OtherUserProfileActivity : BaseActivity() {
                 .navController
         sharedViewModel.navDirectionLiveData.observe(this) {
             navController.navigate(it)
+        }
+    }
+
+    private fun setUpToolbar() {
+        setUpToolbar(toolbar, getString(R.string.str_profile), true, false)
+        imgBack.setOnClickListener {
+            finish()
         }
     }
 }

@@ -9,7 +9,6 @@ import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentOtherUserBinding
 import com.auditionstreet.castingagency.model.response.ProjectResponse
-import com.auditionstreet.castingagency.ui.home.adapter.ShortListAdapter
 import com.auditionstreet.castingagency.ui.home.viewmodel.ProjectViewModel
 import com.auditionstreet.castingagency.ui.projects.adapter.OtherUserImageAdapter
 import com.auditionstreet.castingagency.ui.projects.adapter.OtherUserVideoAdapter
@@ -22,7 +21,8 @@ import com.silo.utils.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class OtherUserProfileFragment : AppBaseFragment(R.layout.fragment_other_user) {
+class OtherUserProfileFragment : AppBaseFragment(R.layout.fragment_other_user),
+    View.OnClickListener {
     private val binding by viewBinding(FragmentOtherUserBinding::bind)
     private lateinit var otherUserImageAdapter: OtherUserImageAdapter
     private lateinit var otherUserVideoAdapter: OtherUserVideoAdapter
@@ -36,6 +36,9 @@ class OtherUserProfileFragment : AppBaseFragment(R.layout.fragment_other_user) {
     }
 
     private fun setListeners() {
+        binding.tvViewAllImages.setOnClickListener(this)
+        binding.tvViewAllVideos.setOnClickListener(this)
+
     }
 
 
@@ -51,7 +54,7 @@ class OtherUserProfileFragment : AppBaseFragment(R.layout.fragment_other_user) {
                 hideProgress()
                 when (apiResponse.apiConstant) {
                     ApiConstant.GET_PROJECTS -> {
-                       // setAdapter(apiResponse.data as ProjectResponse)
+                        // setAdapter(apiResponse.data as ProjectResponse)
                     }
                 }
             }
@@ -102,6 +105,7 @@ class OtherUserProfileFragment : AppBaseFragment(R.layout.fragment_other_user) {
             )
         }
     }
+
     private fun setAdapter(projectResponse: ProjectResponse) {
         if (projectResponse.data.size > 0) {
             otherUserImageAdapter.submitList(projectResponse.data)
@@ -109,7 +113,21 @@ class OtherUserProfileFragment : AppBaseFragment(R.layout.fragment_other_user) {
             //binding.tvNoRecordFound.visibility = View.GONE
         } else {
             binding.rvImages.visibility = View.GONE
-           // binding.tvNoRecordFound.visibility = View.VISIBLE
+            // binding.tvNoRecordFound.visibility = View.VISIBLE
+        }
+    }
+
+    override fun onClick(p0: View?) {
+        when(p0!!.id)
+        {
+           R.id.tvViewAllImages->
+           {
+               showToast(requireActivity(),resources.getString(R.string.str_coming_soon))
+           }
+            R.id.tvViewAllVideos->
+            {
+                showToast(requireActivity(),resources.getString(R.string.str_coming_soon))
+            }
         }
     }
 }

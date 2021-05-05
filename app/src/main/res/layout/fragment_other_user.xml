@@ -27,7 +27,7 @@
                     android:id="@+id/ivProfileImage"
                     android:layout_width="@dimen/_70sdp"
                     android:layout_height="@dimen/_70sdp"
-                    android:src="@drawable/dummy_image"
+                    android:src="@drawable/dumy_image_1"
                     app:siBorderColor="@color/black"
                     app:siBorderWidth="2dp"
                     app:siRadius="6dp"
@@ -231,7 +231,7 @@
                 app:layout_constraintTop_toBottomOf="@id/viewTwo" />
 
             <com.auditionstreet.castingagency.customviews.CustomTextViewBold
-                android:id="@+id/ViewAllText"
+                android:id="@+id/tvViewAllImages"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
@@ -268,7 +268,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/rvImages" />
 
             <com.auditionstreet.castingagency.customviews.CustomTextViewBold
-                android:id="@+id/ViewAllText2"
+                android:id="@+id/tvViewAllVideos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"

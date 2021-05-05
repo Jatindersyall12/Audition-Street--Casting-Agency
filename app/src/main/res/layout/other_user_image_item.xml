@@ -15,7 +15,7 @@
             android:layout_width="@dimen/_90sdp"
             android:layout_height="@dimen/_90sdp"
             android:layout_marginStart="@dimen/_10sdp"
-            android:src="@drawable/dummy_image"
+            android:src="@drawable/dumy_image_5"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:siRadius="6dp"

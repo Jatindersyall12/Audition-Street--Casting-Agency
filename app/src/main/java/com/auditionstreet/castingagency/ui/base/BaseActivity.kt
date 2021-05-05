@@ -6,6 +6,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.auditionstreet.castingagency.ui.base.viewmodel.SharedViewModel
 import com.silo.listeners.DialogHelper
@@ -35,8 +36,7 @@ abstract class BaseActivity : AppCompatActivity(), DialogProvider {
         toolbar: Toolbar,
         title: String,
         backBtnVisibility: Boolean = true,
-        profilePic: Boolean = true
-    ) {
+        profilePic: Boolean = true) {
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         if (backBtnVisibility) {
@@ -53,6 +53,7 @@ abstract class BaseActivity : AppCompatActivity(), DialogProvider {
         }
         imgBack.setOnClickListener {
             finish()
+           // findNavController().popBackStack()
         }
     }
 }

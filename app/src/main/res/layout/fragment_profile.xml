@@ -27,7 +27,7 @@
                 android:id="@+id/imgProfile"
                 android:layout_width="@dimen/_70sdp"
                 android:layout_height="@dimen/_70sdp"
-                android:src="@drawable/dummy_image"
+                android:src="@drawable/dumy_image_1"
                 app:siBorderColor="@color/black"
                 app:siBorderWidth="2dp"
                 app:siRadius="6dp"

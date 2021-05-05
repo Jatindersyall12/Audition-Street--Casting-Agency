@@ -5,6 +5,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_6sdp">
 
         <androidx.appcompat.widget.Toolbar
@@ -17,8 +19,8 @@
 
         <ImageView
             android:id="@+id/imgBack"
-            android:layout_width="@dimen/_70sdp"
-            android:layout_height="@dimen/_20sdp"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_28sdp"
             android:visibility="visible"
             android:src="@drawable/ic_icon_back"
@@ -41,14 +43,15 @@
 
         <com.github.siyamed.shapeimageview.RoundedImageView
             android:id="@+id/toolBarImage"
-            android:layout_width="@dimen/_60sdp"
-            android:layout_height="@dimen/_45sdp"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_width="@dimen/_65sdp"
+            android:layout_height="@dimen/_65sdp"
+            android:layout_marginTop="@dimen/_30sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:paddingEnd="@dimen/_16sdp"
-            android:src="@drawable/image_round"
-            app:layout_constraintEnd_toEndOf="parent" />
-
+            app:layout_constraintEnd_toEndOf="parent"
+            app:siRadius="6dp"
+            app:siSquare="true"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
