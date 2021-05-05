@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.auditionstreet.castingagency.BuildConfig
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
@@ -118,10 +119,13 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
                     }
                     ApiConstant.ADD_PROJECT -> {
                         showToast(requireActivity(), "add successfully")
+                        findNavController().popBackStack()
                     }
                     ApiConstant.ADD_GROUP -> {
                         groupResponse = apiResponse.data as AddGroupResponse
                         showToast(requireActivity(), groupResponse.msg)
+                        adminList = arrayListOf<String>()
+                        binding.etxSubDomain.text = ""
                         viewModel.getAllAdmin(
                             BuildConfig.BASE_URL + ApiConstant.GET_ALL_ADMINS + "/" + preferences.getString(
                                 AppConstants.USER_ID
@@ -150,33 +154,41 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnSubmit -> {
-                addProjectRequest(binding)
-                viewModel.isValidate(binding)
+                if(viewModel.isValidate(binding))
+                    addProjectRequest(binding)
             }
             R.id.etxSubDomain -> {
                 showAdminPopUpAdmins(requireActivity(), allAdminResponse)
                 {
                     adminList = arrayListOf<String>()
+                    var user = ""
                     for (i in 0 until allAdminResponse.data!!.size) {
-                        if (allAdminResponse.data!![i]!!.is_checked)
+                        if (allAdminResponse.data!![i]!!.is_checked) {
                             adminList.add(allAdminResponse.data!![i]!!.id!!)
+                            user += allAdminResponse.data!![i]!!.name + " ,"
+                        }
                     }
+                    if (user.length >= 1)
+                        binding.etxSubDomain.text = user.substring(0, user.length - 1)
+                    else
+                        binding.etxSubDomain.text = ""
                 }
             }
             R.id.tvAddOrEditAdmin -> {
                 showAllUser(requireActivity(), allUserResponse)
                 {
                     groupList = arrayListOf<String>()
-                    for (i in 0 until allUserResponse.data.size - 1) {
-                        if (allUserResponse.data[i].isChecked)
+                    for (i in 0 until allUserResponse.data.size) {
+                        if (allUserResponse.data[i].isChecked) {
                             groupList.add(allUserResponse.data[i].id.toString())
+                        }
                     }
-                    if (groupList.size > 0) {
-                        val request = AddGroupRequest()
-                        request.castingId = preferences.getString(AppConstants.USER_ID)
-                        request.anotherCastingId = groupList
-                        viewModel.createGroup(request)
-                    }
+                    //  if (groupList.size > 0) {
+                    val request = AddGroupRequest()
+                    request.castingId = preferences.getString(AppConstants.USER_ID)
+                    request.anotherCastingId = groupList
+                    viewModel.createGroup(request)
+                    //  }
                 }
             }
             R.id.tvStartDate -> {
@@ -206,8 +218,26 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
 
     private fun addProjectRequest(binding: FragmentAddProjectBinding) {
         val request = AddProjectRequest()
-        request.age = "123"
-        request.admins = adminList
+        request.castingId=preferences.getString(AppConstants.USER_ID)
+        request.title=binding.etxTitle.text.toString()
+        request.description=binding.etxDescription.text.toString()
+        if (binding.chkMale.isChecked)
+            request.gender=resources.getString(R.string.str_male)
+        else
+            request.gender=resources.getString(R.string.str_female)
+        request.age= "$minAge-$maxAge"
+
+      //  if(etxHeightFt.text.toString().isNotEmpty()&&etxHeightIn.text.toString().isNullOrEmpty())
+        request.height=etxHeightFt.text.toString() + "'" +etxHeightIn.text.toString()
+       // else if()
+        request.bodyType=etxBodyType.text.toString()
+        request.exp=etxExperiance.text.toString()
+        request.lang=etxLanguages.text.toString()
+        request.fromDate=tvStartDate.text.toString()
+        request.toDate=tvEndDate.text.toString()
+        request.location=etxLocation.text.toString()
+        request.admins=adminList
+        viewModel.addProject(request)
 
         Log.e("id", preferences.getString(AppConstants.USER_ID))
         Log.e("title", binding.etxTitle.text.toString())

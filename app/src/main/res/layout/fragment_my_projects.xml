@@ -62,15 +62,24 @@
             android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imgAdd"
+        <RelativeLayout
+            android:id="@+id/layAdd"
             android:layout_width="@dimen/_70sdp"
             android:layout_height="@dimen/_70sdp"
-            android:src="@drawable/ic_icon_add_project"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="@dimen/_10sdp"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/ic_icon_add_project"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:visibility="gone"
+            >
+
+        <ImageView
+            android:src="@drawable/ic_add_icon"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_centerInParent="true"
             android:contentDescription="@string/str_bio" />
+        </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

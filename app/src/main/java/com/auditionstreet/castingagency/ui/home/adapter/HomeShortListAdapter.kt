@@ -12,11 +12,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.model.response.ProjectResponse
-import kotlinx.android.synthetic.main.project_item.view.btnViewDetail
+import kotlinx.android.synthetic.main.application_item.view.*
+import kotlinx.android.synthetic.main.project_item.view.*
 import java.util.*
 
 class HomeShortListAdapter(
-    val mContext: FragmentActivity,private val mCallback: (
+    val mContext: FragmentActivity, private val mCallback: (
         mposition: Int
     ) -> Unit
 ) :
@@ -56,6 +57,9 @@ class HomeShortListAdapter(
         when (holder) {
             is ConnectionHolder -> {
 //                holder.bind(differ.currentList[position])
+                holder.itemView.tvViewProfile.setOnClickListener {
+                    mCallback.invoke(position)
+                }
             }
         }
     }

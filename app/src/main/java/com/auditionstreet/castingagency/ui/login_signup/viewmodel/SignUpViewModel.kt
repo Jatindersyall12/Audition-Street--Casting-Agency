@@ -10,7 +10,6 @@ import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.ui.login_signup.repository.SignUpRepository
 import com.leo.wikireviews.utils.livedata.Event
-import com.silo.model.request.LoginRequest
 import com.silo.model.response.SignUpResponse
 import com.silo.utils.isValidEmail
 import com.silo.utils.network.NetworkHelper
@@ -20,7 +19,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
-import java.util.HashMap
+import java.util.*
 
 class SignUpViewModel @ViewModelInject constructor(
     private val signUpRepository: SignUpRepository,
@@ -64,16 +63,27 @@ class SignUpViewModel @ViewModelInject constructor(
                             ))
                         )
                     } else {
-                        _sign_up.postValue(
-                            Event(
-                                Resource.error(
-                                    ApiConstant.SIGN_UP,
-                                    it.code(),
-                                    it.errorBody().toString(),
-                                    null
+                        if (it.code() == ApiConstant.STATUS_302) {
+                            _sign_up.postValue(
+                                Event(
+                                    Resource.requiredResource(
+                                        ApiConstant.SIGN_UP,
+                                        R.string.err_email_msg
+                                    )
                                 )
                             )
-                        )
+                        } else {
+                            _sign_up.postValue(
+                                Event(
+                                    Resource.error(
+                                        ApiConstant.SIGN_UP,
+                                        it.code(),
+                                        it.errorBody().toString(),
+                                        null
+                                    )
+                                )
+                            )
+                        }
                     }
                 }
 
@@ -139,8 +149,7 @@ class SignUpViewModel @ViewModelInject constructor(
                 )
             )
             return
-        }
-        else if (!isValidEmail(email)) {
+        } else if (!isValidEmail(email)) {
             _sign_up.postValue(
                 Event(
                     Resource.requiredResource(
@@ -150,8 +159,7 @@ class SignUpViewModel @ViewModelInject constructor(
                 )
             )
             return
-        }
-        else if (password.length<6) {
+        } else if (password.length < 6) {
             _sign_up.postValue(
                 Event(
                     Resource.requiredResource(
@@ -161,8 +169,7 @@ class SignUpViewModel @ViewModelInject constructor(
                 )
             )
             return
-        }
-        else if (!password.equals(confirmPassword)) {
+        } else if (!password.equals(confirmPassword)) {
             _sign_up.postValue(
                 Event(
                     Resource.requiredResource(
@@ -172,9 +179,8 @@ class SignUpViewModel @ViewModelInject constructor(
                 )
             )
             return
-        }
-        else
-            signUp(requestSignUp,profileImageFile,selectedImage)
+        } else
+            signUp(requestSignUp, profileImageFile, selectedImage)
     }
 }
 

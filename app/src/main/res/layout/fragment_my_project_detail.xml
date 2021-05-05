@@ -4,12 +4,14 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white">
+            >
 
             <com.auditionstreet.castingagency.customviews.CustomTextViewBold
                 android:id="@+id/tvTitle"
@@ -17,7 +19,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_18sdp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_20sdp"
+                android:textSize="@dimen/_18sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,10 +28,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_18sdp"
-                android:layout_marginTop="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/_25sdp"
                 android:text="@string/str_criteria"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="@dimen/_16sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
@@ -41,7 +43,7 @@
                 android:layout_marginTop="@dimen/_7sdp"
                 android:text="@string/str_age"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_14sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvCriteria" />
 
@@ -52,7 +54,7 @@
                 android:layout_marginStart="@dimen/_14sdp"
                 android:layout_marginTop="@dimen/_7sdp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_14sdp"
                 app:layout_constraintLeft_toRightOf="@+id/tvAge"
                 app:layout_constraintTop_toBottomOf="@+id/tvCriteria" />
 
@@ -62,10 +64,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_18sdp"
-                android:layout_marginTop="@dimen/_7sdp"
+                android:layout_marginTop="@dimen/_4sdp"
                 android:text="@string/str_height"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_14sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvAge" />
 
@@ -74,9 +76,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_7sdp"
+                android:layout_marginTop="@dimen/_4sdp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_14sdp"
                 app:layout_constraintLeft_toRightOf="@+id/tvtvHeightDetail"
                 app:layout_constraintTop_toBottomOf="@+id/tvAge" />
 
@@ -85,10 +87,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_18sdp"
-                android:layout_marginTop="@dimen/_7sdp"
+                android:layout_marginTop="@dimen/_4sdp"
                 android:text="@string/str_languages"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_14sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvtvHeightDetail" />
 
@@ -97,9 +99,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_7sdp"
+                android:layout_marginTop="@dimen/_4sdp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_14sdp"
                 app:layout_constraintLeft_toRightOf="@+id/tvLanguage"
                 app:layout_constraintTop_toBottomOf="@+id/tvtvHeightDetail" />
 
@@ -108,10 +110,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_18sdp"
-                android:layout_marginTop="@dimen/_22sdp"
+                android:layout_marginTop="@dimen/_18sdp"
                 android:text="@string/str_dates"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_16sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvLanguageDetail" />
 
@@ -122,7 +124,7 @@
                 android:layout_marginStart="@dimen/_18sdp"
                 android:layout_marginTop="@dimen/_7sdp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_14sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvDates" />
 
@@ -131,10 +133,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_18sdp"
-                android:layout_marginTop="@dimen/_22sdp"
+                android:layout_marginTop="@dimen/_18sdp"
                 android:text="@string/str_location"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_16sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvDatesDetail" />
 
@@ -145,7 +147,7 @@
                 android:layout_marginStart="@dimen/_18sdp"
                 android:layout_marginTop="@dimen/_7sdp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_14sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvtvLocationDetail" />
 
@@ -154,7 +156,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_18sdp"
-                android:layout_marginTop="@dimen/_22sdp"
+                android:layout_marginTop="@dimen/_18sdp"
                 android:text="@string/str_description"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_16sdp"
@@ -166,12 +168,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_18sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:paddingStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_7sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_20sdp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_14sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvDesc" />
 

@@ -29,7 +29,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_40sdp"
-                    android:layout_marginTop="@dimen/_14sdp"
+                    android:layout_marginTop="@dimen/_24sdp"
                     android:text="Jennie"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_13sdp"
@@ -89,6 +89,7 @@
                     />
 
                 <ImageView
+                    android:id="@+id/imgFavourite"
                     android:layout_width="@dimen/_17sdp"
                     android:layout_height="@dimen/_17sdp"
                     android:layout_marginEnd="@dimen/_10sdp"

@@ -8,13 +8,15 @@
         android:layout_marginStart="@dimen/_7sdp"
         android:layout_marginEnd="@dimen/_7sdp"
         app:cardCornerRadius="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_7sdp"
         app:cardElevation="@dimen/_10sdp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layConstraint"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/blue">
+            android:background="@drawable/ic_image_diretor"
+            >
 
             <com.auditionstreet.castingagency.customviews.CustomTextViewBold
                 android:id="@+id/tvActor"
@@ -55,13 +57,13 @@
 
             <com.auditionstreet.castingagency.customviews.CustomButton
                 android:id="@+id/btnViewDetail"
-                android:layout_width="@dimen/_94sdp"
-                android:layout_height="@dimen/_30sdp"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_28sdp"
                 android:background="@drawable/button_round_view_detail"
                 android:gravity="center"
                 android:text="@string/str_view_details"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_11sdp"
+                android:textSize="@dimen/_10sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

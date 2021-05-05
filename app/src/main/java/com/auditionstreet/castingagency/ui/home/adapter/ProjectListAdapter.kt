@@ -12,9 +12,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.model.response.ProjectResponse
-import kotlinx.android.synthetic.main.my_project_item.view.*
+import com.auditionstreet.castingagency.utils.showToast
 import kotlinx.android.synthetic.main.project_item.view.*
-import kotlinx.android.synthetic.main.project_item.view.btnViewDetail
 import java.util.*
 
 class ProjectListAdapter(
@@ -59,6 +58,9 @@ class ProjectListAdapter(
         when (holder) {
             is ConnectionHolder -> {
 //                holder.bind(differ.currentList[position])
+                holder.itemView.btnViewDetail.setOnClickListener{
+                    showToast(mContext,mContext.resources.getString(R.string.str_coming_soon))
+                }
             }
         }
     }

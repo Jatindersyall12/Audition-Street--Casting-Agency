@@ -47,9 +47,9 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
         binding.rvProjects.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy > 0) {
-                    binding.imgAdd.visibility = View.GONE
+                    binding.layAdd.visibility = View.GONE
                 } else if (dy < 0) {
-                    binding.imgAdd.visibility = View.VISIBLE
+                    binding.layAdd.visibility = View.VISIBLE
                 }
             }
         })
@@ -67,7 +67,7 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
 
     private fun setListeners() {
         binding.btnAddProject.setOnClickListener(this)
-        binding.imgAdd.setOnClickListener(this)
+        binding.layAdd.setOnClickListener(this)
     }
 
 
@@ -121,7 +121,9 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
             myProjectListAdapter.submitList(projectResponse.data)
             binding.rvProjects.visibility = View.VISIBLE
             binding.layNoRecord.visibility = View.GONE
+            binding.layAdd.visibility=View.VISIBLE
         } else {
+            binding.layAdd.visibility=View.GONE
             binding.rvProjects.visibility = View.GONE
             binding.layNoRecord.visibility = View.VISIBLE
         }
@@ -132,7 +134,7 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
             binding.btnAddProject -> {
                 sharedViewModel.setDirection(MyProjectsListingFragmentDirections.navigateToAddProject())
             }
-            binding.imgAdd -> {
+            binding.layAdd -> {
                 sharedViewModel.setDirection(MyProjectsListingFragmentDirections.navigateToAddProject())
             }
         }

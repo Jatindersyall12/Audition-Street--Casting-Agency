@@ -3,6 +3,7 @@ package com.auditionstreet.castingagency.ui.home.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +13,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.model.response.ProjectResponse
-import kotlinx.android.synthetic.main.my_project_item.view.*
+import kotlinx.android.synthetic.main.application_item.view.*
 import kotlinx.android.synthetic.main.project_item.view.*
-import kotlinx.android.synthetic.main.project_item.view.btnViewDetail
 import java.util.*
 
 class ApplicationListAdapter(
@@ -58,7 +58,10 @@ class ApplicationListAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ConnectionHolder -> {
-//                holder.bind(differ.currentList[position])
+                holder.itemView.tvViewProfile.setOnClickListener{
+                    mCallback.invoke(position)
+                }
+               // holder.bind(differ.currentList[position])
             }
         }
     }
@@ -79,6 +82,8 @@ class ApplicationListAdapter(
     ) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: ProjectResponse.Data) = with(itemView) {
+            Log.e("sd1","Dg")
+
             val rnd = Random()
             val color: Int = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
             itemView.btnViewDetail.background.setTint(color)

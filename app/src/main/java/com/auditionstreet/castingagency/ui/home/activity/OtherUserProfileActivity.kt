@@ -25,9 +25,10 @@ class OtherUserProfileActivity : BaseActivity() {
             supportFragmentManager.findFragmentById(R.id.navHostOtherUserFragment) as NavHostFragment
         val navController: NavController = navHostFragment.navController
         if (navController.graph.startDestination == navController.currentDestination?.id) {
-            val i = Intent(this, HomeActivity::class.java)
+            super.onBackPressed()
+            /*val i = Intent(this, HomeActivity::class.java)
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(i)
+            startActivity(i)*/
         } else
             super.onBackPressed()
     }

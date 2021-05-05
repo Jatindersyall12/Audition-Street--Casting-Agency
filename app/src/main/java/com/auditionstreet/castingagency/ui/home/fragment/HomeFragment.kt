@@ -13,8 +13,8 @@ import com.auditionstreet.castingagency.model.response.ProjectResponse
 import com.auditionstreet.castingagency.ui.home.activity.OtherUserProfileActivity
 import com.auditionstreet.castingagency.ui.home.activity.ShortlistedActivity
 import com.auditionstreet.castingagency.ui.home.adapter.ApplicationListAdapter
-import com.auditionstreet.castingagency.ui.home.adapter.ProjectListAdapter
 import com.auditionstreet.castingagency.ui.home.adapter.HomeShortListAdapter
+import com.auditionstreet.castingagency.ui.home.adapter.ProjectListAdapter
 import com.auditionstreet.castingagency.ui.home.viewmodel.ProjectViewModel
 import com.auditionstreet.castingagency.utils.showToast
 import com.leo.wikireviews.utils.livedata.EventObserver
@@ -23,7 +23,6 @@ import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
 import com.silo.utils.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.toolbar.*
 
 @AndroidEntryPoint
 class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListener {
@@ -77,8 +76,7 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
                 hideProgress()
                 showToast(requireContext(), getString(apiResponse.resourceId!!))
             }
-            else ->
-            {
+            else -> {
 
             }
         }
@@ -105,7 +103,8 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
             layoutManager = LinearLayoutManager(activity)
             applicationListAdapter = ApplicationListAdapter(requireActivity())
             { position: Int ->
-                Log.e("position", "" + position)
+                val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
+                startActivity(i)
             }
             adapter = applicationListAdapter
             binding.rvApplication.setLayoutManager(
@@ -121,7 +120,8 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
             layoutManager = LinearLayoutManager(activity)
             shortListAdapter = HomeShortListAdapter(requireActivity())
             { position: Int ->
-                Log.e("position", "" + position)
+                val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
+                startActivity(i)
             }
             adapter = shortListAdapter
             binding.rvShortlist.setLayoutManager(
@@ -173,15 +173,15 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
         when (p0!!.id) {
             R.id.tvShortListMore -> {
                 val i = Intent(requireActivity(), ShortlistedActivity::class.java)
-               // i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                // i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(i)
-               // requireActivity().finish()
+                // requireActivity().finish()
             }
             R.id.tvViewAllApplication -> {
-                val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
-               // i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                val i = Intent(requireActivity(), ShortlistedActivity::class.java)
+                // i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(i)
-              //  requireActivity().finish()
+                //  requireActivity().finish()
             }
         }
     }

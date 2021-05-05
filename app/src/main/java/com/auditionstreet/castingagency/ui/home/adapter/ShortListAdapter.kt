@@ -12,15 +12,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.model.response.ProjectResponse
-import kotlinx.android.synthetic.main.project_item.view.btnViewDetail
+import com.auditionstreet.castingagency.utils.showToast
+import kotlinx.android.synthetic.main.project_item.view.*
+import kotlinx.android.synthetic.main.shortlist_item.view.*
 import java.util.*
 
 class ShortListAdapter(
-    val mContext: FragmentActivity,private val mCallback: (
+    val mContext: FragmentActivity, private val mCallback: (
         mposition: Int
     ) -> Unit
 ) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
     val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ProjectResponse.Data>() {
 
         override fun areItemsTheSame(
@@ -55,6 +57,10 @@ class ShortListAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ConnectionHolder -> {
+                holder.itemView.imgFavourite.setOnClickListener(this)
+                holder.itemView.tvChat.setOnClickListener(this)
+                holder.itemView.tvViewProfile.setOnClickListener(this)
+
 //                holder.bind(differ.currentList[position])
             }
         }
@@ -80,6 +86,22 @@ class ShortListAdapter(
             val color: Int = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
             itemView.btnViewDetail.background.setTint(color)
             //itemView.tvProject.setTextColor(color)
+        }
+    }
+
+    override fun onClick(p0: View?) {
+        when (p0!!.id) {
+            R.id.imgFavourite -> {
+                showToast(mContext, mContext.resources.getString(R.string.str_coming_soon))
+            }
+            R.id.tvChat -> {
+                showToast(mContext, mContext.resources.getString(R.string.str_coming_soon))
+
+            }
+            R.id.tvViewProfile -> {
+                showToast(mContext, mContext.resources.getString(R.string.str_coming_soon))
+
+            }
         }
     }
 }
