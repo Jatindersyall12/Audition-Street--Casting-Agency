@@ -39,7 +39,6 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
         setListeners()
         setObservers()
         init()
-        getMyProjects()
         setRecyclerViewListener()
     }
 
@@ -138,5 +137,10 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
                 sharedViewModel.setDirection(MyProjectsListingFragmentDirections.navigateToAddProject())
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getMyProjects()
     }
 }

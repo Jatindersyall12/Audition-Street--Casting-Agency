@@ -10,6 +10,7 @@ import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentAddProjectBinding
 import com.auditionstreet.castingagency.model.response.AddGroupResponse
+import com.auditionstreet.castingagency.model.response.AddProjectResponse
 import com.auditionstreet.castingagency.model.response.AllAdminResponse
 import com.auditionstreet.castingagency.model.response.AllUsersResponse
 import com.auditionstreet.castingagency.storage.preference.Preferences
@@ -43,6 +44,7 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
     private lateinit var allAdminResponse: AllAdminResponse
     private lateinit var allUserResponse: AllUsersResponse
     private lateinit var groupResponse: AddGroupResponse
+    private lateinit var addProjectResponse: AddProjectResponse
 
     @Inject
     lateinit var preferences: Preferences
@@ -77,7 +79,9 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
             )
         )
         viewModel.getAllUser(
-            BuildConfig.BASE_URL + ApiConstant.GET_ALL_USER
+            BuildConfig.BASE_URL + ApiConstant.GET_ALL_USER + "/" + preferences.getString(
+                AppConstants.USER_ID
+            )
         )
     }
 
@@ -118,7 +122,8 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
                         allUserResponse = apiResponse.data as AllUsersResponse
                     }
                     ApiConstant.ADD_PROJECT -> {
-                        showToast(requireActivity(), "add successfully")
+                        addProjectResponse = apiResponse.data as AddProjectResponse
+                        showToast(requireActivity(), addProjectResponse.msg.toString())
                         findNavController().popBackStack()
                     }
                     ApiConstant.ADD_GROUP -> {
@@ -154,7 +159,7 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnSubmit -> {
-                if(viewModel.isValidate(binding))
+                if (viewModel.isValidate(binding))
                     addProjectRequest(binding)
             }
             R.id.etxSubDomain -> {
@@ -218,25 +223,28 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
 
     private fun addProjectRequest(binding: FragmentAddProjectBinding) {
         val request = AddProjectRequest()
-        request.castingId=preferences.getString(AppConstants.USER_ID)
-        request.title=binding.etxTitle.text.toString()
-        request.description=binding.etxDescription.text.toString()
+        request.castingId = preferences.getString(AppConstants.USER_ID)
+        request.title = binding.etxTitle.text.toString()
+        request.description = binding.etxDescription.text.toString()
         if (binding.chkMale.isChecked)
-            request.gender=resources.getString(R.string.str_male)
+            request.gender = resources.getString(R.string.str_male)
         else
-            request.gender=resources.getString(R.string.str_female)
-        request.age= "$minAge-$maxAge"
+            request.gender = resources.getString(R.string.str_female)
+        request.age = "$minAge-$maxAge"
 
-      //  if(etxHeightFt.text.toString().isNotEmpty()&&etxHeightIn.text.toString().isNullOrEmpty())
-        request.height=etxHeightFt.text.toString() + "'" +etxHeightIn.text.toString()
-       // else if()
-        request.bodyType=etxBodyType.text.toString()
-        request.exp=etxExperiance.text.toString()
-        request.lang=etxLanguages.text.toString()
-        request.fromDate=tvStartDate.text.toString()
-        request.toDate=tvEndDate.text.toString()
-        request.location=etxLocation.text.toString()
-        request.admins=adminList
+        if (etxHeightFt.text.toString().isNotEmpty() && etxHeightIn.text.toString().isNotEmpty())
+            request.height = etxHeightFt.text.toString() + "'" + etxHeightIn.text.toString()
+        else if(etxHeightFt.text.toString().isNotEmpty() && etxHeightIn.text.toString().isEmpty())
+            request.height = etxHeightFt.text.toString() + "'"
+        else
+        request.height = ""
+        request.bodyType = etxBodyType.text.toString()
+        request.exp = etxExperiance.text.toString()
+        request.lang = etxLanguages.text.toString()
+        request.fromDate = tvStartDate.text.toString()
+        request.toDate = tvEndDate.text.toString()
+        request.location = etxLocation.text.toString()
+        request.admins = adminList
         viewModel.addProject(request)
 
         Log.e("id", preferences.getString(AppConstants.USER_ID))

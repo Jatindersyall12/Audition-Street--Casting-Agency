@@ -80,6 +80,7 @@ class MyProjectListAdapter(
 
         fun bind(item: MyProjectResponse.Data) = with(itemView) {
             val rnd = Random()
+            itemView.tvProjectRequirement.text=item.title
             val color: Int = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
             itemView.btnViewDetail.background.setTint(color)
             itemView.tvProject.setTextColor(color)

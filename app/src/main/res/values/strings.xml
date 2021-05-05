@@ -109,6 +109,7 @@
     <string name="str_location">Location:</string>
     <string name="str_description">Description:</string>
     <string name="str_to">\u0020to\u0020</string>
+    <string name="str_empty">- -</string>
 
     <!-- Add Project -->
 
@@ -148,5 +149,8 @@
     <string name="str_error_title">Please enter title</string>
     <string name="str_error_desc">Please enter Description</string>
     <string name="str_error_body_type">Please enter body type</string>
+    <string name="str_select_start_Date">Please select start date</string>
+    <string name="str_select_end_Date">Please select end date</string>
+    <string name="str_height_ft_msg">Please enter height in FT </string>
 
 </resources>

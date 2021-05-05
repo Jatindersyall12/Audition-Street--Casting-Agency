@@ -8,9 +8,7 @@ import com.auditionstreet.castingagency.BuildConfig
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentMyProjectDetailBinding
-import com.auditionstreet.castingagency.databinding.FragmentMyProjectsBinding
 import com.auditionstreet.castingagency.model.response.MyProjectDetailResponse
-import com.auditionstreet.castingagency.model.response.MyProjectResponse
 import com.auditionstreet.castingagency.storage.preference.Preferences
 import com.auditionstreet.castingagency.ui.projects.viewmodel.MyProjectDetailViewModel
 import com.auditionstreet.castingagency.utils.showToast
@@ -80,21 +78,33 @@ class MyProjectDetailFragment : AppBaseFragment(R.layout.fragment_my_project_det
                 hideProgress()
                 showToast(requireContext(), getString(apiResponse.resourceId!!))
             }
-            else ->
-            {
+            else -> {
 
             }
         }
     }
 
     private fun setDetail(myProjectResponse: MyProjectDetailResponse) {
-        binding.tvTitle.text=myProjectResponse.data[0].projectDetails.title
-        binding.tvAgeDetail.text=myProjectResponse.data[0].projectDetails.age
-        binding.tvHeightDetail.text=myProjectResponse.data[0].projectDetails.height
-        binding.tvLanguageDetail.text=myProjectResponse.data[0].projectDetails.lang
-        binding.tvDatesDetail.text=myProjectResponse.data[0].projectDetails.fromDate + resources.getString(R.string.str_to) + myProjectResponse.data[0].projectDetails.toDate
-        binding.tvLocationDetail.text=myProjectResponse.data[0].projectDetails.location
-        binding.tvDescDetail.text=myProjectResponse.data[0].projectDetails.description
+        binding.tvTitle.text = myProjectResponse.data[0].projectDetails.title
+        binding.tvAgeDetail.text = myProjectResponse.data[0].projectDetails.age
+        if (myProjectResponse.data[0].projectDetails.height.isEmpty())
+            binding.tvHeightDetail.text = resources.getString(R.string.str_empty)
+        else
+            binding.tvHeightDetail.text = myProjectResponse.data[0].projectDetails.height
+        if (myProjectResponse.data[0].projectDetails.lang.isEmpty())
+            binding.tvLanguageDetail.text = resources.getString(R.string.str_empty)
+        else
+            binding.tvLanguageDetail.text = myProjectResponse.data[0].projectDetails.lang
+        if (myProjectResponse.data[0].projectDetails.fromDate.isEmpty())
+            binding.tvDatesDetail.text = resources.getString(R.string.str_empty)
+        else
+            binding.tvDatesDetail.text =
+                myProjectResponse.data[0].projectDetails.fromDate + resources.getString(R.string.str_to) + myProjectResponse.data[0].projectDetails.toDate
+        if (myProjectResponse.data[0].projectDetails.location.isEmpty())
+            binding.tvLocationDetail.text = resources.getString(R.string.str_empty)
+        else
+        binding.tvLocationDetail.text = myProjectResponse.data[0].projectDetails.location
+        binding.tvDescDetail.text = myProjectResponse.data[0].projectDetails.description
     }
 
     override fun onClick(v: View?) {

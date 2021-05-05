@@ -28,7 +28,8 @@ class OtherUserProfileActivity : BaseActivity() {
             super.onBackPressed()
             /*val i = Intent(this, HomeActivity::class.java)
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(i)*/
+            startActivity(i)
+            finish()*/
         } else
             super.onBackPressed()
     }

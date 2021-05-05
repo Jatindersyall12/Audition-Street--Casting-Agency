@@ -32,6 +32,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:text="Supporting Actor(Male)"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sdp"

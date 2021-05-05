@@ -36,7 +36,7 @@ class ApiConstant {
         const val GET_MY_PROJECTS = "projectList"
         const val GET_MY_PROJECTS_DETAILS = "projectDetail"
         const val GET_ALL_ADMINS = "groupMemberList"
-        const val GET_ALL_USER = "castingList"
+        const val GET_ALL_USER = "getAllUser"
         const val ADD_PROJECT = "projectCreate"
         const val SIGN_UP = "castingSignup"
         const val GET_PROFILE = "profile"

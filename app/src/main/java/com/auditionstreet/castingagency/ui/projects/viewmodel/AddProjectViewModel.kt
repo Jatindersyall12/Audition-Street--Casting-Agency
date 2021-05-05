@@ -208,6 +208,41 @@ class AddProjectViewModel @ViewModelInject constructor(
                 )
                 return false
             }
+
+            TextUtils.isEmpty(binding.tvStartDate.text!!.trim())&& !TextUtils.isEmpty(binding.tvEndDate.text!!.trim()) -> {
+                project.postValue(
+                    Event(
+                        Resource.requiredResource(
+                            ApiConstant.ADD_PROJECT, R
+                                .string.str_select_start_Date
+                        )
+                    )
+                )
+                return false
+            }
+            !TextUtils.isEmpty(binding.tvStartDate.text!!.trim())&& TextUtils.isEmpty(binding.tvEndDate.text!!.trim()) -> {
+                project.postValue(
+                    Event(
+                        Resource.requiredResource(
+                            ApiConstant.ADD_PROJECT, R
+                                .string.str_select_end_Date
+                        )
+                    )
+                )
+                return false
+            }
+            !TextUtils.isEmpty(binding.etxHeightIn.text!!.trim())&& TextUtils.isEmpty(binding.etxHeightFt.text!!.trim()) -> {
+                project.postValue(
+                    Event(
+                        Resource.requiredResource(
+                            ApiConstant.ADD_PROJECT, R
+                                .string.str_height_ft_msg
+                        )
+                    )
+                )
+                return false
+            }
+
             else -> return true
         }
     }

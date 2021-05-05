@@ -5,42 +5,42 @@ import java.util.ArrayList
 
 data class AddProjectResponse(
     @SerializedName("code")
-    val code: Int,
+    val code: Int?,
     @SerializedName("data")
-    val `data`: List<Data>,
+    val `data`: List<Data?>?,
     @SerializedName("msg")
-    val msg: String
+    val msg: String?
 ) {
     data class Data(
         @SerializedName("age")
-        val age: String,
+        val age: String?,
         @SerializedName("bodyType")
-        val bodyType: String,
+        val bodyType: String?,
         @SerializedName("castingId")
-        val castingId: String,
+        val castingId: String?,
         @SerializedName("created_at")
-        val createdAt: String,
+        val createdAt: String?,
         @SerializedName("description")
-        val description: String,
+        val description: String?,
         @SerializedName("exp")
-        val exp: String,
+        val exp: String?,
         @SerializedName("fromDate")
-        val fromDate: String,
+        val fromDate: String?,
         @SerializedName("gender")
-        val gender: String,
+        val gender: String?,
         @SerializedName("height")
-        val height: String,
+        val height: String?,
         @SerializedName("id")
-        val id: Int,
+        val id: Int?,
         @SerializedName("lang")
-        val lang: String,
+        val lang: String?,
         @SerializedName("location")
-        val location: String,
+        val location: String?,
         @SerializedName("title")
-        val title: String,
+        val title: String?,
         @SerializedName("toDate")
-        val toDate: String,
+        val toDate: String?,
         @SerializedName("updated_at")
-        val updatedAt: String
+        val updatedAt: String?
     )
 }
