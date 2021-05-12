@@ -3,7 +3,6 @@ package com.auditionstreet.castingagency.ui.login_signup.fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
@@ -63,6 +62,8 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
         binding.imgProfileImage.setOnClickListener(this)
         binding.btnSignUp.setOnClickListener(this)
         binding.imgFacebook.setOnClickListener(this)
+        binding.imgRound.setOnClickListener(this)
+
     }
 
     override fun onClick(v: View?) {
@@ -70,13 +71,23 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
             binding.imgProfileImage -> {
                 pickImage()
             }
+            binding.imgRound -> {
+                pickImage()
+            }
+
             binding.btnSignUp -> {
                 viewModel.isValidate(
                     binding.etxUserName.text.toString(),
                     binding.etxEmail.text.toString(),
                     binding.etxPassword.text.toString(),
                     binding.etxConfirmPassword.text.toString(),
-                    requestSignUp(resources.getString(R.string.str_facebook), "", resources.getString(R.string.str_false), "", ""),profileImageFile,selectedImage
+                    requestSignUp(
+                        resources.getString(R.string.str_facebook),
+                        "",
+                        resources.getString(R.string.str_false),
+                        "",
+                        ""
+                    ), profileImageFile, selectedImage
                 )
             }
             binding.imgFacebook -> {
@@ -103,7 +114,10 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
                             AppConstants.USER_ID,
                             signUpResponse.data!![0]!!.id.toString()
                         )
-                        preferences.setString(AppConstants.USER_IMAGE, signUpResponse.data[0]!!.image)
+                        preferences.setString(
+                            AppConstants.USER_IMAGE,
+                            signUpResponse.data[0]!!.image
+                        )
                         startActivity(Intent(requireActivity(), HomeActivity::class.java))
                         requireActivity().finish()
                     }
@@ -121,8 +135,7 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
                 showToast(requireContext(), getString(apiResponse.resourceId!!))
             }
 
-            else ->
-            {
+            else -> {
 
             }
         }
@@ -176,7 +189,7 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
                 toRequestBody(email)
             map[resources.getString(R.string.str_password)] =
                 toRequestBody("")
-            selectedImage=""
+            selectedImage = ""
         }
         map[resources.getString(R.string.str_social_type)] =
             toRequestBody(socialType)
