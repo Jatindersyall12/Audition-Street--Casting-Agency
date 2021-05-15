@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "832395255488",
+    "project_id": "castingdiretor-b296d",
+    "storage_bucket": "castingdiretor-b296d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832395255488:android:d12c3d0fa70019c7885725",
+        "android_client_info": {
+          "package_name": "com.auditionstreet.castingagency"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "832395255488-vbuebni94hecd9hvhktm9r4tonj1q0a4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnk3kBbCpAGMOb18T3t3FzLFcfKk763nw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "832395255488-vbuebni94hecd9hvhktm9r4tonj1q0a4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

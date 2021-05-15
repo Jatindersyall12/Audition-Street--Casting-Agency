@@ -1,0 +1,21 @@
+apply plugin: 'com.android.library'
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
+
+android {
+    compileSdkVersion 30
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 30
+        multiDexEnabled true
+    }
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+dependencies {
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+}
