@@ -7,7 +7,7 @@ data class MyProjectResponse(
     @SerializedName("code")
     val code: Int,
     @SerializedName("data")
-    val `data`: List<Data>,
+    val `data`: ArrayList<Data>,
     @SerializedName("msg")
     val msg: String
 ) {

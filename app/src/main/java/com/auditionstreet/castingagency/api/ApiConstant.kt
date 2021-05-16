@@ -32,7 +32,7 @@ class ApiConstant {
         const val PUBLIC_PROFILE = "&public_profile=true"
 
         const val LOGIN = "castingLogin"
-        const val GET_PROJECTS = ""
+        const val GET_PROJECTS = "projectList"
         const val GET_MY_PROJECTS = "projectList"
         const val GET_MY_PROJECTS_DETAILS = "projectDetail"
         const val GET_ALL_ADMINS = "groupMemberList"

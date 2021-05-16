@@ -6,6 +6,7 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
@@ -19,6 +20,9 @@ import com.auditionstreet.castingagency.customviews.CustomButton
 import com.auditionstreet.castingagency.customviews.CustomTextView
 import com.auditionstreet.castingagency.model.response.AllAdminResponse
 import com.auditionstreet.castingagency.model.response.AllUsersResponse
+import com.auditionstreet.castingagency.model.response.MyProjectResponse
+import com.auditionstreet.castingagency.model.response.ProjectResponse
+import com.auditionstreet.castingagency.ui.home.adapter.SelectProjectListAdapter
 import com.auditionstreet.castingagency.ui.projects.adapter.AllAdminListAdapter
 import com.auditionstreet.castingagency.ui.projects.adapter.AllUserListAdapter
 import java.text.ParseException
@@ -141,6 +145,56 @@ fun showAdminPopUpAdmins(
     dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
     return dialogView
 }
+
+fun showSelectProjectDialog(
+    mContext: Context,
+    projectResponse: MyProjectResponse,
+    mCallback: (year: String) -> Unit
+): Dialog {
+    lateinit var rvSelectProject: SelectProjectListAdapter
+    val dialogView = Dialog(mContext)
+    dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    val binding =
+        DataBindingUtil.inflate<ViewDataBinding>(
+            LayoutInflater.from(mContext),
+            R.layout.popup_select_project,
+            null,
+            false
+        )
+    dialogView.setContentView(binding.root)
+    dialogView.setCancelable(false)
+    val rvAllUser = dialogView.findViewById<RecyclerView>(R.id.rvAdmin)
+    val btnDone = dialogView.findViewById<CustomButton>(R.id.btnDone)
+    val tvNoRecord = dialogView.findViewById<CustomTextView>(R.id.tvNoRecord)
+
+    btnDone.setOnClickListener {
+        dialogView.cancel()
+        mCallback.invoke("Sd")
+    }
+    if (projectResponse.data!!.size > 0) {
+        rvAllUser.visibility = View.VISIBLE
+        tvNoRecord.visibility = View.GONE
+    } else {
+        rvAllUser.visibility = View.GONE
+        tvNoRecord.visibility = View.VISIBLE
+    }
+    rvAllUser.apply {
+        layoutManager = LinearLayoutManager(mContext)
+        rvSelectProject = SelectProjectListAdapter(mContext as FragmentActivity)
+        { projectId: String ->
+         Log.e("sd","Ss")
+        }
+        adapter = rvSelectProject
+        rvSelectProject.submitList(projectResponse.data)
+    }
+
+    dialogView.show()
+    val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
+    val height = (mContext.getResources().getDisplayMetrics().heightPixels * 0.65)
+    dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
+    return dialogView
+}
+
 
 fun showFromDatePicker(
     requireActivity: FragmentActivity,

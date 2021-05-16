@@ -79,6 +79,13 @@
     <string name="str_shortlist_frag">ShortList Fragment</string>
 
 
+    <!-- All Application Fragment -->
+    <string name="str_all_application">All Application Fragment</string>
+    <string name="str_select_project">Select Project</string>
+    <string name="str_shortlst">Shortlist</string>
+    <string name="str_block">Block</string>
+    <string name="str_select_projects">Select Projects</string>
+
     <!-- Facebook -->
 
     <string name="facebook_app_id">204922881173526</string>

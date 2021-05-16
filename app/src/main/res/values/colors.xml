@@ -13,5 +13,6 @@
     <color name="orange">#FF773B</color>
     <color name="light_grey">#F8F9FA</color>
     <color name="dim_grey">#ececec</color>
+    <color name="transparent">#00000000</color>
 
 </resources>

@@ -1,25 +1,25 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\CardStackView-master\cardstackview\src\main\AndroidManifest.xml:3:1-58
-INJECTED from D:\CardStackView-master\cardstackview\src\main\AndroidManifest.xml:3:1-58
-INJECTED from D:\CardStackView-master\cardstackview\src\main\AndroidManifest.xml:3:1-58
+ADDED from D:\AuditionStreetCastingAgency\cardstackview\src\main\AndroidManifest.xml:3:1-58
+INJECTED from D:\AuditionStreetCastingAgency\cardstackview\src\main\AndroidManifest.xml:3:1-58
+INJECTED from D:\AuditionStreetCastingAgency\cardstackview\src\main\AndroidManifest.xml:3:1-58
 	package
-		ADDED from D:\CardStackView-master\cardstackview\src\main\AndroidManifest.xml:3:11-56
-		INJECTED from D:\CardStackView-master\cardstackview\src\main\AndroidManifest.xml
-		INJECTED from D:\CardStackView-master\cardstackview\src\main\AndroidManifest.xml
+		ADDED from D:\AuditionStreetCastingAgency\cardstackview\src\main\AndroidManifest.xml:3:11-56
+		INJECTED from D:\AuditionStreetCastingAgency\cardstackview\src\main\AndroidManifest.xml
+		INJECTED from D:\AuditionStreetCastingAgency\cardstackview\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from D:\CardStackView-master\cardstackview\src\main\AndroidManifest.xml:3:1-58
+		ADDED from D:\AuditionStreetCastingAgency\cardstackview\src\main\AndroidManifest.xml:3:1-58
 uses-sdk
-INJECTED from D:\CardStackView-master\cardstackview\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from D:\CardStackView-master\cardstackview\src\main\AndroidManifest.xml
-INJECTED from D:\CardStackView-master\cardstackview\src\main\AndroidManifest.xml
-INJECTED from D:\CardStackView-master\cardstackview\src\main\AndroidManifest.xml
-INJECTED from D:\CardStackView-master\cardstackview\src\main\AndroidManifest.xml
+INJECTED from D:\AuditionStreetCastingAgency\cardstackview\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\AuditionStreetCastingAgency\cardstackview\src\main\AndroidManifest.xml
+INJECTED from D:\AuditionStreetCastingAgency\cardstackview\src\main\AndroidManifest.xml
+INJECTED from D:\AuditionStreetCastingAgency\cardstackview\src\main\AndroidManifest.xml
+INJECTED from D:\AuditionStreetCastingAgency\cardstackview\src\main\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from D:\CardStackView-master\cardstackview\src\main\AndroidManifest.xml
-		ADDED from D:\CardStackView-master\cardstackview\src\main\AndroidManifest.xml
-		INJECTED from D:\CardStackView-master\cardstackview\src\main\AndroidManifest.xml
+		INJECTED from D:\AuditionStreetCastingAgency\cardstackview\src\main\AndroidManifest.xml
+		ADDED from D:\AuditionStreetCastingAgency\cardstackview\src\main\AndroidManifest.xml
+		INJECTED from D:\AuditionStreetCastingAgency\cardstackview\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from D:\CardStackView-master\cardstackview\src\main\AndroidManifest.xml
-		ADDED from D:\CardStackView-master\cardstackview\src\main\AndroidManifest.xml
-		INJECTED from D:\CardStackView-master\cardstackview\src\main\AndroidManifest.xml
+		INJECTED from D:\AuditionStreetCastingAgency\cardstackview\src\main\AndroidManifest.xml
+		ADDED from D:\AuditionStreetCastingAgency\cardstackview\src\main\AndroidManifest.xml
+		INJECTED from D:\AuditionStreetCastingAgency\cardstackview\src\main\AndroidManifest.xml

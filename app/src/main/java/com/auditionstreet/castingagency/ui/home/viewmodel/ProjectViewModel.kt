@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.auditionstreet.castingagency.api.ApiConstant
+import com.auditionstreet.castingagency.model.response.MyProjectResponse
 import com.auditionstreet.castingagency.model.response.ProjectResponse
 import com.auditionstreet.castingagency.ui.home.repository.ProjectRepository
 import com.leo.wikireviews.utils.livedata.Event
@@ -24,6 +25,10 @@ class ProjectViewModel @ViewModelInject constructor(
     private val _users = MutableLiveData<Event<Resource<ProjectResponse>>>()
     val users: LiveData<Event<Resource<ProjectResponse>>>
         get() = _users
+
+    private val all_applications = MutableLiveData<Event<Resource<MyProjectResponse>>>()
+    val allAppliactions: LiveData<Event<Resource<MyProjectResponse>>>
+        get() = all_applications
 
     private fun getProject(projectRequest: ProjectRequest) {
         viewModelScope.launch {
@@ -44,6 +49,37 @@ class ProjectViewModel @ViewModelInject constructor(
                             Event(
                                 Resource.error(
                                     ApiConstant.GET_PROJECTS,
+                                    it.code(),
+                                    it.errorBody().toString(),
+                                    null
+                                )
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    fun getAllApplications(url: String) {
+        viewModelScope.launch {
+            all_applications.postValue(Event(Resource.loading(ApiConstant.GET_MY_PROJECTS, null)))
+            if (networkHelper.isNetworkConnected()) {
+                projectRepository.getMyProjects(url).let {
+                    if (it.isSuccessful && it.body() != null) {
+                        all_applications.postValue(
+                            Event(
+                                Resource.success(
+                                    ApiConstant.GET_MY_PROJECTS,
+                                    it.body()
+                                )
+                            )
+                        )
+                    } else {
+                        all_applications.postValue(
+                            Event(
+                                Resource.error(
+                                    ApiConstant.GET_MY_PROJECTS,
                                     it.code(),
                                     it.errorBody().toString(),
                                     null

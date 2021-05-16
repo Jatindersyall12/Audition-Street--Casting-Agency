@@ -10,6 +10,7 @@ import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentHomeBinding
 import com.auditionstreet.castingagency.model.response.ProjectResponse
+import com.auditionstreet.castingagency.ui.home.activity.AllApplicationActivity
 import com.auditionstreet.castingagency.ui.home.activity.OtherUserProfileActivity
 import com.auditionstreet.castingagency.ui.home.activity.ShortlistedActivity
 import com.auditionstreet.castingagency.ui.home.adapter.ApplicationListAdapter
@@ -178,7 +179,7 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
                 // requireActivity().finish()
             }
             R.id.tvViewAllApplication -> {
-                val i = Intent(requireActivity(), ShortlistedActivity::class.java)
+                val i = Intent(requireActivity(), AllApplicationActivity::class.java)
                 // i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(i)
                 //  requireActivity().finish()
