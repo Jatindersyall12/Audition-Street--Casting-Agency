@@ -1,179 +1,240 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:background="@color/white"
-        android:layout_height="match_parent"
-        >
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/white">
 
-        <LinearLayout
-            android:id="@+id/layLinear"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:gravity="center"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            android:layout_height="@dimen/_60sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.github.siyamed.shapeimageview.RoundedImageView
-                android:id="@+id/imgProfile"
-                android:layout_width="@dimen/_70sdp"
-                android:layout_height="@dimen/_70sdp"
-                android:src="@drawable/dumy_image_1"
-                app:siBorderColor="@color/black"
-                app:siBorderWidth="2dp"
-                app:siRadius="6dp"
-                app:siSquare="true" />
+            <com.auditionstreet.castingagency.customviews.CustomTextViewBold
+                android:id="@+id/toolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_17sdp"
+                android:text="@string/str_profile_heading"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_20ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <TableLayout
+            <com.auditionstreet.castingagency.customviews.CustomTextViewBold
+                android:id="@+id/tvDone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:text="@string/str_done"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_16sdp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imgEdit"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@drawable/ic_icon_add_project"
+                android:contentDescription="@string/str_year"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_60sdp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_4sdp">
-                <TableRow
-                    android:id="@+id/tableRow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                android:background="@color/white">
 
-                    <com.auditionstreet.castingagency.customviews.CustomTextViewBold
-                        android:id="@+id/tvTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:text="Film Studio Play"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:gravity="center"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.github.siyamed.shapeimageview.RoundedImageView
+                        android:id="@+id/imgProfile"
+                        android:layout_width="@dimen/_70sdp"
+                        android:layout_height="@dimen/_70sdp"
+                        android:clickable="false"
+                        android:enabled="false"
+                        android:saveEnabled="false"
+                        android:src="@drawable/ic_dummy_profile_image"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:siBorderColor="@color/black"
+                        app:siBorderWidth="2dp"
+                        app:siRadius="6dp"
+                        app:siSquare="true" />
+
+                    <com.auditionstreet.castingagency.customviews.CustomEditText
+                        android:id="@+id/etxName"
+                        android:layout_width="@dimen/_180sdp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:background="@null"
+                        android:enabled="false"
+                        android:hint="@string/str_film_studio"
+                        android:maxLength="50"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_17sdp" />
-                </TableRow>
+                        android:textSize="@dimen/_17sdp"
+                        app:backgroundTint="@color/orange"
+                        app:layout_constraintStart_toEndOf="@+id/imgProfile"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <TableRow
-                    android:id="@+id/tableRow2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <com.auditionstreet.castingagency.customviews.CustomTextView
-                        android:id="@+id/tvCasting"
-                        android:layout_width="wrap_content"
+                    <com.auditionstreet.castingagency.customviews.CustomEditText
+                        android:id="@+id/etxSubName"
+                        android:layout_width="@dimen/_180sdp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:text="Casting Agency"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:background="@null"
+                        android:enabled="false"
+                        android:hint="@string/str_casting_agency"
+                        android:maxLength="50"
                         android:textColor="@color/gray"
-                        android:textSize="@dimen/_13sdp" />
-                </TableRow>
-            </TableLayout>
-        </LinearLayout>
+                        android:textSize="@dimen/_13sdp"
+                        app:layout_constraintStart_toEndOf="@+id/imgProfile"
+                        app:layout_constraintTop_toBottomOf="@+id/etxName" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <View
-            android:id="@+id/tvView"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:background="@color/dim_grey"
-            android:layout_marginStart="@dimen/_30sdp"
-            android:layout_marginEnd="@dimen/_30sdp"
-            app:layout_constraintTop_toBottomOf="@+id/layLinear" />
+                <View
+                    android:id="@+id/tvView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginStart="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_30sdp"
+                    android:background="@color/dim_grey"
+                    app:layout_constraintTop_toBottomOf="@+id/layLinear" />
 
-        <com.auditionstreet.castingagency.customviews.CustomTextViewBold
-            android:id="@+id/tvYear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_13sdp"
-            android:fontFamily="sans-serif-medium"
-            android:text="07"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_22sdp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvView" />
+                <com.auditionstreet.castingagency.customviews.CustomEditText
+                    android:id="@+id/etxYear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_13sdp"
+                    android:background="@null"
+                    android:enabled="false"
+                    android:hint="@string/str_year"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_22sdp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvView" />
 
-        <com.auditionstreet.castingagency.customviews.CustomTextView
-            android:id="@+id/tvYearinIndustry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_15sdp"
-            android:text="Years In Industry"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/_12sdp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvYear" />
+                <com.auditionstreet.castingagency.customviews.CustomTextView
+                    android:id="@+id/etxYearinIndustry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:text="@string/str_year_in_industry"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_14sdp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/etxYear" />
 
-        <View
-            android:id="@+id/tvView2"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"
-            android:layout_marginTop="@dimen/_18sdp"
-            android:background="@color/dim_grey"
-            android:layout_marginStart="@dimen/_30sdp"
-            android:layout_marginEnd="@dimen/_30sdp"
-            app:layout_constraintTop_toBottomOf="@+id/tvYearinIndustry" />
+                <View
+                    android:id="@+id/tvView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginStart="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:layout_marginEnd="@dimen/_30sdp"
+                    android:background="@color/dim_grey"
+                    app:layout_constraintTop_toBottomOf="@+id/etxYearinIndustry" />
 
-        <com.auditionstreet.castingagency.customviews.CustomTextViewBold
-            android:id="@+id/textWork"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:text="Work"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_17sdp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvView2" />
+                <com.auditionstreet.castingagency.customviews.CustomTextViewBold
+                    android:id="@+id/textWork"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:text="@string/str_work"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvView2" />
 
-        <com.auditionstreet.castingagency.customviews.CustomTextViewBold
-            android:id="@+id/tvViewAll"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:drawablePadding="@dimen/_3sdp"
-            android:drawableEnd="@drawable/ic_icon_view_all"
-            android:text="@string/str_view_all"
-            android:textColor="@color/orange"
-            android:textSize="@dimen/_13sdp"
-            app:layout_constraintTop_toBottomOf="@+id/tvView2"
-            app:layout_constraintEnd_toEndOf="parent" />
+                <com.auditionstreet.castingagency.customviews.CustomTextViewBold
+                    android:id="@+id/tvAddMedia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:drawablePadding="@dimen/_3sdp"
+                    android:text="@string/str_add_media"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/_14sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvView2" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvWork"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_90sdp"
-            android:paddingStart="@dimen/_10sdp"
-            android:paddingEnd="@dimen/_10sdp"
-            android:clipToPadding="false"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textWork" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvWork"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_180sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:clipToPadding="false"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textWork" />
 
-        <com.auditionstreet.castingagency.customviews.CustomTextViewBold
-            android:id="@+id/tvBio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:text="Bio"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_17sdp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rvWork" />
+                <com.auditionstreet.castingagency.customviews.CustomTextViewBold
+                    android:id="@+id/tvBio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:text="@string/str_bio"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_17sdp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rvWork" />
 
-        <com.auditionstreet.castingagency.customviews.CustomTextView
-            android:id="@+id/tvDesc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:text="High fashion modelling has strict guidelines; male models should generally be between 5'11″ and 6'3” in height, their waist should measure 29-32 inches and their chest 39-40 inches. These figures will vary slightly depending on the agency, but scouts will always be on the lookout for toned, slim physiques."
-            android:textColor="@color/gray"
-            android:textSize="@dimen/_12sdp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvBio" />
+                <com.auditionstreet.castingagency.customviews.CustomEditText
+                    android:id="@+id/etxBio"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:background="@null"
+                    android:enabled="false"
+                    android:gravity="start|top"
+                    android:hint="@string/str_bio_profile"
+                    android:maxLength="150"
+                    android:padding="@dimen/_10sdp"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_13sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvBio" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
 </layout>

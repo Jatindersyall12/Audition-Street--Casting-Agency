@@ -5,15 +5,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/_60sdp"
-        android:background="@color/white"
         android:layout_marginTop="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_6sdp">
+        android:layout_marginEnd="@dimen/_6sdp"
+        android:background="@color/white">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_marginTop="@dimen/_15sdp"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="@dimen/_15sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,8 +21,8 @@
             android:id="@+id/imgBack"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_15sdp"
-            android:visibility="visible"
             android:src="@drawable/ic_icon_back"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -33,10 +33,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_17sdp"
             android:gravity="left|center"
-            android:visibility="invisible"
             android:text="Home"
             android:textColor="@color/black"
             android:textSize="@dimen/_20ssp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -45,13 +45,12 @@
             android:id="@+id/toolBarImage"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:siRadius="10dp"
-            app:siSquare="true"
-            />
+            app:siSquare="true" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -26,9 +26,12 @@ import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultAllocator
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.google.android.exoplayer2.upstream.RawResourceDataSource
 import com.google.android.exoplayer2.util.Util
 import kotlinx.android.synthetic.main.all_application_item.view.*
+import java.io.File
 
+@Suppress("DEPRECATION")
 class AllApplicationsAdapter(
     val mContext: FragmentActivity, private val mCallback: (
         mposition: Int
@@ -87,8 +90,10 @@ class AllApplicationsAdapter(
                 holder.itemView.tvBlock.setOnClickListener {
                     mCallback.invoke(1)
                 }
-                //   prePair(holder.itemView.player_view, "https://media.geeksforgeeks.org/wp-content/uploads/20201217163353/Screenrecorder-2020-12-17-16-32-03-350.mp4")
-
+                prePair(
+                    holder.itemView.player_view,
+                    "content://com.android.providers.media.documents/document/video%3A327469"
+                )
             }
         }
     }
@@ -108,15 +113,20 @@ class AllApplicationsAdapter(
             mContext,
             Util.getUserAgent(mContext, mContext.getResources().getString(R.string.app_name))
         )
+        /*val videoSource: MediaSource = ExtractorMediaSource.Factory(dataSourceFactory)
+            .createMediaSource(Uri.parse(proxyUrl))*/
+        val p = File(proxyUrl)
         val videoSource: MediaSource = ExtractorMediaSource.Factory(dataSourceFactory)
-            .createMediaSource(Uri.parse(proxyUrl))
+            .createMediaSource(Uri.fromFile(p))
+
+        //RawResourceDataSource.buildRawResourceUri(/*R.raw.video1*/rawFile)
         //player.addListener(this)
         playerView.setPlayer(player)
         player.seekTo(0, 0)
         player.setRepeatMode(Player.REPEAT_MODE_ALL)
         playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH)
         player.prepare(videoSource)
-        player.setPlayWhenReady(false)
+        player.setPlayWhenReady(true)
     }
 
     override fun getItemCount(): Int {

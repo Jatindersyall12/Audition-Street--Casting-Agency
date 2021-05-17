@@ -41,7 +41,7 @@
             android:name=".ui.projects.activity.ProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -77,7 +77,8 @@
             android:name=".ui.home.activity.OtherUserProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            />
         <activity
             android:name=".ui.home.activity.AllApplicationActivity"
             android:screenOrientation="portrait"

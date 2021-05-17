@@ -71,6 +71,8 @@
     <string name="str_shortlist">Shortlisted</string>
     <string name="str_application">Applications</string>
     <string name="str_view_all">View All</string>
+    <string name="str_add_media">Add Media</string>
+
     <string name="str_coming_soon">Coming Soon..</string>
     <string name="str_view_details">View Details</string>
     <string name="str_view_profile">View Profile</string>
@@ -94,6 +96,13 @@
     <!-- Profile Fragment -->
     <string name="str_profile">Profile Fragment</string>
     <string name="str_profile_heading">Profile</string>
+    <string name="str_film_studio">Film Studio Play</string>
+    <string name="str_casting_agency">Casting Agency</string>
+    <string name="str_year">00</string>
+    <string name="str_bio_profile">Please enter bio here...</string>
+    <string name="str_year_in_industry">Years In Industry</string>
+    <string name="str_work">Work</string>
+    <string name="str_done">Done</string>
 
     <!-- other user profile Fragment -->
     <string name="str_other_user_profile">Other User Profile Fragment</string>
@@ -106,6 +115,8 @@
     <string name="str_view_detail">View Details</string>
     <string name="str_project_heading">Project:</string>
     <string name="str_project_detail">Project Detail</string>
+    <string name="str_image_error">You can choose max 4 images at a time</string>
+    <string name="str_video_error">You can choose max 1 video</string>
 
     <!-- Projects detail -->
     <string name="str_criteria">Criteria:</string>
@@ -159,5 +170,17 @@
     <string name="str_select_start_Date">Please select start date</string>
     <string name="str_select_end_Date">Please select end date</string>
     <string name="str_height_ft_msg">Please enter height in FT </string>
+
+    <!-- Exit Popup -->
+    <string name="str_exit">Do you want to exit ? </string>
+    <string name="str_audition_casting">Casting Agency</string>
+    <string name="str_yes">Yes</string>
+    <string name="str_no">No</string>
+
+    <!-- Choose Media -->
+    <string name="str_choose_media">Choose Media</string>
+    <string name="str_images">Choose Images</string>
+    <string name="str_videos">Choose Video</string>
+    <string name="str_cancel">Cancel</string>
 
 </resources>

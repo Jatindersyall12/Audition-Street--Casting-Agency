@@ -13,7 +13,7 @@ import com.auditionstreet.castingagency.ui.projects.activity.ProfileActivity
 import com.auditionstreet.castingagency.ui.projects.activity.ProjectsActivity
 import com.auditionstreet.castingagency.utils.AppConstants
 import com.auditionstreet.castingagency.utils.DataHelper
-import com.auditionstreet.castingagency.utils.closeAppDialog
+import com.auditionstreet.castingagency.utils.showExitDialog
 import com.auditionstreet.castingagency.utils.showToast
 import com.bumptech.glide.Glide
 import com.silo.ui.base.BaseActivity
@@ -142,7 +142,8 @@ class HomeActivity : BaseActivity() {
             supportFragmentManager.findFragmentById(R.id.navHostHomeFragment) as NavHostFragment
         val navController: NavController = navHostFragment.navController
         if (navController.graph.startDestination == navController.currentDestination?.id)
-            closeAppDialog(this)
+            showExitDialog(this)
+        // closeAppDialog(this)
         else
             super.onBackPressed()
     }

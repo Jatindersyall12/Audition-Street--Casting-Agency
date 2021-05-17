@@ -144,7 +144,7 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
     private fun pickImage() {
         ImagePicker.create(this)
             .returnMode(ReturnMode.ALL)
-            .folderMode(true)
+            .folderMode(false)
             .single()
             .limit(1)
             .toolbarFolderTitle(getString(R.string.folder))
