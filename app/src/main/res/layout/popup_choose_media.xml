@@ -27,7 +27,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.auditionstreet.castingagency.customviews.CustomTextView
+            <com.auditionstreet.castingagency.customviews.CustomTextViewBold
                 android:id="@+id/tvChooseImages"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -39,7 +39,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvHeading" />
 
-            <com.auditionstreet.castingagency.customviews.CustomTextView
+
+            <com.auditionstreet.castingagency.customviews.CustomTextViewBold
                 android:id="@+id/tvChooseVideos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,7 +52,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvChooseImages" />
 
-            <com.auditionstreet.castingagency.customviews.CustomTextView
+            <com.auditionstreet.castingagency.customviews.CustomTextViewBold
                 android:id="@+id/tvCancel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

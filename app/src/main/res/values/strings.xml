@@ -182,5 +182,7 @@
     <string name="str_images">Choose Images</string>
     <string name="str_videos">Choose Video</string>
     <string name="str_cancel">Cancel</string>
+    <string name="tv_media">No Media Found.</string>
+    <string name="str_loading">Please wait..</string>
 
 </resources>

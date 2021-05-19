@@ -16,9 +16,7 @@ import kotlinx.android.synthetic.main.my_project_item.view.*
 import java.util.*
 
 class MyProjectListAdapter(
-    val mContext: FragmentActivity, private val mCallback: (
-        mposition: String
-    ) -> Unit
+    val mContext: FragmentActivity, private val mCallback: (mposition: String) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MyProjectResponse.Data>() {

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -12,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.auditionstreet.castingagency.BuildConfig
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentProfileBinding
@@ -19,9 +19,7 @@ import com.auditionstreet.castingagency.model.response.ProfileResponse
 import com.auditionstreet.castingagency.storage.preference.Preferences
 import com.auditionstreet.castingagency.ui.profile.viewmodel.ProfileViewModel
 import com.auditionstreet.castingagency.ui.projects.adapter.WorkListAdapter
-import com.auditionstreet.castingagency.utils.CompressFile
-import com.auditionstreet.castingagency.utils.showMediaDialog
-import com.auditionstreet.castingagency.utils.showToast
+import com.auditionstreet.castingagency.utils.*
 import com.bumptech.glide.Glide
 import com.esafirm.imagepicker.features.ImagePicker
 import com.leo.wikireviews.utils.livedata.EventObserver
@@ -64,9 +62,11 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
     }
 
     private fun getUserProfile() {
-        /*viewModel.getProfile(
-            BuildConfig.BASE_URL + ApiConstant.GET_PROFILE
-        )*/
+        viewModel.getProfile(
+            BuildConfig.BASE_URL + ApiConstant.GET_PROFILE + "/" + preferences.getString(
+                AppConstants.USER_ID
+            )
+        )
     }
 
     private fun setListeners() {
@@ -81,6 +81,9 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
         viewModel.getProfile.observe(viewLifecycleOwner, EventObserver {
             handleApiCallback(it)
         })
+        viewModel.uploadMedia.observe(viewLifecycleOwner, EventObserver {
+            handleApiCallback(it)
+        })
 
     }
 
@@ -93,7 +96,9 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                         profileResponse = apiResponse.data as ProfileResponse
                         setWorkAdapter(profileResponse)
                     }
-
+                    ApiConstant.UPLOAD_MEDIA -> {
+                        showToast(requireActivity(), "Uploaded succesfully")
+                    }
                 }
             }
             Status.LOADING -> {
@@ -114,13 +119,26 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
     }
 
     private fun setWorkAdapter(profileResponse: ProfileResponse) {
-        if (profileResponse.data.isNotEmpty()) {
-            binding.rvWork.visibility = View.VISIBLE
-            // binding.layNoRecord.visibility = View.GONE
-        } else {
-            binding.rvWork.visibility = View.GONE
-            //  binding.layNoRecord.visibility = View.VISIBLE
+        for (i in 0..profileResponse.data.size) {
+            val request = WorkGalleryRequest()
+            request.path = images[i].path
+            request.isImage = true
+            request.isShowDeleteImage = true
+            listGallery.add(request)
+            profileAdapter.notifyDataSetChanged()
         }
+        if (listGallery.size > 0) {
+            showGalleryView(true)
+        } else {
+            showGalleryView(false)
+        }
+        Glide.with(this).load(profileImageFile)
+            .into(binding.imgProfile)
+        binding.etxName.setText("Sd")
+        binding.etxSubName.setText("Sd")
+        binding.etxYearinIndustry.setText("Sd")
+        binding.etxBio.setText("Sd")
+
     }
 
     override fun onClick(v: View?) {
@@ -135,6 +153,7 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
             R.id.tvDone -> {
                 showImgEdit()
                 enableOrDisable(false)
+                viewModel.uploadMedia(listGallery)
             }
             R.id.imgProfile -> {
                 pickImage(picker, true, 1)
@@ -154,12 +173,11 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                 if (totalGalleryVideos < 1) {
                     val intent = Intent()
                     intent.type = "video/*"
-                    intent.action = Intent.ACTION_GET_CONTENT
+                    intent.action = Intent.ACTION_PICK
                     Intent.createChooser(intent, "Select Video")
                     startForResult.launch(intent)
                 } else
                     showToast(requireActivity(), resources.getString(R.string.str_video_error))
-
             }
         }
     }
@@ -180,11 +198,13 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
     private fun showDoneButton() {
         binding.imgEdit.visibility = View.GONE
         binding.tvDone.visibility = View.VISIBLE
+        binding.tvAddMedia.visibility = View.VISIBLE
     }
 
     private fun showImgEdit() {
         binding.imgEdit.visibility = View.VISIBLE
         binding.tvDone.visibility = View.GONE
+        binding.tvAddMedia.visibility = View.GONE
     }
 
     private fun init() {
@@ -199,6 +219,12 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                     totalGalleryVideos--
                 listGallery.removeAt(position)
                 profileAdapter.notifyDataSetChanged()
+
+                if (listGallery.size > 0) {
+                    showGalleryView(true)
+                } else {
+                    showGalleryView(false)
+                }
             }
 
             adapter = profileAdapter
@@ -230,7 +256,6 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                 .into(binding.imgProfile)
         } else if (requestCode == picker_gallery && resultCode == AppCompatActivity.RESULT_OK && data != null) {
             images = ImagePicker.getImages(data)
-            Log.e("length", totalGalleryImages.toString())
             for (i in 0 until images.size) {
                 totalGalleryImages++
                 val request = WorkGalleryRequest()
@@ -239,6 +264,7 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                 request.isShowDeleteImage = true
                 listGallery.add(0, request)
                 profileAdapter.notifyDataSetChanged()
+                showGalleryView(true)
             }
         }
     }
@@ -247,12 +273,27 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val request = WorkGalleryRequest()
-                request.path = result.data?.data.toString()!!
-                request.isImage = false
-                request.isShowDeleteImage = true
-                listGallery.add(0, request)
-                profileAdapter.notifyDataSetChanged()
-                totalGalleryVideos++
+                processVideo(result.data!!.data!!, requireActivity())
+                { path: String ->
+                    request.path = path
+                    request.isImage = false
+                    request.isShowDeleteImage = true
+                    listGallery.add(0, request)
+                    profileAdapter.notifyDataSetChanged()
+                    totalGalleryVideos++
+                    showGalleryView(true)
+                }
             }
         }
+
+    private fun showGalleryView(b: Boolean) {
+        if (b) {
+            binding.rvWork.visibility = View.VISIBLE
+            binding.tvNoMedia.visibility = View.INVISIBLE
+        } else {
+            binding.rvWork.visibility = View.INVISIBLE
+            binding.tvNoMedia.visibility = View.VISIBLE
+        }
+
+    }
 }

@@ -190,11 +190,29 @@
                     android:text="@string/str_add_media"
                     android:textColor="@color/orange"
                     android:textSize="@dimen/_14sdp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvView2" />
 
+                <com.auditionstreet.castingagency.customviews.CustomTextViewBold
+                    android:id="@+id/tvNoMedia"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_180sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:clipToPadding="false"
+                    android:text="@string/tv_media"
+                    android:textColor="@color/orange"
+                    android:gravity="center"
+                    android:textSize="@dimen/_14sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textWork"
+
+                    />
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvWork"
+                    android:visibility="invisible"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_180sdp"
                     android:layout_marginTop="@dimen/_10sdp"

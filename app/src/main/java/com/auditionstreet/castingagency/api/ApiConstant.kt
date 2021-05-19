@@ -41,6 +41,8 @@ class ApiConstant {
         const val SIGN_UP = "castingSignup"
         const val GET_PROFILE = "profile"
         const val ADD_GROUP = "groupCreate"
+        const val UPLOAD_MEDIA = "imageUploadPost"
+
 
     }
 }

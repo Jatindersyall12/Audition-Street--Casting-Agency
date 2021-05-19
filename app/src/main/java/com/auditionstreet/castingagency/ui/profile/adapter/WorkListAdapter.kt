@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.utils.showImageOrVideoDialog
-import com.auditionstreet.castingagency.utils.showToast
 import com.bumptech.glide.Glide
 import com.silo.model.request.WorkGalleryRequest
 import kotlinx.android.synthetic.main.work_item.view.*
@@ -98,11 +97,11 @@ class WorkListAdapter(
                 itemView.imgDelete.visibility = View.GONE
 
             itemView.imgPlay.setOnClickListener {
-                showToast(mContext, "play click")
+                showImageOrVideoDialog(mContext, item.path,false)
             }
             itemView.setOnClickListener {
                 if (item.isImage)
-                    showImageOrVideoDialog(mContext, item.path)
+                    showImageOrVideoDialog(mContext, item.path,true)
             }
         }
     }

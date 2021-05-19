@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.model.response.MyProjectResponse
+import com.auditionstreet.castingagency.utils.playVideo
 import com.auditionstreet.castingagency.utils.showToast
 import com.google.android.exoplayer2.DefaultLoadControl
 import com.google.android.exoplayer2.ExoPlayerFactory
@@ -26,10 +27,8 @@ import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultAllocator
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
-import com.google.android.exoplayer2.upstream.RawResourceDataSource
 import com.google.android.exoplayer2.util.Util
 import kotlinx.android.synthetic.main.all_application_item.view.*
-import java.io.File
 
 @Suppress("DEPRECATION")
 class AllApplicationsAdapter(
@@ -90,43 +89,12 @@ class AllApplicationsAdapter(
                 holder.itemView.tvBlock.setOnClickListener {
                     mCallback.invoke(1)
                 }
-                prePair(
-                    holder.itemView.player_view,
-                    "content://com.android.providers.media.documents/document/video%3A327469"
+                playVideo(
+                    mContext, holder.itemView.player_view,
+                    "/storage/emulated/0/Download/1621355555030_VID_20210325_194505209.mp4"
                 )
             }
         }
-    }
-
-    private fun prePair(playerView: PlayerView, url: String) {
-        Log.e("url", url)
-        var proxyUrl = url
-        val loadControl: LoadControl = DefaultLoadControl.Builder()
-            .setAllocator(DefaultAllocator(true, 16))
-            .setBufferDurationsMs(1 * 1024, 1 * 1024, 500, 1024)
-            .setTargetBufferBytes(-1)
-            .setPrioritizeTimeOverSizeThresholds(true)
-            .createDefaultLoadControl()
-        val trackSelector = DefaultTrackSelector()
-        var player = ExoPlayerFactory.newSimpleInstance(mContext, trackSelector, loadControl)
-        val dataSourceFactory: DataSource.Factory = DefaultDataSourceFactory(
-            mContext,
-            Util.getUserAgent(mContext, mContext.getResources().getString(R.string.app_name))
-        )
-        /*val videoSource: MediaSource = ExtractorMediaSource.Factory(dataSourceFactory)
-            .createMediaSource(Uri.parse(proxyUrl))*/
-        val p = File(proxyUrl)
-        val videoSource: MediaSource = ExtractorMediaSource.Factory(dataSourceFactory)
-            .createMediaSource(Uri.fromFile(p))
-
-        //RawResourceDataSource.buildRawResourceUri(/*R.raw.video1*/rawFile)
-        //player.addListener(this)
-        playerView.setPlayer(player)
-        player.seekTo(0, 0)
-        player.setRepeatMode(Player.REPEAT_MODE_ALL)
-        playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH)
-        player.prepare(videoSource)
-        player.setPlayWhenReady(true)
     }
 
     override fun getItemCount(): Int {

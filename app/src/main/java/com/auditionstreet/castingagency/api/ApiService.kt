@@ -5,6 +5,7 @@ import com.auditionstreet.castingagency.api.ApiConstant.Companion.ADD_PROJECT
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.GET_PROJECTS
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.LOGIN
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.SIGN_UP
+import com.auditionstreet.castingagency.api.ApiConstant.Companion.UPLOAD_MEDIA
 import com.auditionstreet.castingagency.model.response.*
 import com.silo.model.request.AddGroupRequest
 import com.silo.model.request.AddProjectRequest
@@ -55,5 +56,11 @@ interface ApiService {
         @PartMap params: HashMap<String, RequestBody>,
         @Part photo: MultipartBody.Part?
     ): Response<SignUpResponse>
+
+    @Multipart
+    @POST(UPLOAD_MEDIA)
+    suspend fun uploadMedia(
+        @Part photo: List<MultipartBody.Part?>
+    ): Response<UploadMediaResponse>
 
 }
