@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.castingagency.R
+import com.auditionstreet.castingagency.utils.showDeleteDialog
 import com.auditionstreet.castingagency.utils.showImageOrVideoDialog
 import com.bumptech.glide.Glide
 import com.silo.model.request.WorkGalleryRequest
@@ -57,20 +58,17 @@ class WorkListAdapter(
             is ConnectionHolder -> {
                 holder.bind(differ.currentList[position])
                 holder.itemView.imgDelete.setOnClickListener {
-                    mCallback.invoke(position)
+                    showDeleteDialog(mContext)
+                    {
+                        mCallback.invoke(position)
+                    }
                 }
-                /* holder.itemView.chkUser.setOnCheckedChangeListener { buttonView, isChecked ->
-                     differ.currentList[position].isChecked = !differ.currentList[position].isChecked
-                     // holder.itemView.chkUser.isChecked=!differ.currentList[position].isChecked
-                     // notifyDataSetChanged()
-                 }*/
             }
         }
     }
 
     override fun getItemCount(): Int {
         return differ.currentList.size
-        //return
     }
 
     fun submitList(projectResponse: ArrayList<WorkGalleryRequest>) {
@@ -97,11 +95,11 @@ class WorkListAdapter(
                 itemView.imgDelete.visibility = View.GONE
 
             itemView.imgPlay.setOnClickListener {
-                showImageOrVideoDialog(mContext, item.path,false)
+                showImageOrVideoDialog(mContext, item.path, false)
             }
             itemView.setOnClickListener {
                 if (item.isImage)
-                    showImageOrVideoDialog(mContext, item.path,true)
+                    showImageOrVideoDialog(mContext, item.path, true)
             }
         }
     }

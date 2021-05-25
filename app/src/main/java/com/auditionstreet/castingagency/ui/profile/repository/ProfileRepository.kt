@@ -1,24 +1,24 @@
 package com.auditionstreet.castingagency.ui.profile.repository
 
-import com.auditionstreet.castingagency.model.response.MyProjectResponse
+import com.auditionstreet.castingagency.model.response.DeleteMediaResponse
 import com.auditionstreet.castingagency.model.response.ProfileResponse
-import com.auditionstreet.castingagency.model.response.ProjectResponse
 import com.auditionstreet.castingagency.model.response.UploadMediaResponse
 import com.silo.api.ApiService
-import com.silo.model.request.LoginRequest
-import com.silo.model.request.MyProjectRequest
-import com.silo.model.request.ProjectRequest
-import com.silo.model.response.LoginResponse
-import com.silo.model.response.SignUpResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
-import retrofit2.http.Url
+import java.util.HashMap
 import javax.inject.Inject
 
 class ProfileRepository @Inject constructor(val apiService: ApiService) {
-    suspend fun getProfile(url: String):Response<ProfileResponse> =apiService.getProfile(url)
-    suspend fun uploadMedia(media: List<MultipartBody.Part?>): Response<UploadMediaResponse> = apiService.uploadMedia(media)
+    suspend fun getProfile(url: String): Response<ProfileResponse> = apiService.getProfile(url)
+    suspend fun uploadMedia(
+        media: List<MultipartBody.Part?>,
+        profileImageFile: MultipartBody.Part?,
+        requestProfileUpdate: HashMap<String, RequestBody>
+    ): Response<UploadMediaResponse> =
+        apiService.uploadMedia(media,requestProfileUpdate,profileImageFile)
+    suspend fun deleteMedia(url: String):Response<DeleteMediaResponse> =apiService.deleteMedia(url)
 
 }
 

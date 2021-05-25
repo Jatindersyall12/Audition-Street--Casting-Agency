@@ -129,8 +129,6 @@
                 app:right_thumb_color="@color/orange"
                 app:thumb_diameter="19dp" />
 
-
-
             <com.auditionstreet.castingagency.customviews.CustomEditText
                 android:id="@+id/etxHeightFt"
                 android:layout_width="0dp"

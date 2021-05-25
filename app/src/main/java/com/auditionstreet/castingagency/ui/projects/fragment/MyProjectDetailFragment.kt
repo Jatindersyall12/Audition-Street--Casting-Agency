@@ -39,8 +39,7 @@ class MyProjectDetailFragment : AppBaseFragment(R.layout.fragment_my_project_det
     }
 
     private fun getMyProjectDetail(projectId: String) {
-        /* preferences.getString(
-            AppConstants.USER_ID)*/
+
         viewModel.getMyProjectDetail(
             BuildConfig.BASE_URL + ApiConstant.GET_MY_PROJECTS_DETAILS + "/" + projectId
         )
@@ -87,10 +86,11 @@ class MyProjectDetailFragment : AppBaseFragment(R.layout.fragment_my_project_det
     private fun setDetail(myProjectResponse: MyProjectDetailResponse) {
         binding.tvTitle.text = myProjectResponse.data[0].projectDetails.title
         binding.tvAgeDetail.text = myProjectResponse.data[0].projectDetails.age
-        if (myProjectResponse.data[0].projectDetails.height.isEmpty())
+        if (myProjectResponse.data[0].projectDetails.heightFt.isEmpty())
             binding.tvHeightDetail.text = resources.getString(R.string.str_empty)
         else
-            binding.tvHeightDetail.text = myProjectResponse.data[0].projectDetails.height
+            binding.tvHeightDetail.text =
+                myProjectResponse.data[0].projectDetails.heightFt + " ft " + myProjectResponse.data[0].projectDetails.heightIn
         if (myProjectResponse.data[0].projectDetails.lang.isEmpty())
             binding.tvLanguageDetail.text = resources.getString(R.string.str_empty)
         else
@@ -103,14 +103,13 @@ class MyProjectDetailFragment : AppBaseFragment(R.layout.fragment_my_project_det
         if (myProjectResponse.data[0].projectDetails.location.isEmpty())
             binding.tvLocationDetail.text = resources.getString(R.string.str_empty)
         else
-        binding.tvLocationDetail.text = myProjectResponse.data[0].projectDetails.location
+            binding.tvLocationDetail.text = myProjectResponse.data[0].projectDetails.location
         binding.tvDescDetail.text = myProjectResponse.data[0].projectDetails.description
     }
 
     override fun onClick(v: View?) {
         when (v) {
             //   binding.btnAddProject -> {
-
         }
     }
     //  }

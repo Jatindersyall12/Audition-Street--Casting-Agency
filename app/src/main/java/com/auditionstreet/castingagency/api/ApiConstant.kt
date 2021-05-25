@@ -39,10 +39,10 @@ class ApiConstant {
         const val GET_ALL_USER = "getAllUser"
         const val ADD_PROJECT = "projectCreate"
         const val SIGN_UP = "castingSignup"
-        const val GET_PROFILE = "profile"
+        const val GET_PROFILE = "castingDetail"
         const val ADD_GROUP = "groupCreate"
-        const val UPLOAD_MEDIA = "imageUploadPost"
-
+        const val UPLOAD_MEDIA = "updateCastingProfile"
+        const val DELETE_MEDIA = "deleteMedia"
 
     }
 }

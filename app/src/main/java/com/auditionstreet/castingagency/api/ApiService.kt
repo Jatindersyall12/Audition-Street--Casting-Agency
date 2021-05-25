@@ -34,6 +34,9 @@ interface ApiService {
     suspend fun getProfile(@Url url: String): Response<ProfileResponse>
 
     @GET
+    suspend fun deleteMedia(@Url url: String): Response<DeleteMediaResponse>
+
+    @GET
     suspend fun getAllAdmin(@Url url: String): Response<AllAdminResponse>
 
 
@@ -60,7 +63,9 @@ interface ApiService {
     @Multipart
     @POST(UPLOAD_MEDIA)
     suspend fun uploadMedia(
-        @Part photo: List<MultipartBody.Part?>
+        @Part photo: List<MultipartBody.Part?>,
+        @PartMap requestProfileUpdate: HashMap<String, RequestBody>,
+        @Part profileImageFile: MultipartBody.Part?
     ): Response<UploadMediaResponse>
 
 }

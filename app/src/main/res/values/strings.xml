@@ -103,6 +103,14 @@
     <string name="str_year_in_industry">Years In Industry</string>
     <string name="str_work">Work</string>
     <string name="str_done">Done</string>
+    <string name="str_company_name_label">companyName</string>
+    <string name="str_agency_name_label">agencyType</string>
+    <string name="str_year_label">year</string>
+    <string name="str_bio_label">bio</string>
+    <string name="str_casting_id">castingId</string>
+    <string name="str_image_label">Image</string>
+
+
 
     <!-- other user profile Fragment -->
     <string name="str_other_user_profile">Other User Profile Fragment</string>
@@ -115,8 +123,8 @@
     <string name="str_view_detail">View Details</string>
     <string name="str_project_heading">Project:</string>
     <string name="str_project_detail">Project Detail</string>
-    <string name="str_image_error">You can choose max 4 images at a time</string>
-    <string name="str_video_error">You can choose max 1 video</string>
+    <string name="str_image_error">You can choose max 4 images at a time.If you want to edit please delete previous image.</string>
+    <string name="str_video_error">You can choose max 1 video at a time.If you want to edit please delete previous one.</string>
 
     <!-- Projects detail -->
     <string name="str_criteria">Criteria:</string>
@@ -176,6 +184,7 @@
     <string name="str_audition_casting">Casting Agency</string>
     <string name="str_yes">Yes</string>
     <string name="str_no">No</string>
+    <string name="delete_dialog">Are you sure you want to delete ? </string>
 
     <!-- Choose Media -->
     <string name="str_choose_media">Choose Media</string>

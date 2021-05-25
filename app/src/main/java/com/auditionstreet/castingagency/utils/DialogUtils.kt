@@ -133,6 +133,39 @@ fun showExitDialog(
     return dialogView
 }
 
+fun showDeleteDialog(
+    mContext: Activity,
+    mCallback: (pos: Int) -> Unit
+): Dialog {
+    val dialogView = Dialog(mContext)
+    dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    val binding =
+        DataBindingUtil.inflate<ViewDataBinding>(
+            LayoutInflater.from(mContext),
+            R.layout.popup_delete,
+            null,
+            false
+        )
+    dialogView.setContentView(binding.root)
+    dialogView.setCancelable(false)
+    dialogView.show()
+    val tvYes = dialogView.findViewById<CustomTextView>(R.id.tvYes)
+    val tvNo = dialogView.findViewById<CustomTextView>(R.id.tvNo)
+    tvYes.setOnClickListener {
+        mCallback.invoke(1)
+        dialogView.dismiss()
+    }
+    tvNo.setOnClickListener {
+        dialogView.dismiss()
+    }
+
+    val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
+    val height = 450
+    dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
+    return dialogView
+}
+
+
 fun showMediaDialog(
     mContext: Context,
     mCallback: (pos: Int) -> Unit
@@ -169,6 +202,36 @@ fun showMediaDialog(
 
     val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
     val height = 600
+    dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
+    return dialogView
+}
+
+fun showVideoOrImageValidation(
+    mContext: Context,
+    errorString: String,
+
+    ): Dialog {
+    val dialogView = Dialog(mContext)
+    dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    val binding =
+        DataBindingUtil.inflate<ViewDataBinding>(
+            LayoutInflater.from(mContext),
+            R.layout.popup_video_image_error,
+            null,
+            false
+        )
+    dialogView.setContentView(binding.root)
+    dialogView.setCancelable(false)
+    dialogView.show()
+    val tvVideo = dialogView.findViewById<CustomTextView>(R.id.tvVideo)
+    val tvOk = dialogView.findViewById<CustomTextViewBold>(R.id.tvOk)
+    tvVideo.setText(errorString)
+    tvOk.setOnClickListener {
+        dialogView.dismiss()
+    }
+
+    val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
+    val height = 570
     dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
     return dialogView
 }

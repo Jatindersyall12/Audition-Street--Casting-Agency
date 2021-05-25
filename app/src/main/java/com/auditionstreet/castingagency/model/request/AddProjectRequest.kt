@@ -27,8 +27,11 @@ class AddProjectRequest {
     @SerializedName("gender")
     var gender: String = ""
 
-    @SerializedName("height")
-    var height: String = ""
+    @SerializedName("heightFt")
+    var heightFt: String = ""
+
+    @SerializedName("heightIn")
+    var heightIn: String = ""
 
     @SerializedName("lang")
     var lang: String = ""

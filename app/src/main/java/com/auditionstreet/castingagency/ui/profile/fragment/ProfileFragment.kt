@@ -1,9 +1,11 @@
-package com.auditionstreet.castingagency.ui.projects.fragment
+package com.auditionstreet.castingagency.ui.profile.fragment
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -15,7 +17,9 @@ import com.auditionstreet.castingagency.BuildConfig
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentProfileBinding
+import com.auditionstreet.castingagency.model.response.DeleteMediaResponse
 import com.auditionstreet.castingagency.model.response.ProfileResponse
+import com.auditionstreet.castingagency.model.response.UploadMediaResponse
 import com.auditionstreet.castingagency.storage.preference.Preferences
 import com.auditionstreet.castingagency.ui.profile.viewmodel.ProfileViewModel
 import com.auditionstreet.castingagency.ui.projects.adapter.WorkListAdapter
@@ -29,8 +33,15 @@ import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
 import com.silo.utils.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_profile.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
+import kotlin.collections.set
 
 
 @AndroidEntryPoint
@@ -42,11 +53,16 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
     private val picker_gallery = 4000
     private var totalGalleryImages = 0
     private var totalGalleryVideos = 0
-    val listGallery = ArrayList<WorkGalleryRequest>()
+    var listGallery = ArrayList<WorkGalleryRequest>()
     private var images: MutableList<com.esafirm.imagepicker.model.Image> = mutableListOf()
     private var profileImageFile: File? = null
     private var selectedImage = ""
     private var compressImage = CompressFile()
+    private lateinit var uploadMediaResponse: UploadMediaResponse
+    private lateinit var mediaDelete: DeleteMediaResponse
+    private var isImageDelete: Boolean = false
+    private var deleteMediaPos: Int = 0
+    val uploadMedia = ArrayList<WorkGalleryRequest>()
 
     @Inject
     lateinit var preferences: Preferences
@@ -84,6 +100,9 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
         viewModel.uploadMedia.observe(viewLifecycleOwner, EventObserver {
             handleApiCallback(it)
         })
+        viewModel.deleteMedia.observe(viewLifecycleOwner, EventObserver {
+            handleApiCallback(it)
+        })
 
     }
 
@@ -97,7 +116,21 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                         setWorkAdapter(profileResponse)
                     }
                     ApiConstant.UPLOAD_MEDIA -> {
-                        showToast(requireActivity(), "Uploaded succesfully")
+                        uploadMediaResponse = apiResponse.data as UploadMediaResponse
+                        showToast(requireActivity(), uploadMediaResponse.msg.toString())
+                        showImgEdit()
+                        enableOrDisable(false)
+                        getUserProfile()
+                    }
+                    ApiConstant.DELETE_MEDIA -> {
+                        mediaDelete = apiResponse.data as DeleteMediaResponse
+                        showToast(requireActivity(), mediaDelete.msg.toString())
+                        if (isImageDelete)
+                            totalGalleryImages--
+                        else
+                            totalGalleryVideos--
+                        listGallery.removeAt(deleteMediaPos)
+                        profileAdapter.notifyDataSetChanged()
                     }
                 }
             }
@@ -119,41 +152,62 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
     }
 
     private fun setWorkAdapter(profileResponse: ProfileResponse) {
-        for (i in 0..profileResponse.data.size) {
+        if (profileResponse.data!![0]!!.castingDetails!!.logo!!.isNotEmpty()) {
+            Glide.with(this).load(profileResponse.data[0]!!.castingDetails!!.logo)
+                .into(binding.imgProfile)
+        }
+        binding.etxName.setText(profileResponse.data[0]!!.castingDetails!!.name)
+        binding.etxSubName.setText(profileResponse.data[0]!!.castingDetails!!.companyName)
+        binding.etxYearinIndustry.setText(profileResponse.data[0]!!.castingDetails!!.year)
+        listGallery.clear()
+        for (i in 0 until profileResponse.data[0]!!.media!!.size) {
             val request = WorkGalleryRequest()
-            request.path = images[i].path
-            request.isImage = true
-            request.isShowDeleteImage = true
+            request.path = profileResponse.data[0]!!.media!![i]!!.mediaUrl!!
+            request.isShowDeleteImage = false
+            request.isLocal = false
+            request.isImage =
+                profileResponse.data[0]!!.media!![i]!!.mediaType.equals(resources.getString(R.string.str_image_label))
             listGallery.add(request)
-            profileAdapter.notifyDataSetChanged()
         }
         if (listGallery.size > 0) {
             showGalleryView(true)
         } else {
             showGalleryView(false)
         }
-        Glide.with(this).load(profileImageFile)
-            .into(binding.imgProfile)
-        binding.etxName.setText("Sd")
-        binding.etxSubName.setText("Sd")
-        binding.etxYearinIndustry.setText("Sd")
-        binding.etxBio.setText("Sd")
+        profileAdapter.notifyDataSetChanged()
+
+        binding.etxBio.setText(profileResponse.data[0]!!.castingDetails!!.bio)
+
 
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.tvAddMedia -> {
-                showMedia()
+                mPermissionResult.launch(
+                    arrayOf(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
+                )
             }
             R.id.imgEdit -> {
                 showDoneButton()
                 enableOrDisable(true)
             }
             R.id.tvDone -> {
-                showImgEdit()
-                enableOrDisable(false)
-                viewModel.uploadMedia(listGallery)
+
+                uploadMedia.clear()
+                for (i in 0 until listGallery.size) {
+                    if (listGallery[i].isLocal)
+                        uploadMedia.add(listGallery[i])
+                }
+                viewModel.uploadMedia(
+                    uploadMedia,
+                    requestProfileUpdate(),
+                    selectedImage,
+                    profileImageFile
+                )
             }
             R.id.imgProfile -> {
                 pickImage(picker, true, 1)
@@ -168,7 +222,10 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                 if (totalGalleryImages < 4)
                     pickImage(picker_gallery, false, 4 - totalGalleryImages)
                 else
-                    showToast(requireActivity(), resources.getString(R.string.str_image_error))
+                    showVideoOrImageValidation(
+                        requireActivity(),
+                        resources.getString(R.string.str_image_error)
+                    )
             else if (it == 1) {
                 if (totalGalleryVideos < 1) {
                     val intent = Intent()
@@ -177,7 +234,10 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                     Intent.createChooser(intent, "Select Video")
                     startForResult.launch(intent)
                 } else
-                    showToast(requireActivity(), resources.getString(R.string.str_video_error))
+                    showVideoOrImageValidation(
+                        requireActivity(),
+                        resources.getString(R.string.str_video_error)
+                    )
             }
         }
     }
@@ -213,13 +273,18 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
             layoutManager = LinearLayoutManager(activity)
             profileAdapter = WorkListAdapter(requireActivity())
             { position: Int ->
-                if (listGallery[position].isImage)
-                    totalGalleryImages--
-                else
-                    totalGalleryVideos--
-                listGallery.removeAt(position)
+                isImageDelete = listGallery[position].isImage
+                deleteMediaPos=position
+                if (listGallery[position].isLocal) {
+                    listGallery.removeAt(position)
+                } else {
+                    viewModel.deleteMedia(
+                        BuildConfig.BASE_URL + ApiConstant.DELETE_MEDIA + "/" + preferences.getString(
+                            AppConstants.USER_ID
+                        )
+                    )
+                }
                 profileAdapter.notifyDataSetChanged()
-
                 if (listGallery.size > 0) {
                     showGalleryView(true)
                 } else {
@@ -262,6 +327,7 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                 request.path = images[i].path
                 request.isImage = true
                 request.isShowDeleteImage = true
+                request.isLocal = true
                 listGallery.add(0, request)
                 profileAdapter.notifyDataSetChanged()
                 showGalleryView(true)
@@ -280,6 +346,7 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                     request.isShowDeleteImage = true
                     listGallery.add(0, request)
                     profileAdapter.notifyDataSetChanged()
+                    request.isLocal = true
                     totalGalleryVideos++
                     showGalleryView(true)
                 }
@@ -295,5 +362,38 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
             binding.tvNoMedia.visibility = View.VISIBLE
         }
 
+    }
+
+    val mPermissionResult =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            var permission: Int = 0
+            permissions.entries.forEach {
+                Log.e("DEBUG", "${it.key} = ${it.value}")
+                if (it.value)
+                    permission++
+            }
+            if (permission == 2)
+                showMedia()
+        }
+
+    private fun requestProfileUpdate(
+    ): HashMap<String, RequestBody> {
+        val map = HashMap<String, RequestBody>()
+        map[resources.getString(R.string.str_company_name_label)] =
+            toRequestBody(etxName.text.toString())
+        map[resources.getString(R.string.str_agency_name_label)] =
+            toRequestBody(etxSubName.text.toString())
+        map[resources.getString(R.string.str_year_label)] =
+            toRequestBody(etxYear.text.toString())
+        map[resources.getString(R.string.str_bio_label)] =
+            toRequestBody(etxBio.text.toString())
+        map[resources.getString(R.string.str_casting_id)] =
+            toRequestBody(preferences.getString(AppConstants.USER_ID))
+
+        return map
+    }
+
+    private fun toRequestBody(value: String): RequestBody {
+        return value.toRequestBody("text/plain".toMediaTypeOrNull())
     }
 }

@@ -1,7 +1,6 @@
 package com.auditionstreet.castingagency.ui.projects.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -232,12 +231,16 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
             request.gender = resources.getString(R.string.str_female)
         request.age = "$minAge-$maxAge"
 
-        if (etxHeightFt.text.toString().isNotEmpty() && etxHeightIn.text.toString().isNotEmpty())
+        /*if (etxHeightFt.text.toString().isNotEmpty() && etxHeightIn.text.toString().isNotEmpty())
             request.height = etxHeightFt.text.toString() + "'" + etxHeightIn.text.toString()
         else if(etxHeightFt.text.toString().isNotEmpty() && etxHeightIn.text.toString().isEmpty())
             request.height = etxHeightFt.text.toString() + "'"
         else
-        request.height = ""
+        request.height = ""*/
+        request.heightFt = etxHeightFt.text.toString()
+        request.heightIn = etxHeightIn.text.toString()
+
+
         request.bodyType = etxBodyType.text.toString()
         request.exp = etxExperiance.text.toString()
         request.lang = etxLanguages.text.toString()
@@ -246,28 +249,6 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
         request.location = etxLocation.text.toString()
         request.admins = adminList
         viewModel.addProject(request)
-
-        Log.e("id", preferences.getString(AppConstants.USER_ID))
-        Log.e("title", binding.etxTitle.text.toString())
-        Log.e("desc", binding.etxDescription.text.toString())
-        if (binding.chkMale.isChecked)
-            Log.e("gender", "male")
-        else
-            Log.e("gender", "female")
-        Log.e("agee", minAge.toString() + "-" + maxAge.toString())
-        Log.e(
-            "heightt",
-            etxHeightFt.text.toString() + "'" + "\"" + etxHeightIn.text.toString() + "\""
-        )
-        Log.e("body type", etxBodyType.text.toString())
-        Log.e("exp", etxExperiance.text.toString())
-        Log.e("lang", etxLanguages.text.toString())
-        Log.e("from date", tvStartDate.text.toString())
-        Log.e("end date", tvEndDate.text.toString())
-        Log.e("location", etxLocation.text.toString())
-
-        //val request=AddProjectRequest(null)
-        //return request
 
     }
 }
