@@ -12,6 +12,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +30,7 @@ import com.abedelazizshe.lightcompressorlibrary.VideoCompressor
 import com.abedelazizshe.lightcompressorlibrary.VideoQuality
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.customviews.CustomButton
+import com.auditionstreet.castingagency.customviews.CustomEditText
 import com.auditionstreet.castingagency.customviews.CustomTextView
 import com.auditionstreet.castingagency.customviews.CustomTextViewBold
 import com.auditionstreet.castingagency.model.response.AllAdminResponse
@@ -61,6 +64,7 @@ import java.io.IOException
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 fun showImageOrVideoDialog(
     mContext: Context, url: String, isImage: Boolean
@@ -256,6 +260,35 @@ fun showAllUser(
     dialogView.setCancelable(false)
     val rvAllUser = dialogView.findViewById<RecyclerView>(R.id.rvAllUser)
     val btnDone = dialogView.findViewById<CustomButton>(R.id.btnDone)
+    val etSearch = dialogView.findViewById<CustomEditText>(R.id.etSearch)
+
+    etSearch.addTextChangedListener(object : TextWatcher {
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            // TODO Auto-generated method stub
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            // TODO Auto-generated method stub
+        }
+
+        override fun afterTextChanged(s: Editable) {
+
+            // filter your list from your input
+            val temp: ArrayList<AllUsersResponse.Data> = ArrayList()
+            for (d in allUserResponse.data) {
+                //or use .equal(text) with you want equal match
+                //use .toLowerCase() for better matches
+                if (d.name.toLowerCase().contains(s.toString().toLowerCase())) {
+                    temp.add(d)
+                }
+            }
+            //update recyclerview
+            rvUserAdapter.submitList(temp)
+            //you can use runnable postDelayed like 500 ms to delay search text
+        }
+    })
 
     btnDone.setOnClickListener {
         dialogView.cancel()
