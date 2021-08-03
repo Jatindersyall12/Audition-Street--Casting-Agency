@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.castingagency.R
+import com.auditionstreet.castingagency.model.response.ApplicationResponse
 import com.auditionstreet.castingagency.model.response.MyProjectResponse
 import com.auditionstreet.castingagency.utils.playVideo
 import com.auditionstreet.castingagency.utils.showToast
@@ -37,19 +38,19 @@ class AllApplicationsAdapter(
     ) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
-    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MyProjectResponse.Data>() {
+    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ApplicationResponse.Data>() {
 
         override fun areItemsTheSame(
-            oldItem: MyProjectResponse.Data,
-            newItem: MyProjectResponse.Data
+            oldItem: ApplicationResponse.Data,
+            newItem: ApplicationResponse.Data
         ): Boolean {
             return oldItem == newItem
         }
 
         @SuppressLint("DiffUtilEquals")
         override fun areContentsTheSame(
-            oldItem: MyProjectResponse.Data,
-            newItem: MyProjectResponse.Data
+            oldItem: ApplicationResponse.Data,
+            newItem: ApplicationResponse.Data
         ): Boolean {
             return oldItem == newItem
         }
@@ -89,10 +90,25 @@ class AllApplicationsAdapter(
                 holder.itemView.tvBlock.setOnClickListener {
                     mCallback.invoke(1)
                 }
-                playVideo(
-                    mContext, holder.itemView.player_view,
-                    "/storage/emulated/0/Download/1621355555030_VID_20210325_194505209.mp4"
-                )
+                holder.itemView.tvHeight.text = "Height: "+differ.currentList[position].heightFt+
+                        "."+differ.currentList[position].heightIn+" ft"
+                holder.itemView.tvAge.text = "Age: "+differ.currentList[position].age
+                holder.itemView.tvUserName.text = differ.currentList[position].artistName
+                if (!differ.currentList[position].video.isNullOrEmpty()) {
+                    playVideo(
+                        mContext, holder.itemView.player_view,
+                        differ.currentList[position].video
+                        /*"http://techslides.com/demos/sample-videos/small.mp4"*/
+                    )
+                }
+
+                holder.itemView.imgPopUp.setOnClickListener {
+                    if (holder.itemView.clBlockView.visibility == View.VISIBLE){
+                        holder.itemView.clBlockView.visibility = View.GONE
+                    }else{
+                        holder.itemView.clBlockView.visibility = View.VISIBLE
+                    }
+                }
             }
         }
     }
@@ -101,7 +117,7 @@ class AllApplicationsAdapter(
         return differ.currentList.size
     }
 
-    fun submitList(projectResponse: List<MyProjectResponse.Data>) {
+    fun submitList(projectResponse: List<ApplicationResponse.Data>) {
         differ.submitList(projectResponse)
         notifyDataSetChanged()
     }
@@ -111,7 +127,7 @@ class AllApplicationsAdapter(
         val mContext: Context
     ) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(item: MyProjectResponse.Data) = with(itemView) {
+        fun bind(item: ApplicationResponse.Data) = with(itemView) {
         }
     }
 

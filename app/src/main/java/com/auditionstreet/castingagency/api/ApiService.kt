@@ -1,16 +1,16 @@
 package com.silo.api
 
+
+import com.auditionstreet.castingagency.api.ApiConstant.Companion.ACCEPT_REJECT_ARTIST
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.ADD_GROUP
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.ADD_PROJECT
+import com.auditionstreet.castingagency.api.ApiConstant.Companion.BLOCK_ARTIST
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.GET_PROJECTS
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.LOGIN
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.SIGN_UP
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.UPLOAD_MEDIA
 import com.auditionstreet.castingagency.model.response.*
-import com.silo.model.request.AddGroupRequest
-import com.silo.model.request.AddProjectRequest
-import com.silo.model.request.LoginRequest
-import com.silo.model.request.ProjectRequest
+import com.silo.model.request.*
 import com.silo.model.response.LoginResponse
 import com.silo.model.response.SignUpResponse
 import okhttp3.MultipartBody
@@ -68,4 +68,12 @@ interface ApiService {
         @Part profileImageFile: MultipartBody.Part?
     ): Response<UploadMediaResponse>
 
+    @POST(ACCEPT_REJECT_ARTIST)
+    suspend fun acceptRejectArtist(@Body acceptRejectArtistRequest: AcceptRejectArtistRequest): Response<AddGroupResponse>
+
+    @GET
+    suspend fun getApplications(@Url url: String): Response<ApplicationResponse>
+
+    @POST(BLOCK_ARTIST)
+    suspend fun blockArtist(@Body blockArtistRequest: BlockArtistRequest): Response<AddGroupResponse>
 }

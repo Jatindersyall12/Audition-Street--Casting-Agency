@@ -42,7 +42,10 @@ class ApiConstant {
         const val GET_PROFILE = "castingDetail"
         const val ADD_GROUP = "groupCreate"
         const val UPLOAD_MEDIA = "updateCastingProfile"
-        const val DELETE_MEDIA = "deleteMedia"
+        const val DELETE_MEDIA = "common/deleteMedia"
+        const val ACCEPT_REJECT_ARTIST = "common/acceptReject"
+        const val GET_REQUEST_APPLICATIONS = "getProjectRequest"
+        const val BLOCK_ARTIST = "blockArtist"
 
     }
 }

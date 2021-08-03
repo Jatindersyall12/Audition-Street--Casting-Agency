@@ -10,11 +10,13 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.castingagency.R
+import com.auditionstreet.castingagency.model.response.ApplicationResponse
 import com.auditionstreet.castingagency.model.response.MyProjectResponse
+import kotlinx.android.synthetic.main.select_project_item.view.*
 
 class SelectProjectListAdapter(
     val mContext: FragmentActivity, private val mCallback: (
-        mposition: String
+        mProjectId: String
     ) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -45,7 +47,7 @@ class SelectProjectListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ConnectionHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.all_admin_item,
+                R.layout.select_project_item,
                 parent,
                 false
             ),
@@ -58,8 +60,9 @@ class SelectProjectListAdapter(
             is ConnectionHolder -> {
                 holder.bind(differ.currentList[position])
                 // holder.itemView.chkUser.isChecked=differ.currentList[position].isChecked
-
-
+                holder.itemView.clSelectedProject.setOnClickListener {
+                    mCallback.invoke(differ.currentList[position].id.toString())
+                }
             }
         }
     }
@@ -83,11 +86,8 @@ class SelectProjectListAdapter(
     ) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: MyProjectResponse.Data) = with(itemView) {
-            /*itemView.chkUser.setOnCheckedChangeListener { buttonView, isChecked ->
-                differ.currentList[adapterPosition].is_checked = isChecked
-            }
-            itemView.chkUser.isChecked = differ.currentList[adapterPosition].is_checked
-            itemView.tvAdmin.text = item.name*/
+           // itemView.chkUser.isChecked = differ.currentList[adapterPosition].is_checked
+            itemView.tvProjectTitle.text = item.title
         }
     }
 }

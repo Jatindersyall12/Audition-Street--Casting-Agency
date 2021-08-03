@@ -35,6 +35,7 @@ import com.auditionstreet.castingagency.customviews.CustomTextView
 import com.auditionstreet.castingagency.customviews.CustomTextViewBold
 import com.auditionstreet.castingagency.model.response.AllAdminResponse
 import com.auditionstreet.castingagency.model.response.AllUsersResponse
+import com.auditionstreet.castingagency.model.response.ApplicationResponse
 import com.auditionstreet.castingagency.model.response.MyProjectResponse
 import com.auditionstreet.castingagency.ui.home.adapter.SelectProjectListAdapter
 import com.auditionstreet.castingagency.ui.projects.adapter.AllAdminListAdapter
@@ -373,7 +374,7 @@ fun showAdminPopUpAdmins(
 fun showSelectProjectDialog(
     mContext: Context,
     projectResponse: MyProjectResponse,
-    mCallback: (year: String) -> Unit
+    mCallback: (mProjectId: String) -> Unit
 ): Dialog {
     lateinit var rvSelectProject: SelectProjectListAdapter
     val dialogView = Dialog(mContext)
@@ -393,7 +394,7 @@ fun showSelectProjectDialog(
 
     btnDone.setOnClickListener {
         dialogView.cancel()
-        mCallback.invoke("Sd")
+        //mCallback.invoke("Sd")
     }
     if (projectResponse.data!!.size > 0) {
         rvAllUser.visibility = View.VISIBLE
@@ -406,7 +407,8 @@ fun showSelectProjectDialog(
         layoutManager = LinearLayoutManager(mContext)
         rvSelectProject = SelectProjectListAdapter(mContext as FragmentActivity)
         { projectId: String ->
-            Log.e("sd", "Ss")
+            dialogView.cancel()
+            mCallback.invoke(projectId)
         }
         adapter = rvSelectProject
         rvSelectProject.submitList(projectResponse.data)
