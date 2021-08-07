@@ -28,8 +28,10 @@ data class MyProjectResponse(
         val fromDate: String,
         @SerializedName("gender")
         val gender: String,
-        @SerializedName("height")
-        val height: String,
+        @SerializedName("heightFt")
+        val heightFt: String,
+        @SerializedName("heightIn")
+        val heightIn: String,
         @SerializedName("id")
         val id: Int,
         @SerializedName("lang")

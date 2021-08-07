@@ -76,4 +76,7 @@ interface ApiService {
 
     @POST(BLOCK_ARTIST)
     suspend fun blockArtist(@Body blockArtistRequest: BlockArtistRequest): Response<AddGroupResponse>
+
+    @GET
+    suspend fun getHomeData(@Url url: String): Response<HomeApiResponse>
 }

@@ -46,6 +46,7 @@ class ApiConstant {
         const val ACCEPT_REJECT_ARTIST = "common/acceptReject"
         const val GET_REQUEST_APPLICATIONS = "getProjectRequest"
         const val BLOCK_ARTIST = "blockArtist"
+        const val GET_HOME_DATA = "casting/homeAPI/"
 
     }
 }

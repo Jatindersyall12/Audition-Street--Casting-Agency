@@ -6,17 +6,24 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.auditionstreet.castingagency.BuildConfig
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentHomeBinding
+import com.auditionstreet.castingagency.model.response.HomeApiResponse
+import com.auditionstreet.castingagency.model.response.MyProjectResponse
 import com.auditionstreet.castingagency.model.response.ProjectResponse
+import com.auditionstreet.castingagency.storage.preference.Preferences
 import com.auditionstreet.castingagency.ui.home.activity.AllApplicationActivity
 import com.auditionstreet.castingagency.ui.home.activity.OtherUserProfileActivity
 import com.auditionstreet.castingagency.ui.home.activity.ShortlistedActivity
 import com.auditionstreet.castingagency.ui.home.adapter.ApplicationListAdapter
 import com.auditionstreet.castingagency.ui.home.adapter.HomeShortListAdapter
 import com.auditionstreet.castingagency.ui.home.adapter.ProjectListAdapter
+import com.auditionstreet.castingagency.ui.home.viewmodel.HomeViewModel
 import com.auditionstreet.castingagency.ui.home.viewmodel.ProjectViewModel
+import com.auditionstreet.castingagency.ui.projects.fragment.MyProjectsListingFragmentDirections
+import com.auditionstreet.castingagency.utils.AppConstants
 import com.auditionstreet.castingagency.utils.showToast
 import com.leo.wikireviews.utils.livedata.EventObserver
 import com.silo.utils.AppBaseFragment
@@ -24,6 +31,7 @@ import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
 import com.silo.utils.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListener {
@@ -33,12 +41,37 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
     private lateinit var shortListAdapter: HomeShortListAdapter
 
     private val viewModel: ProjectViewModel by viewModels()
+    private val viewModelHome: HomeViewModel by viewModels()
+    private var projectList = ArrayList<MyProjectResponse.Data>()
+    private var applicationList = ArrayList<HomeApiResponse.Data.Request>()
+    private var shortListedList = ArrayList<HomeApiResponse.Data.Accept>()
+
+    @Inject
+    lateinit var preferences: Preferences
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
         setObservers()
         init()
+        getProjectList()
+        getHomeScreenData()
+    }
+
+    private fun getProjectList(){
+        viewModel.getMyProject(
+            BuildConfig.BASE_URL + ApiConstant.GET_MY_PROJECTS + "/" + preferences.getString(
+                AppConstants.USER_ID
+            )
+        )
+    }
+
+    private fun getHomeScreenData(){
+        viewModelHome.getHomeScreenData(
+            BuildConfig.BASE_URL + ApiConstant.GET_HOME_DATA + preferences.getString(
+                AppConstants.USER_ID
+            )
+        )
     }
 
     private fun setListeners() {
@@ -48,7 +81,10 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
 
 
     private fun setObservers() {
-        viewModel.users.observe(viewLifecycleOwner, EventObserver {
+        viewModel.getMyProjects.observe(viewLifecycleOwner, EventObserver {
+            handleApiCallback(it)
+        })
+        viewModelHome.getHomeScreenData.observe(viewLifecycleOwner, EventObserver {
             handleApiCallback(it)
         })
     }
@@ -59,10 +95,16 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
                 hideProgress()
                 when (apiResponse.apiConstant) {
                     ApiConstant.GET_PROJECTS -> {
-                        setAdapter(apiResponse.data as ProjectResponse)
-                        setApplicationAdapter(apiResponse.data)
-                        setShortListAdapter(apiResponse.data)
-
+                       val projectResponse = apiResponse.data as MyProjectResponse
+                        projectList = projectResponse.data
+                        setAdapter(projectResponse)
+                    }
+                    ApiConstant.GET_HOME_DATA ->{
+                        val homeScreenDetailResponse = apiResponse.data as HomeApiResponse
+                        applicationList = homeScreenDetailResponse.data.requestList as ArrayList<HomeApiResponse.Data.Request>
+                        shortListedList = homeScreenDetailResponse.data.acceptList as ArrayList<HomeApiResponse.Data.Accept>
+                        setApplicationAdapter(homeScreenDetailResponse.data.requestList)
+                        setShortListAdapter(homeScreenDetailResponse.data.acceptList)
                     }
                 }
             }
@@ -88,7 +130,11 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
             layoutManager = LinearLayoutManager(activity)
             projectListAdapter = ProjectListAdapter(requireActivity())
             { position: Int ->
-                Log.e("position", "" + position)
+                sharedViewModel.setDirection(
+                    MyProjectsListingFragmentDirections.navigateToProjectDetail(
+                        projectList[position].id.toString()
+                    )
+                )
             }
             adapter = projectListAdapter
             binding.rvSlidingProject.setLayoutManager(
@@ -135,7 +181,7 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
         }
     }
 
-    private fun setAdapter(projectResponse: ProjectResponse) {
+    private fun setAdapter(projectResponse: MyProjectResponse) {
         if (projectResponse.data.size > 0) {
             projectListAdapter.submitList(projectResponse.data)
             binding.rvSlidingProject.visibility = View.VISIBLE
@@ -146,9 +192,9 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
         }
     }
 
-    private fun setApplicationAdapter(projectResponse: ProjectResponse) {
-        if (projectResponse.data.size > 0) {
-            applicationListAdapter.submitList(projectResponse.data)
+    private fun setApplicationAdapter(applicationRequestList: List<HomeApiResponse.Data.Request>) {
+        if (applicationRequestList.size > 0) {
+            applicationListAdapter.submitList(applicationRequestList)
             binding.rvApplication.visibility = View.VISIBLE
             //binding.tvNoRecordFound.visibility = View.GONE
         } else {
@@ -158,9 +204,9 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
 
     }
 
-    private fun setShortListAdapter(projectResponse: ProjectResponse) {
-        if (projectResponse.data.size > 0) {
-            shortListAdapter.submitList(projectResponse.data)
+    private fun setShortListAdapter(shorListedList: List<HomeApiResponse.Data.Accept>) {
+        if (shorListedList.size > 0) {
+            shortListAdapter.submitList(shorListedList)
             binding.rvShortlist.visibility = View.VISIBLE
             //binding.tvNoRecordFound.visibility = View.GONE
         } else {

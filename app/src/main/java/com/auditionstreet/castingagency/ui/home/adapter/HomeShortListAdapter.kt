@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.castingagency.R
+import com.auditionstreet.castingagency.model.response.HomeApiResponse
 import com.auditionstreet.castingagency.model.response.ProjectResponse
-import kotlinx.android.synthetic.main.application_item.view.*
-import kotlinx.android.synthetic.main.project_item.view.*
+import kotlinx.android.synthetic.main.home_shortlist_item.view.*
 import java.util.*
 
 class HomeShortListAdapter(
@@ -22,19 +22,19 @@ class HomeShortListAdapter(
     ) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ProjectResponse.Data>() {
+    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<HomeApiResponse.Data.Accept>() {
 
         override fun areItemsTheSame(
-            oldItem: ProjectResponse.Data,
-            newItem: ProjectResponse.Data
+            oldItem: HomeApiResponse.Data.Accept,
+            newItem: HomeApiResponse.Data.Accept
         ): Boolean {
             return oldItem == newItem
         }
 
         @SuppressLint("DiffUtilEquals")
         override fun areContentsTheSame(
-            oldItem: ProjectResponse.Data,
-            newItem: ProjectResponse.Data
+            oldItem: HomeApiResponse.Data.Accept,
+            newItem: HomeApiResponse.Data.Accept
         ): Boolean {
             return oldItem == newItem
         }
@@ -60,16 +60,20 @@ class HomeShortListAdapter(
                 holder.itemView.tvViewProfile.setOnClickListener {
                     mCallback.invoke(position)
                 }
+                holder.itemView.tvName.text = differ.currentList[position].artistName
+                holder.itemView.tvActress.text = "Coming Soon"
+                holder.itemView.tvAge.text = "Age:"+differ.currentList[position].age
+                holder.itemView.tvHeight.text = "Height: "+differ.currentList[position].heightFt+
+                        "."+differ.currentList[position].heightIn+"ft"
             }
         }
     }
 
     override fun getItemCount(): Int {
-        //return differ.currentList.size
-        return 6
+        return differ.currentList.size
     }
 
-    fun submitList(projectResponse: List<ProjectResponse.Data>) {
+    fun submitList(projectResponse: List<HomeApiResponse.Data.Accept>) {
         differ.submitList(projectResponse)
         notifyDataSetChanged()
     }
@@ -79,10 +83,10 @@ class HomeShortListAdapter(
         val mContext: Context
     ) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(item: ProjectResponse.Data) = with(itemView) {
+        fun bind(item: HomeApiResponse.Data.Accept) = with(itemView) {
             val rnd = Random()
             val color: Int = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
-            itemView.btnViewDetail.background.setTint(color)
+           // itemView.btnViewDetail.background.setTint(color)
             //itemView.tvProject.setTextColor(color)
         }
     }

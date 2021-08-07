@@ -9,5 +9,22 @@
         android:label="@string/str_home_fragment"
         android:name="com.auditionstreet.castingagency.ui.home.fragment.HomeFragment"
         tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/navigateToProjectDetail"
+            app:destination="@id/addProjectDetail"
+            app:enterAnim="@anim/in_from_right"
+            app:exitAnim="@anim/out_to_left"
+            app:popEnterAnim="@anim/in_from_left"
+            app:popExitAnim="@anim/out_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/addProjectDetail"
+        android:name="com.auditionstreet.castingagency.ui.projects.fragment.MyProjectDetailFragment"
+        android:label="@string/str_project_detail"
+        tools:layout="@layout/fragment_my_project_detail" >
+        <argument
+            android:name="projectId"
+            app:argType="string"
+            android:defaultValue="" />
     </fragment>
 </navigation>
