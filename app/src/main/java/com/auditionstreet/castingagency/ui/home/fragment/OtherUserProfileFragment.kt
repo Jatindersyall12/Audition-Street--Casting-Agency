@@ -140,7 +140,8 @@ class OtherUserProfileFragment : AppBaseFragment(R.layout.fragment_other_user),
                 profileResponse.data[0]!!.artistDetails!!.heightIn+" ft"
         binding.tvLanguage.text = "Language: "+profileResponse.data[0]!!.artistDetails!!.language
         binding.headingExperiance.text = profileResponse.data[0]!!.artistDetails!!.year
-
+        binding.headingAppliedProject.text = profileResponse.data[0]!!.totalApplication.toString()
+        binding.headingSelectedProject.text = profileResponse.data[0]!!.acceptedApplication.toString()
        /* if (profileResponse.data[0]!!.artistDetails!!.video!!.isNotEmpty()) {
             Glide.with(this).load(profileResponse.data[0]!!.artistDetails!!.video)
                 .into(binding.imgIntroVideo)

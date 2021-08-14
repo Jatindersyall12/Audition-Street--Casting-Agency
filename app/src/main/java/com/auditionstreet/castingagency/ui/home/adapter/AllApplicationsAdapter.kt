@@ -90,6 +90,9 @@ class AllApplicationsAdapter(
                 holder.itemView.tvBlock.setOnClickListener {
                     mCallback.invoke(1)
                 }
+                holder.itemView.tvProfile.setOnClickListener {
+                    mCallback.invoke(2)
+                }
                 holder.itemView.tvHeight.text = "Height: "+differ.currentList[position].heightFt+
                         "."+differ.currentList[position].heightIn+" ft"
                 holder.itemView.tvAge.text = "Age: "+differ.currentList[position].age

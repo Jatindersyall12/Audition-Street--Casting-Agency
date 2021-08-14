@@ -13,6 +13,10 @@ data class OtherProfileResponse(
     data class Data(
         @SerializedName("artistDetails")
         val artistDetails: ArtistDetails?,
+        @SerializedName("totalApplication")
+        val totalApplication: Int?,
+        @SerializedName("acceptedApplication")
+        val acceptedApplication: Int?,
         @SerializedName("media")
         val media: List<Media?>?
     ) {

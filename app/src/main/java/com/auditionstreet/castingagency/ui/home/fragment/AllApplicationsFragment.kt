@@ -1,5 +1,6 @@
 package com.auditionstreet.castingagency.ui.home.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -14,6 +15,8 @@ import com.auditionstreet.castingagency.databinding.FragmentAllApplicationsBindi
 import com.auditionstreet.castingagency.model.response.ApplicationResponse
 import com.auditionstreet.castingagency.model.response.MyProjectResponse
 import com.auditionstreet.castingagency.storage.preference.Preferences
+import com.auditionstreet.castingagency.ui.home.activity.AllApplicationActivity
+import com.auditionstreet.castingagency.ui.home.activity.OtherUserProfileActivity
 import com.auditionstreet.castingagency.ui.home.adapter.AllApplicationsAdapter
 import com.auditionstreet.castingagency.ui.home.viewmodel.ProjectViewModel
 import com.auditionstreet.castingagency.utils.AppConstants
@@ -164,8 +167,11 @@ class AllApplicationsFragment : AppBaseFragment(R.layout.fragment_all_applicatio
                     blockArtistRequest.artistId = applicationListResponse.data[cardCurrentPosition].artistId
                     blockArtistRequest.castingId = applicationListResponse.data[cardCurrentPosition].castingId
                     viewModel.blockArtist(blockArtistRequest)
+                }else if(position == 2){
+                    AppConstants.ARTISTID = applicationListResponse.data[cardCurrentPosition].artistId.toString()
+                    val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
+                    startActivity(i)
                 }
-
             }
             adapter = allApplicationsAdapter
             manager.setStackFrom(StackFrom.None)
