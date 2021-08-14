@@ -1,9 +1,11 @@
 package com.auditionstreet.castingagency.ui.home.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.LinearInterpolator
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.auditionstreet.castingagency.BuildConfig
 import com.auditionstreet.castingagency.R
@@ -39,6 +41,7 @@ class AllApplicationsFragment : AppBaseFragment(R.layout.fragment_all_applicatio
     private lateinit var projectListResponse: MyProjectResponse
     private var seletcedAplicationList: ArrayList<ApplicationResponse.Data> ?= null
     private var cardCurrentPosition = 0
+    private var applicationId = ""
 
     @Inject
     lateinit var preferences: Preferences
@@ -46,6 +49,7 @@ class AllApplicationsFragment : AppBaseFragment(R.layout.fragment_all_applicatio
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         seletcedAplicationList = ArrayList()
+        applicationId = AppConstants.APPLICATIONID
         setListeners()
         setObservers()
         init()
@@ -96,28 +100,33 @@ class AllApplicationsFragment : AppBaseFragment(R.layout.fragment_all_applicatio
                 hideProgress()
                 when (apiResponse.apiConstant) {
                     ApiConstant.GET_REQUEST_APPLICATIONS -> {
+                        seletcedAplicationList!!.clear()
                             applicationListResponse = apiResponse.data as ApplicationResponse
-                        if (!applicationListResponse.data.isNullOrEmpty()) {
-                            setAdapter(apiResponse.data as ApplicationResponse)
-                        }else{
-                            showToast(requireActivity(), applicationListResponse.msg)
+                        setAdapter(applicationListResponse)
+                        if (!applicationId.isEmpty()){
+                            binding.tvSelectProject.visibility = View.GONE
+                            for (i in 0 until applicationListResponse.data.size){
+                                if (applicationListResponse.data[i].id == applicationId.toInt()){
+                                    seletcedAplicationList!!.add(applicationListResponse.data[i])
+                                }
+                            }
                         }
                     }
                     ApiConstant.GET_MY_PROJECTS -> {
                             projectListResponse = apiResponse.data as MyProjectResponse
-                        /*if (!applicationListResponse.data.isNullOrEmpty()) {
-                            setAdapter(apiResponse.data as ApplicationResponse)
-                        }else{
-                            showToast(requireActivity(), applicationListResponse.msg)
-                        }*/
                     }
                     ApiConstant.ACCEPT_REJECT_ARTIST -> {
                         applicationListResponse.data.removeAt(0)
                         allApplicationsAdapter.submitList(applicationListResponse.data)
                     }
                     ApiConstant.BLOCK_ARTIST -> {
-                        applicationListResponse.data.removeAt(0)
-                        allApplicationsAdapter.submitList(applicationListResponse.data)
+                        val acceptRejectArtistRequest = AcceptRejectArtistRequest()
+                        acceptRejectArtistRequest.castingId = preferences.getString(AppConstants.USER_ID)
+                        acceptRejectArtistRequest.projectId = applicationListResponse.data[cardCurrentPosition].projectId
+                        acceptRejectArtistRequest.id = applicationListResponse.data[cardCurrentPosition].id.toString()
+                        acceptRejectArtistRequest.status = "2"
+                        acceptRejectArtistRequest.userStatus = "2"
+                        viewModel.acceptRejectArtist(acceptRejectArtistRequest)
                     }
                 }
             }
@@ -183,11 +192,11 @@ class AllApplicationsFragment : AppBaseFragment(R.layout.fragment_all_applicatio
     private fun setAdapter(projectResponse: ApplicationResponse) {
         if (projectResponse.data.size > 0) {
             allApplicationsAdapter.submitList(projectResponse.data)
-            // binding.rvShortList.visibility = View.VISIBLE
-            //binding.tvNoRecordFound.visibility = View.GONE
+            binding.cardAllApplications.visibility = View.VISIBLE
+            binding.tvNoAppFound.visibility = View.GONE
         } else {
-            // binding.rvShortList.visibility = View.GONE
-            // binding.tvNoRecordFound.visibility = View.VISIBLE
+            binding.cardAllApplications.visibility = View.GONE
+            binding.tvNoAppFound.visibility = View.VISIBLE
         }
     }
 
@@ -241,6 +250,7 @@ class AllApplicationsFragment : AppBaseFragment(R.layout.fragment_all_applicatio
     private fun showSelectProject() {
         showSelectProjectDialog(requireActivity(), projectListResponse)
         { projectId: String ->
+            seletcedAplicationList!!.clear()
             for (i in 0 until applicationListResponse.data.size){
                 if (applicationListResponse.data[i].projectId == projectId){
                     seletcedAplicationList!!.add(applicationListResponse.data[i])
@@ -248,6 +258,11 @@ class AllApplicationsFragment : AppBaseFragment(R.layout.fragment_all_applicatio
             }
             if (!seletcedAplicationList.isNullOrEmpty()){
                 allApplicationsAdapter.submitList(seletcedAplicationList!!)
+                binding.cardAllApplications.visibility = View.VISIBLE
+                binding.tvNoAppFound.visibility = View.GONE
+            }else{
+                binding.cardAllApplications.visibility = View.GONE
+                binding.tvNoAppFound.visibility = View.VISIBLE
             }
         }
     }

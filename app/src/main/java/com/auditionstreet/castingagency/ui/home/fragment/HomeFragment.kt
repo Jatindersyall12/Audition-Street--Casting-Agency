@@ -131,7 +131,7 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
             projectListAdapter = ProjectListAdapter(requireActivity())
             { position: Int ->
                 sharedViewModel.setDirection(
-                    MyProjectsListingFragmentDirections.navigateToProjectDetail(
+                    HomeFragmentDirections.navigateToProjectDetail(
                         projectList[position].id.toString()
                     )
                 )
@@ -150,8 +150,12 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
             layoutManager = LinearLayoutManager(activity)
             applicationListAdapter = ApplicationListAdapter(requireActivity())
             { position: Int ->
-                val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
+                AppConstants.APPLICATIONID = applicationList[position].id.toString()
+                val i = Intent(requireActivity(), AllApplicationActivity::class.java)
+              //  i.putExtra("applicationId", applicationList[position].id.toString())
                 startActivity(i)
+                /*val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
+                startActivity(i)*/
             }
             adapter = applicationListAdapter
             binding.rvApplication.setLayoutManager(
@@ -167,6 +171,7 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
             layoutManager = LinearLayoutManager(activity)
             shortListAdapter = HomeShortListAdapter(requireActivity())
             { position: Int ->
+                AppConstants.ARTISTID = shortListedList[position].artistId.toString()
                 val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
                 startActivity(i)
             }
@@ -225,6 +230,7 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
                 // requireActivity().finish()
             }
             R.id.tvViewAllApplication -> {
+                AppConstants.APPLICATIONID = ""
                 val i = Intent(requireActivity(), AllApplicationActivity::class.java)
                 // i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(i)

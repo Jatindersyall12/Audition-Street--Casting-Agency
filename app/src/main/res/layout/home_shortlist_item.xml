@@ -72,6 +72,20 @@
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintTop_toBottomOf="@+id/tvActress" />
 
+                <com.auditionstreet.castingagency.customviews.CustomTextView
+                    android:id="@+id/tvChat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_7ssp"
+                    android:text="@string/str_chat"
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tvViewProfile"
+                    />
+
 
                 <com.auditionstreet.castingagency.customviews.CustomTextView
                     android:id="@+id/tvViewProfile"

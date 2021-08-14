@@ -17,6 +17,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class AllApplicationActivity : BaseActivity() {
     private val binding by viewBinding(ActivityAllApplicationsBinding::inflate)
+    private var applicationId = ""
 
     @Inject
     lateinit var preferences: Preferences
@@ -25,6 +26,8 @@ class AllApplicationActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setNavigationController()
+       /* val i = intent
+        applicationId = i.extras!!.getString("applicationId", "")*/
        // setUpToolbar()
     }
 
@@ -41,6 +44,8 @@ class AllApplicationActivity : BaseActivity() {
     }
 
     private fun setNavigationController() {
+        /*val bundle = Bundle()
+        bundle.putString("applicationId", applicationId)*/
         val navController =
             (supportFragmentManager.findFragmentById(R.id.navHostAllApplicationsFragment) as NavHostFragment)
                 .navController

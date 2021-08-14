@@ -79,4 +79,7 @@ interface ApiService {
 
     @GET
     suspend fun getHomeData(@Url url: String): Response<HomeApiResponse>
+
+    @GET
+    suspend fun getOtherProfile(@Url url: String): Response<OtherProfileResponse>
 }

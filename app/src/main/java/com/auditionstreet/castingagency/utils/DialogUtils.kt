@@ -387,15 +387,10 @@ fun showSelectProjectDialog(
             false
         )
     dialogView.setContentView(binding.root)
-    dialogView.setCancelable(false)
+    dialogView.setCancelable(true)
     val rvAllUser = dialogView.findViewById<RecyclerView>(R.id.rvAdmin)
-    val btnDone = dialogView.findViewById<CustomButton>(R.id.btnDone)
     val tvNoRecord = dialogView.findViewById<CustomTextView>(R.id.tvNoRecord)
 
-    btnDone.setOnClickListener {
-        dialogView.cancel()
-        //mCallback.invoke("Sd")
-    }
     if (projectResponse.data!!.size > 0) {
         rvAllUser.visibility = View.VISIBLE
         tvNoRecord.visibility = View.GONE

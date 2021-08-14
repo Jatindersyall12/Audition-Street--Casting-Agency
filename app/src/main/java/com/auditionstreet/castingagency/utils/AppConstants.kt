@@ -21,6 +21,8 @@ object AppConstants {
     const val SPEED ="speed"
     const val FPS ="fps"
     const val SETTING_CHANGED = "setting_changed"
+    var APPLICATIONID = ""
+    var ARTISTID = ""
 
     var SELECTED = "1"
     var UNSELECTED = "0"

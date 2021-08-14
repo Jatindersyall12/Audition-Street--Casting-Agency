@@ -43,6 +43,10 @@ data class HomeApiResponse(
             val heightIn: String,
             @SerializedName("age")
             val age: String,
+            @SerializedName("gender")
+            val gender: String,
+            @SerializedName("image")
+            val image: String,
             @SerializedName("video")
             val video: String
         )
@@ -74,6 +78,10 @@ data class HomeApiResponse(
             val heightIn: String,
             @SerializedName("age")
             val age: String,
+            @SerializedName("gender")
+            val gender: String,
+            @SerializedName("image")
+            val image: String,
             @SerializedName("video")
             val video: String
         )

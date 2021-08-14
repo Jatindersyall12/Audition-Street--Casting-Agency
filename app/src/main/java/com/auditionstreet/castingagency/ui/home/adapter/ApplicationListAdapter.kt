@@ -64,12 +64,16 @@ class ApplicationListAdapter(
                     mCallback.invoke(position)
                 }
                 holder.itemView.tvName.text = differ.currentList[position].artistName
-                holder.itemView.tvActress.text = "Coming Soon"
+                if (differ.currentList[position].gender.equals("Male")){
+                    holder.itemView.tvActress.text = "Actor"
+                }else{
+                    holder.itemView.tvActress.text = "Actress"
+                }
                 holder.itemView.tvAge.text = "Age:"+differ.currentList[position].age
                 holder.itemView.tvHeight.text = "Height: "+differ.currentList[position].heightFt+
                         "."+differ.currentList[position].heightIn+"ft"
-                /*Glide.with(mContext).load(differ.currentList[position].a)
-                    .into(holder.itemView.imgRound)*/
+                Glide.with(mContext).load(differ.currentList[position].image)
+                    .into(holder.itemView.imgRound)
                // holder.bind(differ.currentList[position])
             }
         }

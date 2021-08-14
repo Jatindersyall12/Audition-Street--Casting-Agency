@@ -24,10 +24,10 @@
 
         <ImageView
             android:id="@+id/imgPlay"
-            android:layout_width="@dimen/_13sdp"
-            android:layout_height="@dimen/_13sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:contentDescription="@string/str_no"
-            android:src="@drawable/ic_add_icon"
+            android:src="@drawable/ic_play"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -38,11 +38,11 @@
             android:id="@+id/imgDelete"
             android:layout_width="@dimen/_10sdp"
             android:layout_height="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_23sdp"
-            android:layout_marginEnd="@dimen/_13sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:contentDescription="@string/str_add_media"
-            android:src="@drawable/ic_add_icon"
-            android:visibility="gone"
+            android:src="@drawable/ic_delete"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

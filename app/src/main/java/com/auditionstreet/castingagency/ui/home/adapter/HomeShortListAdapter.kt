@@ -13,7 +13,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.model.response.HomeApiResponse
 import com.auditionstreet.castingagency.model.response.ProjectResponse
+import com.auditionstreet.castingagency.utils.showToast
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.home_shortlist_item.view.*
+import kotlinx.android.synthetic.main.home_shortlist_item.view.imgRound
+import kotlinx.android.synthetic.main.home_shortlist_item.view.tvActress
+import kotlinx.android.synthetic.main.home_shortlist_item.view.tvAge
+import kotlinx.android.synthetic.main.home_shortlist_item.view.tvHeight
+import kotlinx.android.synthetic.main.home_shortlist_item.view.tvName
+import kotlinx.android.synthetic.main.home_shortlist_item.view.tvViewProfile
 import java.util.*
 
 class HomeShortListAdapter(
@@ -60,11 +68,20 @@ class HomeShortListAdapter(
                 holder.itemView.tvViewProfile.setOnClickListener {
                     mCallback.invoke(position)
                 }
+                holder.itemView.tvChat.setOnClickListener {
+                    showToast(mContext, "Coming Soon")
+                }
                 holder.itemView.tvName.text = differ.currentList[position].artistName
-                holder.itemView.tvActress.text = "Coming Soon"
+                if (differ.currentList[position].gender.equals("Male")){
+                    holder.itemView.tvActress.text = mContext.getString(R.string.actor)
+                }else{
+                    holder.itemView.tvActress.text = mContext.getString(R.string.actress)
+                }
                 holder.itemView.tvAge.text = "Age:"+differ.currentList[position].age
                 holder.itemView.tvHeight.text = "Height: "+differ.currentList[position].heightFt+
                         "."+differ.currentList[position].heightIn+"ft"
+                Glide.with(mContext).load(differ.currentList[position].image)
+                    .into(holder.itemView.imgRound)
             }
         }
     }

@@ -16,6 +16,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.auditionstreet.castingagency.customviews.CustomTextView
+            android:id="@+id/tvNoAppFound"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/no_application_found"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            android:gravity="center"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

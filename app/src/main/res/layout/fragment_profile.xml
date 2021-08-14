@@ -44,7 +44,7 @@
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
-                android:background="@drawable/ic_icon_add_project"
+                android:background="@drawable/ic_edit"
                 android:contentDescription="@string/str_year"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -219,77 +219,58 @@
                 app:layout_constraintTop_toBottomOf="@+id/layLinear" />
 
             <com.auditionstreet.castingagency.customviews.CustomTextViewBold
-                android:id="@+id/tvImages"
+                android:id="@+id/textWork"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_18sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="@string/str_image"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="@string/str_work"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_18sdp"
+                android:textSize="@dimen/_17sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/viewTwo" />
 
             <com.auditionstreet.castingagency.customviews.CustomTextViewBold
-                android:id="@+id/tvViewAllImages"
+                android:id="@+id/tvAddMedia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:drawablePadding="@dimen/_3sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
-                android:drawableEnd="@drawable/ic_icon_view_all"
-                android:text="@string/str_view_all"
-                android:textColor="@color/orange"
-                android:textSize="@dimen/_13sdp"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/viewTwo"/>                app:layout_constraintRight_toRightOf="parent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvImages"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingEnd="@dimen/_10sdp"
-                android:clipToPadding="false"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_90sdp"
                 android:layout_marginTop="@dimen/_20sdp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvImages" />
-
-            <com.auditionstreet.castingagency.customviews.CustomTextViewBold
-                android:id="@+id/VideosText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginStart="@dimen/_18sdp"
-                android:text="@string/str_video"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_18sdp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rvImages" />
-
-            <com.auditionstreet.castingagency.customviews.CustomTextViewBold
-                android:id="@+id/tvViewAllVideos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
                 android:drawablePadding="@dimen/_3sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
-                android:drawableEnd="@drawable/ic_icon_view_all"
-                android:text="@string/str_view_all"
+                android:text="@string/str_add_media"
                 android:textColor="@color/orange"
-                android:textSize="@dimen/_13sdp"
-                app:layout_constraintTop_toBottomOf="@+id/rvImages"
-                app:layout_constraintRight_toRightOf="parent" />
+                android:textSize="@dimen/_14sdp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewTwo" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvVideos"
+            <com.auditionstreet.castingagency.customviews.CustomTextViewBold
+                android:id="@+id/tvNoMedia"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_180sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:clipToPadding="false"
+                android:text="@string/tv_media"
+                android:textColor="@color/orange"
+                android:gravity="center"
+                android:textSize="@dimen/_14sdp"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
-                android:clipToPadding="false"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_90sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/VideosText" />
+                app:layout_constraintTop_toBottomOf="@id/textWork"
+
+                />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvWork"
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_180sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:clipToPadding="false"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textWork" />
 
             <com.auditionstreet.castingagency.customviews.CustomTextViewBold
                 android:id="@+id/headingBio"
@@ -301,7 +282,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_18sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rvVideos" />
+                app:layout_constraintTop_toBottomOf="@id/rvWork" />
 
             <com.auditionstreet.castingagency.customviews.CustomTextView
                 android:id="@+id/tvBio"
