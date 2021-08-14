@@ -113,6 +113,7 @@ class AllApplicationsFragment : AppBaseFragment(R.layout.fragment_all_applicatio
                                     seletcedAplicationList!!.add(applicationListResponse.data[i])
                                 }
                             }
+                            allApplicationsAdapter.submitList(seletcedAplicationList!!)
                         }
                     }
                     ApiConstant.GET_MY_PROJECTS -> {
