@@ -122,6 +122,13 @@ class AllApplicationsFragment : AppBaseFragment(R.layout.fragment_all_applicatio
                     ApiConstant.ACCEPT_REJECT_ARTIST -> {
                         applicationListResponse.data.removeAt(0)
                         allApplicationsAdapter.submitList(applicationListResponse.data)
+                        if (!applicationListResponse.data.isNullOrEmpty()){
+                            binding.cardAllApplications.visibility = View.VISIBLE
+                            binding.tvNoAppFound.visibility = View.GONE
+                        }else{
+                            binding.cardAllApplications.visibility = View.GONE
+                            binding.tvNoAppFound.visibility = View.VISIBLE
+                        }
                     }
                     ApiConstant.BLOCK_ARTIST -> {
                         val acceptRejectArtistRequest = AcceptRejectArtistRequest()

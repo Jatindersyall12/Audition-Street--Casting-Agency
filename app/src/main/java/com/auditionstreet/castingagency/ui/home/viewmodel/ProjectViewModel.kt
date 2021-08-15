@@ -48,16 +48,18 @@ class ProjectViewModel @ViewModelInject constructor(
     val getMyProjects: LiveData<Event<Resource<MyProjectResponse>>>
         get() = _my_projects
 
-    private fun getProject(projectRequest: ProjectRequest) {
+
+
+     fun getProject(url: String) {
         viewModelScope.launch {
-            _users.postValue(Event(Resource.loading(ApiConstant.GET_PROJECTS, null)))
+            _users.postValue(Event(Resource.loading(ApiConstant.GET_SHORTLISTED_LIST, null)))
             if (networkHelper.isNetworkConnected()) {
-                projectRepository.getProjects(projectRequest).let {
+                projectRepository.getShortListedApp(url).let {
                     if (it.isSuccessful && it.body() != null) {
                         _users.postValue(
                             Event(
                                 Resource.success(
-                                    ApiConstant.GET_PROJECTS,
+                                    ApiConstant.GET_SHORTLISTED_LIST,
                                     it.body()
                                 )
                             )
@@ -66,7 +68,7 @@ class ProjectViewModel @ViewModelInject constructor(
                         _users.postValue(
                             Event(
                                 Resource.error(
-                                    ApiConstant.GET_PROJECTS,
+                                    ApiConstant.GET_SHORTLISTED_LIST,
                                     it.code(),
                                     it.errorBody().toString(),
                                     null

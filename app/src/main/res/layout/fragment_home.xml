@@ -19,6 +19,17 @@
             app:layout_constraintTop_toTopOf="parent"
             />
 
+        <com.auditionstreet.castingagency.customviews.CustomTextView
+            android:id="@+id/tvNoProjectFound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_project_found"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tvApplication"/>
+
         <com.auditionstreet.castingagency.customviews.CustomTextViewBold
             android:id="@+id/tvApplication"
             android:layout_width="wrap_content"
@@ -91,6 +102,18 @@
             android:background="@color/dim_grey"
             android:layout_height="match_parent"
              />
+
+            <com.auditionstreet.castingagency.customviews.CustomTextView
+                android:id="@+id/tvNoAppFoundCurrent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_application_found"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -109,6 +132,17 @@
             android:layout_height="match_parent"
             android:background="@color/dim_grey"
             />
+
+            <com.auditionstreet.castingagency.customviews.CustomTextView
+                android:id="@+id/tvNoAppFoundSortListed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_application_found"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout></ScrollView>
 </layout>

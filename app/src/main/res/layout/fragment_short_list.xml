@@ -27,5 +27,17 @@
             android:layout_marginBottom="@dimen/_45sdp"
             android:background="@color/white"
             app:layout_constraintTop_toBottomOf="@+id/tvSelected" />
+
+        <com.auditionstreet.castingagency.customviews.CustomTextView
+            android:id="@+id/tvNoDataFound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_application_found"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/tvSelected"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

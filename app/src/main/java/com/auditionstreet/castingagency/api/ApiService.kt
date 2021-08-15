@@ -46,8 +46,8 @@ interface ApiService {
     @GET
     suspend fun getMyProjectDetail(@Url url: String): Response<MyProjectDetailResponse>
 
-    @POST(GET_PROJECTS)
-    suspend fun getProjects(@Body projectRequest: ProjectRequest): Response<ProjectResponse>
+    @GET
+    suspend fun getProjects(@Url url: String): Response<ProjectResponse>
 
     @POST(ADD_GROUP)
     suspend fun addGroup(@Body groupRequest: AddGroupRequest): Response<AddGroupResponse>

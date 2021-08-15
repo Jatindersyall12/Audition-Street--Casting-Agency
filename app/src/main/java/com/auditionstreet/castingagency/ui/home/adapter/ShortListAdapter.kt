@@ -13,8 +13,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.model.response.ProjectResponse
 import com.auditionstreet.castingagency.utils.showToast
+import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.home_shortlist_item.view.*
 import kotlinx.android.synthetic.main.project_item.view.*
 import kotlinx.android.synthetic.main.shortlist_item.view.*
+import kotlinx.android.synthetic.main.shortlist_item.view.imgRound
+import kotlinx.android.synthetic.main.shortlist_item.view.tvActress
+import kotlinx.android.synthetic.main.shortlist_item.view.tvAge
+import kotlinx.android.synthetic.main.shortlist_item.view.tvChat
+import kotlinx.android.synthetic.main.shortlist_item.view.tvHeight
+import kotlinx.android.synthetic.main.shortlist_item.view.tvName
+import kotlinx.android.synthetic.main.shortlist_item.view.tvViewProfile
 import java.util.*
 
 class ShortListAdapter(
@@ -59,7 +68,20 @@ class ShortListAdapter(
             is ConnectionHolder -> {
                 holder.itemView.imgFavourite.setOnClickListener(this)
                 holder.itemView.tvChat.setOnClickListener(this)
-                holder.itemView.tvViewProfile.setOnClickListener(this)
+                holder.itemView.tvViewProfile.setOnClickListener {
+                  mCallback.invoke(position)
+                }
+                holder.itemView.tvName.text = differ.currentList[position].artistName
+                if (differ.currentList[position].gender.equals("Male")){
+                    holder.itemView.tvActress.text = mContext.getString(R.string.actor)
+                }else{
+                    holder.itemView.tvActress.text = mContext.getString(R.string.actress)
+                }
+                holder.itemView.tvAge.text = "Age:"+differ.currentList[position].age
+                holder.itemView.tvHeight.text = "Height: "+differ.currentList[position].heightFt+
+                        "."+differ.currentList[position].heightIn+"ft"
+                Glide.with(mContext).load(differ.currentList[position].image)
+                    .into(holder.itemView.imgRound)
 
 //                holder.bind(differ.currentList[position])
             }
@@ -67,8 +89,7 @@ class ShortListAdapter(
     }
 
     override fun getItemCount(): Int {
-        //return differ.currentList.size
-        return 6
+        return differ.currentList.size
     }
 
     fun submitList(projectResponse: List<ProjectResponse.Data>) {
@@ -85,6 +106,7 @@ class ShortListAdapter(
             val rnd = Random()
             val color: Int = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
             itemView.btnViewDetail.background.setTint(color)
+
             //itemView.tvProject.setTextColor(color)
         }
     }
@@ -98,10 +120,6 @@ class ShortListAdapter(
                 showToast(mContext, mContext.resources.getString(R.string.str_coming_soon))
 
             }
-            R.id.tvViewProfile -> {
-                showToast(mContext, mContext.resources.getString(R.string.str_coming_soon))
-
-            }
-        }
+                    }
     }
 }

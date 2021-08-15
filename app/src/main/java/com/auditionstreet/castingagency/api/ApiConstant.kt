@@ -48,6 +48,7 @@ class ApiConstant {
         const val BLOCK_ARTIST = "blockArtist"
         const val GET_HOME_DATA = "casting/homeAPI/"
         const val  GET_OTHER_PROFILE = "artistDetail"
+        const val GET_SHORTLISTED_LIST = "casting/acceptedApplication"
 
     }
 }

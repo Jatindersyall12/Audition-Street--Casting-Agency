@@ -14,7 +14,7 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class ProjectRepository @Inject constructor(val apiService: ApiService) {
-    suspend fun getProjects(projectRequest: ProjectRequest):Response<ProjectResponse> =apiService.getProjects(projectRequest)
+    suspend fun getShortListedApp(url: String):Response<ProjectResponse> =apiService.getProjects(url)
     suspend fun getApplications(url: String):Response<ApplicationResponse> =apiService.getApplications(url)
     suspend fun getProjects(url: String):Response<MyProjectResponse> =apiService.getMyProjects(url)
     suspend fun acceptRejectArtist(acceptRejectArtistRequest: AcceptRejectArtistRequest):Response<AddGroupResponse> =apiService.acceptRejectArtist(acceptRejectArtistRequest)

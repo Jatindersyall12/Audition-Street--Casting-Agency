@@ -15,11 +15,9 @@ import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.model.response.ApplicationResponse
 import com.auditionstreet.castingagency.model.response.MyProjectResponse
 import com.auditionstreet.castingagency.utils.playVideo
+import com.auditionstreet.castingagency.utils.showProgressDialog
 import com.auditionstreet.castingagency.utils.showToast
-import com.google.android.exoplayer2.DefaultLoadControl
-import com.google.android.exoplayer2.ExoPlayerFactory
-import com.google.android.exoplayer2.LoadControl
-import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
@@ -38,6 +36,7 @@ class AllApplicationsAdapter(
     ) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
+    private lateinit var player: SimpleExoPlayer
     val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ApplicationResponse.Data>() {
 
         override fun areItemsTheSame(
@@ -83,6 +82,7 @@ class AllApplicationsAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ConnectionHolder -> {
+                player = ExoPlayerFactory.newSimpleInstance(mContext)
                 holder.bind(differ.currentList[position])
                 holder.itemView.tvShortList.setOnClickListener {
                     mCallback.invoke(0)
@@ -104,6 +104,18 @@ class AllApplicationsAdapter(
                         /*"http://techslides.com/demos/sample-videos/small.mp4"*/
                     )
                 }
+                player.addListener(object : Player.EventListener {
+                    override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
+                       val showProgress = showProgressDialog(mContext)
+                        if (playbackState == Player.STATE_BUFFERING) {
+                            showProgress.show()
+                            holder.itemView.player_view.visibility = View.GONE
+                        } else {
+                            showProgress.hide()
+                            holder.itemView.player_view.visibility = View.VISIBLE
+                        }
+                    }
+                })
 
                 holder.itemView.imgPopUp.setOnClickListener {
                     if (holder.itemView.clBlockView.visibility == View.VISIBLE){
