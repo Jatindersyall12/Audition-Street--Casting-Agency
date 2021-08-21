@@ -39,6 +39,7 @@ class AllApplicationActivity : BaseActivity() {
             val i = Intent(this, HomeActivity::class.java)
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(i)
+            finish()
         } else
             super.onBackPressed()
     }

@@ -39,7 +39,9 @@ data class ApplicationResponse(
         @SerializedName("age")
         val age: String,
         @SerializedName("video")
-        val video: String
+        val video: String,
+        @SerializedName("gender")
+        val gender: String
 
     )
 }

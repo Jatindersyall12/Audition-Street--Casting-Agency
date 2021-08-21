@@ -28,6 +28,8 @@ import com.google.android.exoplayer2.upstream.DefaultAllocator
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import kotlinx.android.synthetic.main.all_application_item.view.*
+import kotlinx.android.synthetic.main.all_application_item.view.tvAge
+import kotlinx.android.synthetic.main.all_application_item.view.tvHeight
 
 @Suppress("DEPRECATION")
 class AllApplicationsAdapter(
@@ -92,6 +94,11 @@ class AllApplicationsAdapter(
                 }
                 holder.itemView.tvProfile.setOnClickListener {
                     mCallback.invoke(2)
+                }
+                if (differ.currentList[position].gender.equals("Male")){
+                    holder.itemView.tvType.text = mContext.getString(R.string.actor)
+                }else{
+                    holder.itemView.tvType.text = mContext.getString(R.string.actress)
                 }
                 holder.itemView.tvHeight.text = "Height: "+differ.currentList[position].heightFt+
                         "."+differ.currentList[position].heightIn+" ft"
