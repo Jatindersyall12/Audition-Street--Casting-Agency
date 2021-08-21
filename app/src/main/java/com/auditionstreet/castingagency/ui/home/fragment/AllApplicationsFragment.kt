@@ -173,7 +173,7 @@ class AllApplicationsFragment : AppBaseFragment(R.layout.fragment_all_applicatio
                 }else if(position == 1){
                     val blockArtistRequest = BlockArtistRequest()
                     blockArtistRequest.artistId = applicationListResponse.data[cardCurrentPosition].artistId
-                    blockArtistRequest.castingId = applicationListResponse.data[cardCurrentPosition].castingId
+                    blockArtistRequest.castingId =  preferences.getString(AppConstants.USER_ID)
                     viewModel.blockArtist(blockArtistRequest)
                 }else if(position == 2){
                     AppConstants.ARTISTID = applicationListResponse.data[cardCurrentPosition].artistId.toString()
