@@ -1,148 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_marginBottom="@dimen/_15sdp"
-    android:layout_marginTop="@dimen/_30ssp"
-    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layScroll"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_140sdp"
-            android:id="@+id/rvSlidingProject"
-            app:layout_constraintTop_toTopOf="parent"
-            />
-
-        <com.auditionstreet.castingagency.customviews.CustomTextView
-            android:id="@+id/tvNoProjectFound"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/no_project_found"
-            android:visibility="gone"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/tvApplication"/>
-
-        <com.auditionstreet.castingagency.customviews.CustomTextViewBold
-            android:id="@+id/tvApplication"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/str_application"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_14sdp"
-            android:layout_marginStart="@dimen/_15sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rvSlidingProject"
-            />
-
-        <com.auditionstreet.castingagency.customviews.CustomTextViewBold
-            android:id="@+id/tvShortListMore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:drawablePadding="@dimen/_3sdp"
-            android:drawableEnd="@drawable/ic_icon_view_all"
-            android:text="@string/str_view_all"
-            android:textColor="@color/orange"
-            android:textSize="@dimen/_13sdp"
-            app:layout_constraintTop_toBottomOf="@id/layApplication"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
-
-        <com.auditionstreet.castingagency.customviews.CustomTextViewBold
-            android:id="@+id/tvShortlist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/str_shortlist"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:layout_marginStart="@dimen/_20sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layApplication"
-            />
-
-        <com.auditionstreet.castingagency.customviews.CustomTextViewBold
-            android:id="@+id/tvViewAllApplication"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:drawablePadding="@dimen/_3sdp"
-            android:drawableEnd="@drawable/ic_icon_view_all"
-            android:text="@string/str_view_all"
-            android:textColor="@color/orange"
-            android:textSize="@dimen/_13sdp"
-            app:layout_constraintTop_toBottomOf="@+id/rvSlidingProject"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layApplication"
-            android:layout_width="match_parent"
-            android:background="@color/dim_grey"
-            android:layout_height="@dimen/_115sdp"
-            android:layout_marginTop="@dimen/_12sdp"
-            app:layout_constraintTop_toBottomOf="@+id/tvApplication">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvApplication"
-            android:layout_width="match_parent"
-            android:paddingStart="@dimen/_10sdp"
-            android:clipToPadding="false"
-            android:background="@color/dim_grey"
-            android:layout_height="match_parent"
-             />
-
-            <com.auditionstreet.castingagency.customviews.CustomTextView
-                android:id="@+id/tvNoAppFoundCurrent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no_application_found"
-                android:visibility="gone"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_6ssp"
+        android:layout_marginBottom="@dimen/_15sdp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:layout_height="@dimen/_115sdp"
-            app:layout_constraintTop_toBottomOf="@id/tvShortlist"
-            android:background="@color/dim_grey"
-            >
+            android:layout_height="wrap_content"
+            android:background="@color/white">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvShortlist"
-            android:paddingStart="@dimen/_10sdp"
-            android:clipToPadding="false"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/dim_grey"
-            />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layPending"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_160sdp"
+                android:background="@color/dim_grey"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <com.auditionstreet.castingagency.customviews.CustomTextView
-                android:id="@+id/tvNoAppFoundSortListed"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvSlidingProject"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_height="@dimen/_160sdp"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.auditionstreet.castingagency.customviews.CustomTextView
+                    android:id="@+id/tvNoProjectFound"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_project_found"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.auditionstreet.castingagency.customviews.CustomTextViewBold
+                android:id="@+id/tvApplication"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/no_application_found"
-                android:visibility="gone"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:text="@string/str_application"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/layPending" />
+
+            <com.auditionstreet.castingagency.customviews.CustomTextViewBold
+                android:id="@+id/tvShortListMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:drawableEnd="@drawable/ic_icon_view_all"
+                android:drawablePadding="@dimen/_3sdp"
+                android:text="@string/str_view_all"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_13sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layApplication" />
+
+            <com.auditionstreet.castingagency.customviews.CustomTextViewBold
+                android:id="@+id/tvShortlist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:text="@string/str_shortlist"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layApplication" />
+
+            <com.auditionstreet.castingagency.customviews.CustomTextViewBold
+                android:id="@+id/tvViewAllApplication"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:drawableEnd="@drawable/ic_icon_view_all"
+                android:drawablePadding="@dimen/_3sdp"
+                android:text="@string/str_view_all"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_13sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layPending" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layApplication"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_115sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:background="@color/dim_grey"
+                app:layout_constraintTop_toBottomOf="@+id/tvApplication">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvApplication"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/dim_grey"
+                    android:clipToPadding="false"
+                    android:paddingStart="@dimen/_10sdp" />
+
+                <com.auditionstreet.castingagency.customviews.CustomTextView
+                    android:id="@+id/tvNoAppFoundCurrent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_application_found"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_115sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:background="@color/dim_grey"
+                app:layout_constraintTop_toBottomOf="@id/tvShortlist">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvShortlist"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/dim_grey"
+                    android:clipToPadding="false"
+                    android:paddingStart="@dimen/_10sdp" />
+
+                <com.auditionstreet.castingagency.customviews.CustomTextView
+                    android:id="@+id/tvNoAppFoundSortListed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_shortlisted_project"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout></ScrollView>
+    </ScrollView>
 </layout>

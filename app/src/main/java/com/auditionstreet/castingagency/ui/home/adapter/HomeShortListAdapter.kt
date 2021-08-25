@@ -80,8 +80,10 @@ class HomeShortListAdapter(
                 holder.itemView.tvAge.text = "Age:"+differ.currentList[position].age
                 holder.itemView.tvHeight.text = "Height: "+differ.currentList[position].heightFt+
                         "."+differ.currentList[position].heightIn+"ft"
-                Glide.with(mContext).load(differ.currentList[position].image)
-                    .into(holder.itemView.imgRound)
+                if(differ.currentList[position].image.isNotEmpty()) {
+                    Glide.with(mContext).load(differ.currentList[position].image)
+                        .into(holder.itemView.imgRound)
+                }
             }
         }
     }

@@ -152,13 +152,17 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
     }
 
     private fun setWorkAdapter(profileResponse: ProfileResponse) {
-        if (profileResponse.data!![0]!!.castingDetails!!.logo!!.isNotEmpty()) {
-            Glide.with(this).load(profileResponse.data[0]!!.castingDetails!!.logo)
+        if (profileResponse.data!![0]!!.castingDetails!!.image!!.isNotEmpty()) {
+            Glide.with(this).load(profileResponse.data[0]!!.castingDetails!!.image)
                 .into(binding.imgProfile)
         }
-        binding.etxName.setText(profileResponse.data[0]!!.castingDetails!!.name)
-        binding.etxSubName.setText(profileResponse.data[0]!!.castingDetails!!.companyName)
-        binding.etxYearinIndustry.setText(profileResponse.data[0]!!.castingDetails!!.year)
+        preferences.setString(
+            AppConstants.USER_IMAGE,
+            profileResponse.data[0]!!.castingDetails!!.image
+        )
+        binding.etxName.setText(profileResponse.data[0]!!.castingDetails!!.companyName)
+        //binding.etxSubName.setText(profileResponse.data[0]!!.castingDetails!!.companyName)
+        binding.etxYear.setText(profileResponse.data[0]!!.castingDetails!!.year)
         listGallery.clear()
         for (i in 0 until profileResponse.data[0]!!.media!!.size) {
             val request = WorkGalleryRequest()

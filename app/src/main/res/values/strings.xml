@@ -196,6 +196,8 @@
     <string name="str_loading">Please wait..</string>
     <string name="no_application_found">No Application Found</string>
     <string name="no_project_found">No Project Found</string>
+    <string name="no_pending_project">No Pending Project Found</string>
+    <string name="no_shortlisted_project">No Shortlisted Project Found</string>
 
     <!-- Other User Profile -->
     <string name="str_img">Image</string>

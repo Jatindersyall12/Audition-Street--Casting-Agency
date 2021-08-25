@@ -122,6 +122,7 @@ class AllApplicationsFragment : AppBaseFragment(R.layout.fragment_all_applicatio
                     ApiConstant.ACCEPT_REJECT_ARTIST -> {
                         applicationListResponse.data.removeAt(0)
                         allApplicationsAdapter.submitList(applicationListResponse.data)
+                        showToast(requireActivity(), "Profile Accepted")
                         if (!applicationListResponse.data.isNullOrEmpty()){
                             binding.cardAllApplications.visibility = View.VISIBLE
                             binding.tvNoAppFound.visibility = View.GONE
@@ -131,13 +132,15 @@ class AllApplicationsFragment : AppBaseFragment(R.layout.fragment_all_applicatio
                         }
                     }
                     ApiConstant.BLOCK_ARTIST -> {
-                        val acceptRejectArtistRequest = AcceptRejectArtistRequest()
+                        /*val acceptRejectArtistRequest = AcceptRejectArtistRequest()
                         acceptRejectArtistRequest.castingId = preferences.getString(AppConstants.USER_ID)
                         acceptRejectArtistRequest.projectId = applicationListResponse.data[cardCurrentPosition].projectId
                         acceptRejectArtistRequest.id = applicationListResponse.data[cardCurrentPosition].id.toString()
                         acceptRejectArtistRequest.status = "2"
                         acceptRejectArtistRequest.userStatus = "2"
-                        viewModel.acceptRejectArtist(acceptRejectArtistRequest)
+                        viewModel.acceptRejectArtist(acceptRejectArtistRequest)*/
+                        getAllApplications()
+                        showToast(requireActivity(), "Blocked Successfully")
                     }
                 }
             }
@@ -226,7 +229,7 @@ class AllApplicationsFragment : AppBaseFragment(R.layout.fragment_all_applicatio
             acceptRejectArtistRequest.status = "2"
             acceptRejectArtistRequest.userStatus = "2"
             viewModel.acceptRejectArtist(acceptRejectArtistRequest)
-            showToast(requireActivity(), "Rejected")
+            showToast(requireActivity(), "Profile Rejected")
         }
         else {
             val acceptRejectArtistRequest = AcceptRejectArtistRequest()
@@ -236,7 +239,7 @@ class AllApplicationsFragment : AppBaseFragment(R.layout.fragment_all_applicatio
             acceptRejectArtistRequest.status = "1"
             acceptRejectArtistRequest.userStatus = "2"
             viewModel.acceptRejectArtist(acceptRejectArtistRequest)
-            showToast(requireActivity(), "Accpeted")
+            showToast(requireActivity(), "Profile Accepted")
         }
     }
 

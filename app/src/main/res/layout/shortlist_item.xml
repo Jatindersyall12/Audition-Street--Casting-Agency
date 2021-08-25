@@ -126,7 +126,7 @@
         android:layout_width="@dimen/_57sdp"
         android:layout_height="@dimen/_57sdp"
         android:layout_marginTop="@dimen/_29sdp"
-        android:src="@drawable/dummy_image"
+        android:src="@drawable/ic_dummy_profile_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:siBorderColor="@color/black"

@@ -286,12 +286,12 @@
 
             <com.auditionstreet.castingagency.customviews.CustomTextView
                 android:id="@+id/tvBio"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_20sdp"
-                android:paddingLeft="@dimen/_17sdp"
+                android:paddingLeft="@dimen/_2sdp"
                 android:text="I am Orion Flinch and for the last 3 years, I worked as a photo model. I have a huge passion for acting and I love being in front of the camera. I mainly shoot fashion, and swimwear but I also enjoy creative projects like bodypaint or dress up. I am currently modelling for XYZ  Model Agency and individual photographers."
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_14sdp"

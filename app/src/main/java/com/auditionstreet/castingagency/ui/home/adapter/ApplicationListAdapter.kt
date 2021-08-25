@@ -60,21 +60,23 @@ class ApplicationListAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ConnectionHolder -> {
-                holder.itemView.tvViewProfile.setOnClickListener{
+                holder.itemView.tvViewProfile.setOnClickListener {
                     mCallback.invoke(position)
                 }
                 holder.itemView.tvName.text = differ.currentList[position].artistName
-                if (differ.currentList[position].gender.equals("Male")){
+                if (differ.currentList[position].gender.equals("Male")) {
                     holder.itemView.tvActress.text = "Actor"
-                }else{
+                } else {
                     holder.itemView.tvActress.text = "Actress"
                 }
-                holder.itemView.tvAge.text = "Age:"+differ.currentList[position].age
-                holder.itemView.tvHeight.text = "Height: "+differ.currentList[position].heightFt+
-                        "."+differ.currentList[position].heightIn+"ft"
-                Glide.with(mContext).load(differ.currentList[position].image)
-                    .into(holder.itemView.imgRound)
-               // holder.bind(differ.currentList[position])
+                holder.itemView.tvAge.text = "Age:" + differ.currentList[position].age
+                holder.itemView.tvHeight.text = "Height: " + differ.currentList[position].heightFt +
+                        "." + differ.currentList[position].heightIn + "ft"
+                if (differ.currentList[position].image.isNotEmpty()) {
+                    Glide.with(mContext).load(differ.currentList[position].image)
+                        .into(holder.itemView.imgRound)
+                    // holder.bind(differ.currentList[position])
+                }
             }
         }
     }
