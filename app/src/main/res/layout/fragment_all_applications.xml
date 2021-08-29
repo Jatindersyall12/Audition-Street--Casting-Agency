@@ -9,12 +9,12 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/cardAllApplications"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
+            android:layout_height="0dp"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clToolbar" />
 
         <com.auditionstreet.castingagency.customviews.CustomTextView
             android:id="@+id/tvNoAppFound"
@@ -30,6 +30,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +43,7 @@
                 android:layout_height="@dimen/_15sdp"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:background="@drawable/ic_back_white"
+                android:background="@drawable/ic_icon_back"
                 android:contentDescription="@string/str_bio"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

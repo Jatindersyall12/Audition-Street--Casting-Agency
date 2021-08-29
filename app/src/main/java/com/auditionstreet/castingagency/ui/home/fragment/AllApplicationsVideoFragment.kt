@@ -25,6 +25,7 @@ import com.auditionstreet.castingagency.ui.home.adapter.AllApplicationsAdapter
 import com.auditionstreet.castingagency.ui.home.viewmodel.ProjectViewModel
 import com.auditionstreet.castingagency.utils.*
 import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.ui.PlayerView
 import com.leo.wikireviews.utils.livedata.EventObserver
 import com.silo.model.request.AcceptRejectArtistRequest
 import com.silo.model.request.BlockArtistRequest
@@ -110,17 +111,7 @@ class AllApplicationsVideoFragment : AppBaseFragment(R.layout.fragment_all_appli
         binding.ivBack.setOnClickListener(this)
         binding.ivAccept.setOnClickListener(this)
         binding.ivReject.setOnClickListener(this)
-        binding.playerView.player!!.addListener(object : Player.EventListener {
-            override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-                if (playbackState == Player.STATE_BUFFERING) {
-                    showProgress()
-                    binding.playerView.visibility = View.GONE
-                } else {
-                    hideProgress()
-                    binding.playerView.visibility = View.VISIBLE
-                }
-            }
-        })
+        binding.playerView.setShowBuffering(PlayerView.SHOW_BUFFERING_ALWAYS)
     }
 
     private fun playActorsVideo() {
