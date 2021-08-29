@@ -3,9 +3,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <com.google.android.exoplayer2.ui.PlayerView
+   <!-- <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/player_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,41 +21,102 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">-->
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_2sdp"
+        android:layout_marginTop="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_150sdp"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginStart="@dimen/_13sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/dim_grey"
+            android:paddingBottom="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/ivActorsImage"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_200sdp"
+                android:background="@color/light_grey"
+                android:src="@drawable/ic_dummy_profile_image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/ivAccept"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:src="@drawable/ic_check"
+                app:civ_circle_color="#018786"
+                app:layout_constraintBottom_toBottomOf="@+id/ivActorsImage"
+                app:layout_constraintEnd_toStartOf="@+id/ivReject"/>
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/ivReject"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:src="@drawable/ic_cross"
+                app:civ_circle_color="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/ivActorsImage"
+                app:layout_constraintEnd_toEndOf="@+id/ivActorsImage"/>
 
             <com.auditionstreet.castingagency.customviews.CustomTextViewBold
                 android:id="@+id/tvUserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:text="Orion Flinch"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_14sdp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/ivActorsImage"/>
 
             <com.auditionstreet.castingagency.customviews.CustomTextView
                 android:id="@+id/tvProfile"
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_26sdp"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/profile_round_layout"
                 android:gravity="center"
                 android:text="@string/str_view_profile"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toEndOf="@+id/tvUserName"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/ivActorsImage" />
+
+            <com.auditionstreet.castingagency.customviews.CustomTextView
+                android:id="@+id/tvViewVideo"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_26sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/profile_round_layout"
+                android:gravity="center"
+                android:text="@string/str_view_video"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_10sdp"
+                android:layout_marginEnd="10sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivActorsImage" />
 
             <com.auditionstreet.castingagency.customviews.CustomTextView
                 android:id="@+id/tvType"
@@ -112,7 +173,7 @@
                 android:visibility="gone"
                 android:background="@drawable/pop_up_window_back"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintBottom_toBottomOf="@+id/tvViewVideo">
 
                 <com.auditionstreet.castingagency.customviews.CustomTextView
                     android:id="@+id/tvShortList"
@@ -145,12 +206,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
-                android:layout_marginBottom="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 android:src="@drawable/ic_menu"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.exoplayer2.ui.PlayerView>
+    </androidx.cardview.widget.CardView>
+    <!-- </com.google.android.exoplayer2.ui.PlayerView>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

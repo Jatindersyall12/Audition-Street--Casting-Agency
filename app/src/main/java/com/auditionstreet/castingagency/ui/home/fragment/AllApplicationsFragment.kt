@@ -2,12 +2,10 @@ package com.auditionstreet.castingagency.ui.home.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.animation.LinearInterpolator
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.auditionstreet.castingagency.BuildConfig
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
@@ -15,7 +13,6 @@ import com.auditionstreet.castingagency.databinding.FragmentAllApplicationsBindi
 import com.auditionstreet.castingagency.model.response.ApplicationResponse
 import com.auditionstreet.castingagency.model.response.MyProjectResponse
 import com.auditionstreet.castingagency.storage.preference.Preferences
-import com.auditionstreet.castingagency.ui.home.activity.AllApplicationActivity
 import com.auditionstreet.castingagency.ui.home.activity.OtherUserProfileActivity
 import com.auditionstreet.castingagency.ui.home.adapter.AllApplicationsAdapter
 import com.auditionstreet.castingagency.ui.home.viewmodel.ProjectViewModel
@@ -29,21 +26,20 @@ import com.silo.utils.AppBaseFragment
 import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
 import com.silo.utils.viewbinding.viewBinding
-import com.yuyakaido.android.cardstackview.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AllApplicationsFragment : AppBaseFragment(R.layout.fragment_all_applications),
-    CardStackListener, View.OnClickListener {
+class AllApplicationsFragment : AppBaseFragment(R.layout.fragment_all_applications)/*,
+    CardStackListener*/, View.OnClickListener {
     private val binding by viewBinding(FragmentAllApplicationsBinding::bind)
     private lateinit var allApplicationsAdapter: AllApplicationsAdapter
-    private val manager by lazy { CardStackLayoutManager(requireActivity(), this) }
+    //private val manager by lazy { CardStackLayoutManager(requireActivity(), this) }
     private val viewModel: ProjectViewModel by viewModels()
     private lateinit var applicationListResponse: ApplicationResponse;
     private lateinit var projectListResponse: MyProjectResponse
     private var seletcedAplicationList: ArrayList<ApplicationResponse.Data> ?= null
-    private var cardCurrentPosition = 0
+    private var mPosition = 0
     private var applicationId = ""
 
     @Inject
@@ -62,6 +58,7 @@ class AllApplicationsFragment : AppBaseFragment(R.layout.fragment_all_applicatio
 
     private fun setListeners() {
         binding.tvSelectProject.setOnClickListener(this)
+        binding.ivBack.setOnClickListener(this)
     }
 
     private fun getAllApplications() {
@@ -120,9 +117,8 @@ class AllApplicationsFragment : AppBaseFragment(R.layout.fragment_all_applicatio
                             projectListResponse = apiResponse.data as MyProjectResponse
                     }
                     ApiConstant.ACCEPT_REJECT_ARTIST -> {
-                        applicationListResponse.data.removeAt(0)
+                        applicationListResponse.data.removeAt(mPosition)
                         allApplicationsAdapter.submitList(applicationListResponse.data)
-                        showToast(requireActivity(), "Profile Accepted")
                         if (!applicationListResponse.data.isNullOrEmpty()){
                             binding.cardAllApplications.visibility = View.VISIBLE
                             binding.tvNoAppFound.visibility = View.GONE
@@ -163,28 +159,63 @@ class AllApplicationsFragment : AppBaseFragment(R.layout.fragment_all_applicatio
 
     private fun init() {
         binding.cardAllApplications.apply {
+            layoutManager = LinearLayoutManager(activity)
             allApplicationsAdapter = AllApplicationsAdapter(requireActivity())
-            { position: Int ->
-                if (position == 0){
+            { position: Int, isShorListClicked: Boolean,
+              isBLockClicked: Boolean,
+              isProfileClicked: Boolean,
+              isAcceptClicked: Boolean,
+              isRejectClicked: Boolean,
+                isVideoClicked: Boolean->
+                mPosition = position
+                if (isShorListClicked){
                     val acceptRejectArtistRequest = AcceptRejectArtistRequest()
                     acceptRejectArtistRequest.castingId = preferences.getString(AppConstants.USER_ID)
-                    acceptRejectArtistRequest.projectId = applicationListResponse.data[cardCurrentPosition].projectId
-                    acceptRejectArtistRequest.id = applicationListResponse.data[cardCurrentPosition].id.toString()
+                    acceptRejectArtistRequest.projectId = applicationListResponse.data[mPosition].projectId
+                    acceptRejectArtistRequest.id = applicationListResponse.data[mPosition].id.toString()
                     acceptRejectArtistRequest.status = "1"
                     acceptRejectArtistRequest.userStatus = "2"
                     viewModel.acceptRejectArtist(acceptRejectArtistRequest)
-                }else if(position == 1){
+                }else if(isBLockClicked){
                     val blockArtistRequest = BlockArtistRequest()
-                    blockArtistRequest.artistId = applicationListResponse.data[cardCurrentPosition].artistId
+                    blockArtistRequest.artistId = applicationListResponse.data[mPosition].artistId
                     blockArtistRequest.castingId =  preferences.getString(AppConstants.USER_ID)
                     viewModel.blockArtist(blockArtistRequest)
-                }else if(position == 2){
-                    AppConstants.ARTISTID = applicationListResponse.data[cardCurrentPosition].artistId.toString()
+                }else if(isProfileClicked){
+                    AppConstants.ARTISTID = applicationListResponse.data[mPosition].artistId.toString()
                     val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
                     startActivity(i)
+                }else if(isAcceptClicked){
+                    val acceptRejectArtistRequest = AcceptRejectArtistRequest()
+                    acceptRejectArtistRequest.castingId = preferences.getString(AppConstants.USER_ID)
+                    acceptRejectArtistRequest.projectId = applicationListResponse.data[mPosition].projectId
+                    acceptRejectArtistRequest.id = applicationListResponse.data[mPosition].id.toString()
+                    acceptRejectArtistRequest.status = "1"
+                    acceptRejectArtistRequest.userStatus = "2"
+                    viewModel.acceptRejectArtist(acceptRejectArtistRequest)
+                    showToast(requireActivity(), "Profile Accepted")
+                }
+                else if(isRejectClicked){
+                    val acceptRejectArtistRequest = AcceptRejectArtistRequest()
+                    acceptRejectArtistRequest.castingId = preferences.getString(AppConstants.USER_ID)
+                    acceptRejectArtistRequest.projectId = applicationListResponse.data[mPosition].projectId
+                    acceptRejectArtistRequest.id = applicationListResponse.data[mPosition].id.toString()
+                    acceptRejectArtistRequest.status = "2"
+                    acceptRejectArtistRequest.userStatus = "2"
+                    viewModel.acceptRejectArtist(acceptRejectArtistRequest)
+                    showToast(requireActivity(), "Profile Rejected")
+                }
+
+                else if(isVideoClicked){
+                   val bundle = Bundle()
+                   bundle.putString("projectId", applicationListResponse.data[mPosition].projectId)
+                    bundle.putString("videoUrl", applicationListResponse.data[mPosition].video)
+                    bundle.putString("artistId",  applicationListResponse.data[mPosition].id.toString())
+                    findNavController().navigate(R.id.wideVideoFragment, bundle)
                 }
             }
             adapter = allApplicationsAdapter
+           /*
             manager.setStackFrom(StackFrom.None)
             manager.setVisibleCount(1)
             manager.setTranslationInterval(12.0f)
@@ -196,13 +227,13 @@ class AllApplicationsFragment : AppBaseFragment(R.layout.fragment_all_applicatio
             manager.setCanScrollVertical(true)
             manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
             manager.setOverlayInterpolator(LinearInterpolator())
-            binding.cardAllApplications.layoutManager = manager
+
             binding.cardAllApplications.adapter = allApplicationsAdapter
             binding.cardAllApplications.itemAnimator.apply {
                 if (this is DefaultItemAnimator) {
                     supportsChangeAnimations = false
                 }
-            }
+            }*/
         }
     }
 
@@ -217,7 +248,7 @@ class AllApplicationsFragment : AppBaseFragment(R.layout.fragment_all_applicatio
         }
     }
 
-    override fun onCardDragging(direction: Direction?, ratio: Float) {
+  /*  override fun onCardDragging(direction: Direction?, ratio: Float) {
     }
 
     override fun onCardSwiped(direction: Direction?) {
@@ -254,12 +285,15 @@ class AllApplicationsFragment : AppBaseFragment(R.layout.fragment_all_applicatio
     }
 
     override fun onCardDisappeared(view: View?, position: Int) {
-    }
+    }*/
 
     override fun onClick(p0: View?) {
         when (p0!!.id) {
             R.id.tvSelectProject -> {
                 showSelectProject()
+            }
+            R.id.ivBack ->{
+                requireActivity().onBackPressed()
             }
         }
     }

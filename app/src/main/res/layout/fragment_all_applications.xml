@@ -6,7 +6,7 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
-        <com.yuyakaido.android.cardstackview.CardStackView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/cardAllApplications"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -37,6 +37,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                android:id="@+id/ivBack"
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
                 android:layout_marginStart="@dimen/_10sdp"

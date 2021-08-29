@@ -40,8 +40,9 @@ class AllApplicationActivity : BaseActivity() {
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(i)
             finish()
-        } else
+        } else {
             super.onBackPressed()
+        }
     }
 
     private fun setNavigationController() {

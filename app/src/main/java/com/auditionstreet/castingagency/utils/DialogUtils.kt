@@ -95,10 +95,10 @@ fun showImageOrVideoDialog(
 
     dialogView.setOnDismissListener {
         if (!isImage) {
-            playerView.player_view!!.player!!.playWhenReady = false
-            playerView.player_view!!.player!!.stop()
-            playerView.player_view!!.player!!.release()
-            playerView.player_view.player = null
+            playerView.player!!.playWhenReady = false
+            playerView.player!!.stop()
+            playerView.player!!.release()
+            playerView.player = null
         }
     }
     val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)

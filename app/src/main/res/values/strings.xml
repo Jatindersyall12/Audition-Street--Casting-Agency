@@ -89,6 +89,9 @@
     <string name="str_block">Block</string>
     <string name="str_select_projects">Select Projects</string>
 
+    <!-- All application video fragment -->
+    <string name="str_all_application_video">All Application Video Fragment</string>
+
     <!-- Facebook -->
 
     <string name="facebook_app_id">204922881173526</string>

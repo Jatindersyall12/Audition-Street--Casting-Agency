@@ -17,6 +17,7 @@ import com.auditionstreet.castingagency.model.response.MyProjectResponse
 import com.auditionstreet.castingagency.utils.playVideo
 import com.auditionstreet.castingagency.utils.showProgressDialog
 import com.auditionstreet.castingagency.utils.showToast
+import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.MediaSource
@@ -34,7 +35,13 @@ import kotlinx.android.synthetic.main.all_application_item.view.tvHeight
 @Suppress("DEPRECATION")
 class AllApplicationsAdapter(
     val mContext: FragmentActivity, private val mCallback: (
-        mposition: Int
+        mposition: Int,
+        isShorListClicked: Boolean,
+        isBLockClicked: Boolean,
+        isProfileClicked: Boolean,
+        isAcceptClicked: Boolean,
+        isRejectClicked: Boolean,
+        isVideoClicked: Boolean
     ) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
@@ -70,7 +77,7 @@ class AllApplicationsAdapter(
         )
     }
 
-    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
+  /*  override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
         if (holder.itemView.player_view.player != null) {
             holder.itemView.player_view!!.player!!.playWhenReady = false
             holder.itemView.player_view!!.player!!.stop()
@@ -79,7 +86,7 @@ class AllApplicationsAdapter(
 
         }
         super.onViewDetachedFromWindow(holder)
-    }
+    }*/
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
@@ -87,13 +94,28 @@ class AllApplicationsAdapter(
                 player = ExoPlayerFactory.newSimpleInstance(mContext)
                 holder.bind(differ.currentList[position])
                 holder.itemView.tvShortList.setOnClickListener {
-                    mCallback.invoke(0)
+                    mCallback.invoke(position, true, false,
+                        false, false, false, false)
                 }
                 holder.itemView.tvBlock.setOnClickListener {
-                    mCallback.invoke(1)
+                    mCallback.invoke(position, false, true,
+                        false, false, false, false)
                 }
                 holder.itemView.tvProfile.setOnClickListener {
-                    mCallback.invoke(2)
+                    mCallback.invoke(position, false, false,
+                        true, false, false, false)
+                }
+                holder.itemView.ivAccept.setOnClickListener {
+                    mCallback.invoke(position, false, false,
+                        false, true, false, false)
+                }
+                holder.itemView.ivReject.setOnClickListener {
+                    mCallback.invoke(position, false, false,
+                        false, false, true, false)
+                }
+                holder.itemView.tvViewVideo.setOnClickListener{
+                    mCallback.invoke(position, false, false,
+                        false, false, false, true)
                 }
                 if (differ.currentList[position].gender.equals("Male")){
                     holder.itemView.tvType.text = mContext.getString(R.string.actor)
@@ -104,14 +126,18 @@ class AllApplicationsAdapter(
                         "."+differ.currentList[position].heightIn+" ft"
                 holder.itemView.tvAge.text = "Age: "+differ.currentList[position].age
                 holder.itemView.tvUserName.text = differ.currentList[position].artistName
-                if (!differ.currentList[position].video.isNullOrEmpty()) {
+                if (!differ.currentList[position].image.isNullOrEmpty()) {
+                    Glide.with(mContext).load(differ.currentList[position].image)
+                        .into(holder.itemView.ivActorsImage)
+                }
+               /* if (!differ.currentList[position].video.isNullOrEmpty()) {
                     playVideo(
                         mContext, holder.itemView.player_view,
                         differ.currentList[position].video
-                        /*"http://techslides.com/demos/sample-videos/small.mp4"*/
+                        *//*"http://techslides.com/demos/sample-videos/small.mp4"*//*
                     )
-                }
-                player.addListener(object : Player.EventListener {
+                }*/
+                /*player.addListener(object : Player.EventListener {
                     override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
                        val showProgress = showProgressDialog(mContext)
                         if (playbackState == Player.STATE_BUFFERING) {
@@ -122,7 +148,7 @@ class AllApplicationsAdapter(
                             holder.itemView.player_view.visibility = View.VISIBLE
                         }
                     }
-                })
+                })*/
 
                 holder.itemView.imgPopUp.setOnClickListener {
                     if (holder.itemView.clBlockView.visibility == View.VISIBLE){
