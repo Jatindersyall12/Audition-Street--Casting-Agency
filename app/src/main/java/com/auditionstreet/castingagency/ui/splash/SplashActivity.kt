@@ -31,13 +31,13 @@ class SplashActivity : BaseActivity() {
                 val i = Intent(this@SplashActivity, AuthorizedUserActivity::class.java)
                 startActivity(i)
             } else {
-               // if (!preferences.getBoolean(AppConstants.SECOND_TIME_HERE)){
+                if (!preferences.getBoolean(AppConstants.SECOND_TIME_HERE)){
                     val i = Intent(this@SplashActivity, FirstTimeHereActivity::class.java)
                     startActivity(i)
-              /*  }else{
+                }else{
                     val i = Intent(this@SplashActivity, HomeActivity::class.java)
                     startActivity(i)
-                }*/
+                }
             }
             finish()
         }
