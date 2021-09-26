@@ -18,23 +18,43 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.auditionstreet.castingagency.customviews.CustomTextView
+            android:id="@+id/tvSelectProject"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@drawable/spinner_round_layout"
+            android:drawableRight="@drawable/ic_down"
+            android:drawablePadding="@dimen/_5sdp"
+            android:gravity="start|center"
+            android:text="@string/str_select_project"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSelected" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvShortList"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:visibility="gone"
             android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_45sdp"
             android:background="@color/white"
-            app:layout_constraintTop_toBottomOf="@+id/tvSelected" />
+            app:layout_constraintTop_toBottomOf="@+id/tvSelectProject" />
 
         <com.auditionstreet.castingagency.customviews.CustomTextView
             android:id="@+id/tvNoDataFound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/no_application_found"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@+id/tvSelected"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@+id/tvSelectProject"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

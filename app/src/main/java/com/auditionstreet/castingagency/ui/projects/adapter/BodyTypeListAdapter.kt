@@ -2,7 +2,6 @@ package com.auditionstreet.castingagency.ui.projects.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,30 +10,35 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.castingagency.R
-import com.auditionstreet.castingagency.model.response.MyProjectResponse
-import kotlinx.android.synthetic.main.my_project_item.view.*
-import java.util.*
-import kotlin.collections.ArrayList
+import com.auditionstreet.castingagency.model.BodyTypeModel
+import com.auditionstreet.castingagency.model.LanguageModel
+import com.auditionstreet.castingagency.model.response.AllAdminResponse
+import kotlinx.android.synthetic.main.all_admin_item.view.*
 
-class MyProjectListAdapter(
-    val mContext: FragmentActivity, private val mCallback: (mposition: String) -> Unit
+class BodyTypeListAdapter(
+    val mContext: FragmentActivity, private val mCallback: (
+        mposition: String
+    ) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MyProjectResponse.Data>() {
+    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<BodyTypeModel>() {
 
         override fun areItemsTheSame(
-            oldItem: MyProjectResponse.Data,
-            newItem: MyProjectResponse.Data
+            oldItem: BodyTypeModel,
+            newItem: BodyTypeModel
         ): Boolean {
             return oldItem == newItem
+
+            //return false
         }
 
         @SuppressLint("DiffUtilEquals")
         override fun areContentsTheSame(
-            oldItem: MyProjectResponse.Data,
-            newItem: MyProjectResponse.Data
+            oldItem: BodyTypeModel,
+            newItem: BodyTypeModel
         ): Boolean {
             return oldItem == newItem
+            // return false
         }
 
     }
@@ -44,7 +48,7 @@ class MyProjectListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ConnectionHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.my_project_item,
+                R.layout.all_admin_item,
                 parent,
                 false
             ),
@@ -56,34 +60,37 @@ class MyProjectListAdapter(
         when (holder) {
             is ConnectionHolder -> {
                 holder.bind(differ.currentList[position])
-                holder.itemView.btnViewDetail.setOnClickListener {
-                    mCallback.invoke(differ.currentList[position].id.toString())
-                }
+                // holder.itemView.chkUser.isChecked=differ.currentList[position].isChecked
+
+
             }
         }
     }
+
+    /* override fun getItemViewType(position: Int): Int {
+         return 1
+     }*/
 
     override fun getItemCount(): Int {
         return differ.currentList.size
     }
 
-    fun submitList(projectResponse: ArrayList<MyProjectResponse.Data>) {
+    fun submitList(projectResponse: ArrayList<BodyTypeModel>) {
         differ.submitList(projectResponse)
         notifyDataSetChanged()
     }
 
-    class ConnectionHolder(
+    inner class ConnectionHolder(
         itemView: View,
         val mContext: Context
     ) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(item: MyProjectResponse.Data) = with(itemView) {
-            val rnd = Random()
-            itemView.tvProjectRequirement.text=item.title
-            val color: Int = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
-            itemView.btnViewDetail.background.setTint(color)
-            itemView.tvProject.setTextColor(color)
-
+        fun bind(item: BodyTypeModel) = with(itemView) {
+            itemView.chkUser.setOnCheckedChangeListener { buttonView, isChecked ->
+                differ.currentList[adapterPosition].isChecked = isChecked
+            }
+            itemView.chkUser.isChecked = differ.currentList[adapterPosition].isChecked
+            itemView.tvAdmin.text = item.bodyType
         }
     }
 }

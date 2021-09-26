@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.auditionstreet.castingagency.R
+import com.auditionstreet.castingagency.model.FirstTimeHereModel
 import java.util.ArrayList
 import java.util.regex.Pattern
 

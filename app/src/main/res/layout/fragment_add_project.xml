@@ -164,7 +164,7 @@
                 app:layout_constraintStart_toEndOf="@+id/etxHeightFt"
                 app:layout_constraintTop_toBottomOf="@+id/rangeSeekbar" />
 
-            <com.auditionstreet.castingagency.customviews.CustomEditText
+            <com.auditionstreet.castingagency.customviews.CustomTextView
                 android:id="@+id/etxBodyType"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
@@ -173,6 +173,9 @@
                 android:layout_marginEnd="@dimen/_20sdp"
                 android:background="@drawable/edittext_round_layout"
                 android:hint="@string/str_body_type"
+                android:drawablePadding="@dimen/_20sdp"
+                android:gravity="center_vertical"
+                android:drawableRight="@drawable/ic_drop_down_icon"
                 android:inputType="textEmailAddress"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
@@ -198,7 +201,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etxBodyType" />
 
-            <com.auditionstreet.castingagency.customviews.CustomEditText
+            <com.auditionstreet.castingagency.customviews.CustomTextView
                 android:id="@+id/etxLanguages"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
@@ -207,6 +210,9 @@
                 android:layout_marginEnd="@dimen/_20sdp"
                 android:background="@drawable/edittext_round_layout"
                 android:hint="@string/str_language"
+                android:gravity="center_vertical"
+                android:drawablePadding="@dimen/_20sdp"
+                android:drawableRight="@drawable/ic_drop_down_icon"
                 android:inputType="textEmailAddress"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"

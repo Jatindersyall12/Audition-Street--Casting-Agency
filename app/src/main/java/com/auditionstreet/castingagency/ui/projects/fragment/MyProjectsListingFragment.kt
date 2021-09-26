@@ -1,7 +1,9 @@
 package com.auditionstreet.castingagency.ui.projects.fragment
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.View
+import android.widget.DatePicker
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +16,7 @@ import com.auditionstreet.castingagency.storage.preference.Preferences
 import com.auditionstreet.castingagency.ui.projects.adapter.MyProjectListAdapter
 import com.auditionstreet.castingagency.ui.projects.viewmodel.MyProjectViewModel
 import com.auditionstreet.castingagency.utils.AppConstants
+import com.auditionstreet.castingagency.utils.formatDate
 import com.auditionstreet.castingagency.utils.showToast
 import com.leo.wikireviews.utils.livedata.EventObserver
 import com.silo.utils.AppBaseFragment
@@ -21,7 +24,9 @@ import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
 import com.silo.utils.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects),
@@ -30,12 +35,16 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
     private lateinit var myProjectListAdapter: MyProjectListAdapter
 
     private val viewModel: MyProjectViewModel by viewModels()
+    private var projectListResponse : ArrayList<MyProjectResponse.Data> ?= null
+    private var filteredProjectList : ArrayList<MyProjectResponse.Data> ?= null
 
     @Inject
     lateinit var preferences: Preferences
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        projectListResponse = ArrayList()
+        filteredProjectList = ArrayList()
         setListeners()
         setObservers()
         init()
@@ -67,6 +76,7 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
     private fun setListeners() {
         binding.btnAddProject.setOnClickListener(this)
         binding.layAdd.setOnClickListener(this)
+        binding.tvSelectDate.setOnClickListener(this)
     }
 
 
@@ -82,7 +92,9 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
                 hideProgress()
                 when (apiResponse.apiConstant) {
                     ApiConstant.GET_MY_PROJECTS -> {
-                        setAdapter(apiResponse.data as MyProjectResponse)
+                        val response = apiResponse.data as MyProjectResponse
+                        projectListResponse =  response.data
+                        setAdapter(projectListResponse!!)
                     }
                 }
             }
@@ -115,9 +127,9 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
         }
     }
 
-    private fun setAdapter(projectResponse: MyProjectResponse) {
-        if (projectResponse.data.size > 0) {
-            myProjectListAdapter.submitList(projectResponse.data)
+    private fun setAdapter(projectListResponse: ArrayList<MyProjectResponse.Data>) {
+        if (!projectListResponse.isNullOrEmpty()) {
+            myProjectListAdapter.submitList(projectListResponse)
             binding.rvProjects.visibility = View.VISIBLE
             binding.layNoRecord.visibility = View.GONE
             binding.layAdd.visibility=View.VISIBLE
@@ -136,11 +148,46 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
             binding.layAdd -> {
                 sharedViewModel.setDirection(MyProjectsListingFragmentDirections.navigateToAddProject())
             }
+            binding.tvSelectDate ->{
+                openDatePicker()
+            }
         }
     }
 
     override fun onResume() {
         super.onResume()
         getMyProjects()
+    }
+
+    private fun openDatePicker(){
+        val c: Calendar = Calendar.getInstance()
+        val mYear: Int = c.get(Calendar.YEAR) // current year
+
+        val mMonth: Int = c.get(Calendar.MONTH) // current month
+
+        val mDay: Int = c.get(Calendar.DAY_OF_MONTH) // current day
+
+        // date picker dialog
+       var datePickerDialog = DatePickerDialog(requireActivity(),
+            object : DatePickerDialog.OnDateSetListener{
+                override fun onDateSet(view: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
+                    // set day of month , month and year value in the text view
+                    filteredProjectList!!.clear()
+                    val date = formatDate(requireActivity(),
+                        dayOfMonth, (monthOfYear + 1),  year
+                    )
+                    binding.tvSelectDate.text = date
+                    if (!projectListResponse.isNullOrEmpty()){
+                        for (i in 0 until projectListResponse!!.size){
+                            if (projectListResponse!![i].fromDate == date){
+                                filteredProjectList!!.add(projectListResponse!![i])
+                            }
+                        }
+                        setAdapter(filteredProjectList!!)
+                    }
+                }
+            }, mYear, mMonth, mDay
+        )
+        datePickerDialog.show()
     }
 }

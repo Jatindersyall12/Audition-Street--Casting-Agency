@@ -2,6 +2,7 @@
 
 package com.auditionstreet.castingagency.utils
 
+import android.app.ActionBar
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.Dialog
@@ -15,9 +16,7 @@ import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.Window
+import android.view.*
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.databinding.DataBindingUtil
@@ -33,13 +32,16 @@ import com.auditionstreet.castingagency.customviews.CustomButton
 import com.auditionstreet.castingagency.customviews.CustomEditText
 import com.auditionstreet.castingagency.customviews.CustomTextView
 import com.auditionstreet.castingagency.customviews.CustomTextViewBold
+import com.auditionstreet.castingagency.model.BodyTypeModel
+import com.auditionstreet.castingagency.model.LanguageModel
 import com.auditionstreet.castingagency.model.response.AllAdminResponse
 import com.auditionstreet.castingagency.model.response.AllUsersResponse
-import com.auditionstreet.castingagency.model.response.ApplicationResponse
 import com.auditionstreet.castingagency.model.response.MyProjectResponse
 import com.auditionstreet.castingagency.ui.home.adapter.SelectProjectListAdapter
 import com.auditionstreet.castingagency.ui.projects.adapter.AllAdminListAdapter
 import com.auditionstreet.castingagency.ui.projects.adapter.AllUserListAdapter
+import com.auditionstreet.castingagency.ui.projects.adapter.BodyTypeListAdapter
+import com.auditionstreet.castingagency.ui.projects.adapter.LanguageListAdapter
 import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.DefaultLoadControl
 import com.google.android.exoplayer2.ExoPlayerFactory
@@ -70,8 +72,10 @@ import kotlin.collections.ArrayList
 fun showImageOrVideoDialog(
     mContext: Context, url: String, isImage: Boolean
 ): Dialog {
-    val dialogView = Dialog(mContext)
+    val dialogView = Dialog(mContext, android.R.style.Theme_Translucent_NoTitleBar)
     dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    val window: Window = dialogView.getWindow()!!
+    val wlp: WindowManager.LayoutParams = window.attributes
     val binding =
         DataBindingUtil.inflate<ViewDataBinding>(
             LayoutInflater.from(mContext),
@@ -101,9 +105,12 @@ fun showImageOrVideoDialog(
             playerView.player = null
         }
     }
-    val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
-    val height = 750
-    dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
+    wlp.gravity = Gravity.CENTER;
+    wlp.flags = WindowManager.LayoutParams.FLAG_BLUR_BEHIND;
+    window.setAttributes(wlp)
+  //  val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
+   // val height = 750
+    dialogView.getWindow()!!.setLayout(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT)
     return dialogView
 }
 
@@ -676,6 +683,104 @@ fun showProgressDialog(
     dialogView.show()
     val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.70)
     val height = 370
+    dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
+    return dialogView
+}
+
+fun showLanguageSelectionDialog(
+    mContext: Context,
+    languageList: ArrayList<LanguageModel>,
+    mCallback: (year: String) -> Unit
+): Dialog {
+    lateinit var rvLanguageAdapter: LanguageListAdapter
+    val dialogView = Dialog(mContext)
+    dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    val binding =
+        DataBindingUtil.inflate<ViewDataBinding>(
+            LayoutInflater.from(mContext),
+            R.layout.popup_language,
+            null,
+            false
+        )
+    dialogView.setContentView(binding.root)
+    dialogView.setCancelable(false)
+    val rvLanguage = dialogView.findViewById<RecyclerView>(R.id.rvLanguage)
+    val btnDone = dialogView.findViewById<CustomButton>(R.id.btnDone)
+    val tvNoRecord = dialogView.findViewById<CustomTextView>(R.id.tvNoRecord)
+
+    btnDone.setOnClickListener {
+        dialogView.cancel()
+        mCallback.invoke("Sd")
+    }
+    if (languageList.size > 0) {
+        rvLanguage.visibility = View.VISIBLE
+        tvNoRecord.visibility = View.GONE
+    } else {
+        rvLanguage.visibility = View.GONE
+        tvNoRecord.visibility = View.VISIBLE
+    }
+    rvLanguage.apply {
+        layoutManager = LinearLayoutManager(mContext)
+        rvLanguageAdapter = LanguageListAdapter(mContext as FragmentActivity)
+        { projectId: String ->
+
+        }
+        adapter = rvLanguageAdapter
+        rvLanguageAdapter.submitList(languageList)
+    }
+
+    dialogView.show()
+    val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
+    val height = (mContext.getResources().getDisplayMetrics().heightPixels * 0.65)
+    dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
+    return dialogView
+}
+
+fun showBodyTypeSelectionDialog(
+    mContext: Context,
+    bodyTypeList: ArrayList<BodyTypeModel>,
+    mCallback: (year: String) -> Unit
+): Dialog {
+    lateinit var rvBodyTypeAdapter: BodyTypeListAdapter
+    val dialogView = Dialog(mContext)
+    dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    val binding =
+        DataBindingUtil.inflate<ViewDataBinding>(
+            LayoutInflater.from(mContext),
+            R.layout.body_type_language,
+            null,
+            false
+        )
+    dialogView.setContentView(binding.root)
+    dialogView.setCancelable(false)
+    val rvBodyType = dialogView.findViewById<RecyclerView>(R.id.rvBodyType)
+    val btnDone = dialogView.findViewById<CustomButton>(R.id.btnDone)
+    val tvNoRecord = dialogView.findViewById<CustomTextView>(R.id.tvNoRecord)
+
+    btnDone.setOnClickListener {
+        dialogView.cancel()
+        mCallback.invoke("Sd")
+    }
+    if (bodyTypeList.size > 0) {
+        rvBodyType.visibility = View.VISIBLE
+        tvNoRecord.visibility = View.GONE
+    } else {
+        rvBodyType.visibility = View.GONE
+        tvNoRecord.visibility = View.VISIBLE
+    }
+    rvBodyType.apply {
+        layoutManager = LinearLayoutManager(mContext)
+        rvBodyTypeAdapter = BodyTypeListAdapter(mContext as FragmentActivity)
+        { projectId: String ->
+
+        }
+        adapter = rvBodyTypeAdapter
+        rvBodyTypeAdapter.submitList(bodyTypeList)
+    }
+
+    dialogView.show()
+    val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
+    val height = (mContext.getResources().getDisplayMetrics().heightPixels * 0.65)
     dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
     return dialogView
 }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import com.auditionstreet.castingagency.databinding.ActivitySplashBinding
 import com.auditionstreet.castingagency.storage.preference.Preferences
+import com.auditionstreet.castingagency.ui.home.activity.FirstTimeHereActivity
 import com.auditionstreet.castingagency.ui.home.activity.HomeActivity
 import com.auditionstreet.castingagency.ui.login_signup.AuthorizedUserActivity
 import com.auditionstreet.castingagency.utils.AppConstants
@@ -30,8 +31,13 @@ class SplashActivity : BaseActivity() {
                 val i = Intent(this@SplashActivity, AuthorizedUserActivity::class.java)
                 startActivity(i)
             } else {
-                val i = Intent(this@SplashActivity, HomeActivity::class.java)
-                startActivity(i)
+               // if (!preferences.getBoolean(AppConstants.SECOND_TIME_HERE)){
+                    val i = Intent(this@SplashActivity, FirstTimeHereActivity::class.java)
+                    startActivity(i)
+              /*  }else{
+                    val i = Intent(this@SplashActivity, HomeActivity::class.java)
+                    startActivity(i)
+                }*/
             }
             finish()
         }

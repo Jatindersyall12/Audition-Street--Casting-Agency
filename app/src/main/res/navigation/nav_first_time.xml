@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/firstTimeHere">
+
+    <fragment
+        android:id="@+id/firstTimeHere"
+        android:name="com.auditionstreet.castingagency.ui.firstTimeHere.FirstTsimeHereFragment"
+        android:label="@string/str_first_time_here"
+        tools:layout="@layout/fragment_first_time_here" >
+    </fragment>
+</navigation>

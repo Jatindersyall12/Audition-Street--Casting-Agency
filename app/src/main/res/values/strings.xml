@@ -129,6 +129,7 @@
     <string name="str_project_detail">Project Detail</string>
     <string name="str_image_error">You can choose max 4 images at a time.If you want to edit please delete previous image.</string>
     <string name="str_video_error">You can choose max 1 video at a time.If you want to edit please delete previous one.</string>
+    <string name="select_date">Select Date</string>
 
     <!-- Projects detail -->
     <string name="str_criteria">Criteria:</string>
@@ -182,6 +183,9 @@
     <string name="str_select_start_Date">Please select start date</string>
     <string name="str_select_end_Date">Please select end date</string>
     <string name="str_height_ft_msg">Please enter height in FT </string>
+    <string name="select_language">Select Language</string>
+    <string name="select_body_type">Select Body Type</string>
+    <string name="update">Update</string>
 
     <!-- Exit Popup -->
     <string name="str_exit">Do you want to exit ? </string>
@@ -206,5 +210,11 @@
     <string name="str_img">Image</string>
     <string name="actor">Actor</string>
     <string name="actress">Actress</string>
+
+    <!--First time here-->
+    <string name="str_first_time_here">First Time Here</string>
+    <string name="swipe_to_continue">Swipe to continue</string>
+    <string name="swipe_to_complete">Swipe to Complete</string>
+
 
 </resources>

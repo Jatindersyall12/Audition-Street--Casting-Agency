@@ -10,6 +10,8 @@ import com.auditionstreet.castingagency.BuildConfig
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentShortListBinding
+import com.auditionstreet.castingagency.model.response.MyProjectDetailResponse
+import com.auditionstreet.castingagency.model.response.MyProjectResponse
 import com.auditionstreet.castingagency.model.response.ProjectResponse
 import com.auditionstreet.castingagency.storage.preference.Preferences
 import com.auditionstreet.castingagency.ui.home.activity.OtherUserProfileActivity
@@ -17,6 +19,7 @@ import com.auditionstreet.castingagency.ui.home.adapter.ProjectListAdapter
 import com.auditionstreet.castingagency.ui.home.adapter.ShortListAdapter
 import com.auditionstreet.castingagency.ui.home.viewmodel.ProjectViewModel
 import com.auditionstreet.castingagency.utils.AppConstants
+import com.auditionstreet.castingagency.utils.showSelectProjectDialog
 import com.auditionstreet.castingagency.utils.showToast
 import com.leo.wikireviews.utils.livedata.EventObserver
 import com.silo.utils.AppBaseFragment
@@ -27,11 +30,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ShortListedFragment : AppBaseFragment(R.layout.fragment_short_list) {
+class ShortListedFragment : AppBaseFragment(R.layout.fragment_short_list), View.OnClickListener {
     private val binding by viewBinding(FragmentShortListBinding::bind)
     private lateinit var shortListAdapter: ShortListAdapter
     private val viewModel: ProjectViewModel by viewModels()
     private var shortListedList: ArrayList<ProjectResponse.Data> ?= null
+    private var selectedShortListedList: ArrayList<ProjectResponse.Data> ?= null
+    private var projectListResponse: MyProjectResponse?= null
 
     @Inject
     lateinit var preferences: Preferences
@@ -39,6 +44,7 @@ class ShortListedFragment : AppBaseFragment(R.layout.fragment_short_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         shortListedList = ArrayList()
+        selectedShortListedList = ArrayList()
         setListeners()
         setObservers()
         init()
@@ -46,6 +52,7 @@ class ShortListedFragment : AppBaseFragment(R.layout.fragment_short_list) {
     }
 
     private fun setListeners() {
+        binding.tvSelectProject.setOnClickListener(this)
     }
 
 
@@ -53,11 +60,21 @@ class ShortListedFragment : AppBaseFragment(R.layout.fragment_short_list) {
         viewModel.users.observe(viewLifecycleOwner, EventObserver {
             handleApiCallback(it)
         })
+
+        viewModel.getMyProjects.observe(viewLifecycleOwner, EventObserver {
+            handleApiCallback(it)
+        })
     }
 
     private fun getProjectList(){
         viewModel.getProject(
             BuildConfig.BASE_URL + ApiConstant.GET_SHORTLISTED_LIST + "/" + preferences.getString(
+                AppConstants.USER_ID
+            )
+        )
+
+        viewModel.getMyProject(
+            BuildConfig.BASE_URL + ApiConstant.GET_MY_PROJECTS + "/" + preferences.getString(
                 AppConstants.USER_ID
             )
         )
@@ -70,8 +87,11 @@ class ShortListedFragment : AppBaseFragment(R.layout.fragment_short_list) {
                 when (apiResponse.apiConstant) {
                     ApiConstant.GET_SHORTLISTED_LIST -> {
                         val response = apiResponse.data as ProjectResponse
-                        setAdapter(apiResponse.data as ProjectResponse)
+                        setAdapter(response.data)
                         shortListedList = response.data
+                    }
+                    ApiConstant.GET_MY_PROJECTS -> {
+                        projectListResponse = apiResponse.data as MyProjectResponse
                     }
                 }
             }
@@ -101,14 +121,35 @@ class ShortListedFragment : AppBaseFragment(R.layout.fragment_short_list) {
             adapter = shortListAdapter
         }
     }
-    private fun setAdapter(projectResponse: ProjectResponse) {
-        if (projectResponse.data.size > 0) {
-            shortListAdapter.submitList(projectResponse.data)
+    private fun setAdapter(projectList: ArrayList<ProjectResponse.Data>) {
+        if (!projectList.isNullOrEmpty()) {
+            shortListAdapter.submitList(projectList)
             binding.rvShortList.visibility = View.VISIBLE
             binding.tvNoDataFound.visibility = View.GONE
         } else {
             binding.rvShortList.visibility = View.GONE
             binding.tvNoDataFound.visibility = View.VISIBLE
+        }
+    }
+
+    private fun showSelectProject() {
+        showSelectProjectDialog(requireActivity(), projectListResponse!!)
+        { projectId: String ->
+            selectedShortListedList!!.clear()
+            for (i in 0 until shortListedList!!.size){
+                if (shortListedList!![i].projectId == projectId){
+                    selectedShortListedList!!.add(shortListedList!![i])
+                }
+            }
+            setAdapter(selectedShortListedList!!)
+        }
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.tvSelectProject -> {
+                showSelectProject()
+            }
         }
     }
 }

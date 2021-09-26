@@ -1,20 +1,23 @@
 package com.auditionstreet.castingagency.ui.projects.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.auditionstreet.castingagency.BuildConfig
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentAddProjectBinding
-import com.auditionstreet.castingagency.model.response.AddGroupResponse
-import com.auditionstreet.castingagency.model.response.AddProjectResponse
-import com.auditionstreet.castingagency.model.response.AllAdminResponse
-import com.auditionstreet.castingagency.model.response.AllUsersResponse
+import com.auditionstreet.castingagency.model.BodyTypeModel
+import com.auditionstreet.castingagency.model.LanguageModel
+import com.auditionstreet.castingagency.model.response.*
 import com.auditionstreet.castingagency.storage.preference.Preferences
 import com.auditionstreet.castingagency.ui.projects.viewmodel.AddProjectViewModel
 import com.auditionstreet.castingagency.utils.*
+import com.google.gson.Gson
 import com.leo.wikireviews.utils.livedata.EventObserver
 import com.silo.model.request.AddGroupRequest
 import com.silo.model.request.AddProjectRequest
@@ -44,18 +47,69 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
     private lateinit var allUserResponse: AllUsersResponse
     private lateinit var groupResponse: AddGroupResponse
     private lateinit var addProjectResponse: AddProjectResponse
+    private var projectDetailResponse: MyProjectDetailResponse ?= null
+    private var languageList: ArrayList<LanguageModel> ?= null
+    private var bodyTypeList: ArrayList<BodyTypeModel> ?= null
+
+    private val navArgs by navArgs<AddProjectFragmentArgs>()
 
     @Inject
     lateinit var preferences: Preferences
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        /**
+         * Update case
+         */
+        if (!navArgs.projectDetail.isNullOrEmpty()) {
+            val gson = Gson()
+            projectDetailResponse = gson.convertToModel(
+                navArgs.projectDetail,
+                MyProjectDetailResponse::class.java
+            )!!
+            setData(
+                gson.convertToModel(
+                    navArgs.projectDetail,
+                    MyProjectDetailResponse::class.java
+                )!!
+            )
+            binding.btnSubmit.text = resources.getString(R.string.update)
+        }
+        languageList = ArrayList()
+        bodyTypeList = ArrayList()
+        for (i in 0 until 4){
+            val bodyTypeModel = BodyTypeModel()
+            bodyTypeModel.isChecked = false
+            if (i==0)
+                bodyTypeModel.bodyType = "Muscular"
+            if (i==1)
+                bodyTypeModel.bodyType = "Skinny"
+            if (i==2)
+                bodyTypeModel.bodyType = "Normal"
+            if (i==3)
+                bodyTypeModel.bodyType = "Fat"
+            bodyTypeList!!.add(bodyTypeModel)
+        }
+        for (i in 0 until 5){
+            val languageModel = LanguageModel()
+            languageModel.isChecked = false
+            if (i==0)
+            languageModel.language = "Hindi"
+            if (i==1)
+                languageModel.language = "English"
+            if (i==2)
+                languageModel.language = "Punjabi"
+            if (i==3)
+                languageModel.language = "Bhojpuri"
+            if (i==4)
+                languageModel.language = "Gujrati"
+            languageList!!.add(languageModel)
+        }
+
         setListeners()
         setObservers()
         getAllAdmins()
         setSeekBarListsener()
-
-
     }
 
     private fun setSeekBarListsener() {
@@ -90,6 +144,8 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
         this.binding.tvStartDate.setOnClickListener(this)
         this.binding.tvEndDate.setOnClickListener(this)
         this.binding.tvAddOrEditAdmin.setOnClickListener(this)
+        this.binding.etxLanguages.setOnClickListener(this)
+        this.binding.etxBodyType.setOnClickListener(this)
 
     }
 
@@ -116,6 +172,23 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
                 when (apiResponse.apiConstant) {
                     ApiConstant.GET_ALL_ADMINS -> {
                         allAdminResponse = apiResponse.data as AllAdminResponse
+                        var user = ""
+                        if (!allAdminResponse.data.isNullOrEmpty() &&
+                            projectDetailResponse != null){
+                            for (i in 0 until projectDetailResponse!!.data[0].admins.size){
+                                for (y in 0 until allAdminResponse.data!!.size){
+                                    if (projectDetailResponse!!.data[0].admins[i].id ==
+                                        allAdminResponse.data!![y]!!.id){
+                                        allAdminResponse.data!![y]!!.is_checked = true
+                                        user += allAdminResponse.data!![i]!!.name + " ,"
+                                        if (user.length >= 1)
+                                            binding.etxSubDomain.text = user.substring(0, user.length - 1)
+                                        else
+                                            binding.etxSubDomain.text = ""
+                                    }
+                                }
+                            }
+                        }
                     }
                     ApiConstant.GET_ALL_USER -> {
                         allUserResponse = apiResponse.data as AllUsersResponse
@@ -178,6 +251,40 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
                         binding.etxSubDomain.text = ""
                 }
             }
+            R.id.etxLanguages ->{
+                showLanguageSelectionDialog(requireActivity(), languageList!!)
+                {
+                   val languageStringList = arrayListOf<String>()
+                    var user = ""
+                    for (i in 0 until languageList!!.size) {
+                        if (languageList!![i].isChecked) {
+                            languageStringList.add(languageList!![i].language)
+                            user += languageList!![i].language + " ,"
+                        }
+                    }
+                    if (user.length >= 1)
+                        binding.etxLanguages.text = user.substring(0, user.length - 1)
+                    else
+                        binding.etxLanguages.text = ""
+                }
+            }
+            R.id.etxBodyType ->{
+                showBodyTypeSelectionDialog(requireActivity(), bodyTypeList!!)
+                {
+                    val bodyTypeStringList = arrayListOf<String>()
+                    var user = ""
+                    for (i in 0 until bodyTypeList!!.size) {
+                        if (bodyTypeList!![i].isChecked) {
+                            bodyTypeStringList.add(bodyTypeList!![i].bodyType)
+                            user += bodyTypeList!![i].bodyType + " ,"
+                        }
+                    }
+                    if (user.length >= 1)
+                        binding.etxBodyType.text = user.substring(0, user.length - 1)
+                    else
+                        binding.etxBodyType.text = ""
+                }
+            }
             R.id.tvAddOrEditAdmin -> {
                 showAllUser(requireActivity(), allUserResponse)
                 {
@@ -217,6 +324,31 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
 
                     }
             }
+        }
+    }
+
+    private fun setData(myProjectResponse: MyProjectDetailResponse) {
+        binding.etxTitle.setText(myProjectResponse.data[0].projectDetails.title)
+        binding.tvAge.setText(myProjectResponse.data[0].projectDetails.age)
+        binding.etxHeightFt.setText(myProjectResponse.data[0].projectDetails.heightFt)
+        binding.etxHeightIn.setText(myProjectResponse.data[0].projectDetails.heightIn)
+        binding.etxLanguages.setText(myProjectResponse.data[0].projectDetails.lang)
+        binding.tvStartDate.text = myProjectResponse.data[0].projectDetails.fromDate
+        binding.tvEndDate.text = myProjectResponse.data[0].projectDetails.toDate
+        binding.etxLocation.setText(myProjectResponse.data[0].projectDetails.location)
+        binding.etxDescription.setText(myProjectResponse.data[0].projectDetails.description)
+        binding.etxExperiance.setText(myProjectResponse.data[0].projectDetails.exp)
+        binding.etxBodyType.setText(myProjectResponse.data[0].projectDetails.bodyType)
+        val separate1 = myProjectResponse.data[0].projectDetails.age.split("-")[0]
+        val separate2 = myProjectResponse.data[0].projectDetails.age.split("-")[1]
+        binding.rangeSeekbar.setMinValue(separate1.toFloat())
+        binding.rangeSeekbar.setMaxValue(separate2.toFloat())
+        if (myProjectResponse.data[0].projectDetails.gender.equals("Male")) {
+            binding.chkMale.isChecked = true
+            binding.chkFemale.isChecked = false
+        } else {
+            binding.chkFemale.isChecked = true
+            binding.chkMale.isChecked = false
         }
     }
 

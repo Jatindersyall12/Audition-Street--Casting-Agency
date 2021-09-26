@@ -1,8 +1,6 @@
-package com.auditionstreet.castingagency.ui.projects.adapter
+package com.auditionstreet.castingagency.ui.firstTimeHere.adapter
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,28 +9,27 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.castingagency.R
-import com.auditionstreet.castingagency.model.response.MyProjectResponse
-import kotlinx.android.synthetic.main.my_project_item.view.*
-import java.util.*
-import kotlin.collections.ArrayList
+import com.auditionstreet.castingagency.model.FirstTimeHereModel
+import kotlinx.android.synthetic.main.first_time_item.view.*
 
-class MyProjectListAdapter(
-    val mContext: FragmentActivity, private val mCallback: (mposition: String) -> Unit
+class FirstTimeHereAdapter(
+    private val mContext: FragmentActivity
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MyProjectResponse.Data>() {
+
+    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<FirstTimeHereModel>() {
 
         override fun areItemsTheSame(
-            oldItem: MyProjectResponse.Data,
-            newItem: MyProjectResponse.Data
+            oldItem: FirstTimeHereModel,
+            newItem: FirstTimeHereModel
         ): Boolean {
             return oldItem == newItem
         }
 
         @SuppressLint("DiffUtilEquals")
         override fun areContentsTheSame(
-            oldItem: MyProjectResponse.Data,
-            newItem: MyProjectResponse.Data
+            oldItem: FirstTimeHereModel,
+            newItem: FirstTimeHereModel
         ): Boolean {
             return oldItem == newItem
         }
@@ -42,9 +39,10 @@ class MyProjectListAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
         return ConnectionHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.my_project_item,
+                R.layout.first_time_item,
                 parent,
                 false
             ),
@@ -56,9 +54,6 @@ class MyProjectListAdapter(
         when (holder) {
             is ConnectionHolder -> {
                 holder.bind(differ.currentList[position])
-                holder.itemView.btnViewDetail.setOnClickListener {
-                    mCallback.invoke(differ.currentList[position].id.toString())
-                }
             }
         }
     }
@@ -67,23 +62,18 @@ class MyProjectListAdapter(
         return differ.currentList.size
     }
 
-    fun submitList(projectResponse: ArrayList<MyProjectResponse.Data>) {
-        differ.submitList(projectResponse)
-        notifyDataSetChanged()
+    fun submitList(sliderResponse: ArrayList<FirstTimeHereModel>) {
+        differ.submitList(sliderResponse)
     }
 
     class ConnectionHolder(
         itemView: View,
-        val mContext: Context
+        private val mContext: FragmentActivity
     ) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(item: MyProjectResponse.Data) = with(itemView) {
-            val rnd = Random()
-            itemView.tvProjectRequirement.text=item.title
-            val color: Int = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
-            itemView.btnViewDetail.background.setTint(color)
-            itemView.tvProject.setTextColor(color)
-
+        fun bind(item: FirstTimeHereModel) = with(itemView) {
+            itemView.ivData.setImageResource(item.firstTimeImage)
+            itemView.tvBriefOfScreen.text = item.firstTimeText
         }
     }
 }

@@ -27,4 +27,11 @@
             app:argType="string"
             android:defaultValue="" />
     </fragment>
+
+    <fragment
+        android:id="@+id/firstTimeHere"
+        android:name="com.auditionstreet.castingagency.ui.firstTimeHere.FirstTsimeHereFragment"
+        android:label="@string/str_first_time_here"
+        tools:layout="@layout/fragment_first_time_here" >
+    </fragment>
 </navigation>

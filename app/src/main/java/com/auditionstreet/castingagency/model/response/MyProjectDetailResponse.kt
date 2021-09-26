@@ -13,7 +13,7 @@ data class MyProjectDetailResponse(
 ) {
     data class Data(
         @SerializedName("admins")
-        val admins: List<Admin>,
+        val admins: ArrayList<Admin>,
         @SerializedName("projectDetails")
         val projectDetails: ProjectDetails
     ) {

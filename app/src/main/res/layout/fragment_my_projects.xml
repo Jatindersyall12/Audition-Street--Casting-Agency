@@ -54,13 +54,33 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvNoProject" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <com.auditionstreet.castingagency.customviews.CustomTextView
+            android:id="@+id/tvSelectDate"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@drawable/spinner_round_layout"
+            android:drawableRight="@drawable/ic_down"
+            android:drawablePadding="@dimen/_5sdp"
+            android:gravity="start|center"
+            android:text="@string/select_date"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvProjects"
-            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSelectDate" />
 
         <RelativeLayout
             android:id="@+id/layAdd"

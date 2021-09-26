@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.shortlist_item.view.tvHeight
 import kotlinx.android.synthetic.main.shortlist_item.view.tvName
 import kotlinx.android.synthetic.main.shortlist_item.view.tvViewProfile
 import java.util.*
+import kotlin.collections.ArrayList
 
 class ShortListAdapter(
     val mContext: FragmentActivity, private val mCallback: (
@@ -93,7 +94,7 @@ class ShortListAdapter(
         return differ.currentList.size
     }
 
-    fun submitList(projectResponse: List<ProjectResponse.Data>) {
+    fun submitList(projectResponse: ArrayList<ProjectResponse.Data>) {
         differ.submitList(projectResponse)
         notifyDataSetChanged()
     }

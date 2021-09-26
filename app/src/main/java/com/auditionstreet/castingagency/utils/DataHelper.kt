@@ -19,5 +19,31 @@ class DataHelper @Inject constructor() {
             R.drawable.ic_icon_chat_unselected,
             R.drawable.ic_icon_account_unselected,
         )
+
+        var firstTimehere: ArrayList<Int> = arrayListOf(
+            R.drawable.ic_icon_home_unselected,
+            R.drawable.ic_icon_project_unselected,
+            R.drawable.ic_icon_chat_unselected,
+            R.drawable.ic_icon_account_unselected,
+            R.drawable.ic_icon_account_unselected,
+            R.drawable.ic_icon_account_unselected,
+            R.drawable.ic_icon_account_unselected,
+            R.drawable.ic_icon_account_unselected,
+            R.drawable.ic_icon_account_unselected,
+            R.drawable.ic_icon_account_unselected
+        )
+
+        var firstTimehereString: ArrayList<String> = arrayListOf(
+           "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10"
+        )
     }
 }

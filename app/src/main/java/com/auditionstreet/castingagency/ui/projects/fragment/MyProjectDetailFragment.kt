@@ -11,7 +11,9 @@ import com.auditionstreet.castingagency.databinding.FragmentMyProjectDetailBindi
 import com.auditionstreet.castingagency.model.response.MyProjectDetailResponse
 import com.auditionstreet.castingagency.storage.preference.Preferences
 import com.auditionstreet.castingagency.ui.projects.viewmodel.MyProjectDetailViewModel
+import com.auditionstreet.castingagency.utils.convertToJsonString
 import com.auditionstreet.castingagency.utils.showToast
+import com.google.gson.Gson
 import com.leo.wikireviews.utils.livedata.EventObserver
 import com.silo.utils.AppBaseFragment
 import com.silo.utils.network.Resource
@@ -27,6 +29,7 @@ class MyProjectDetailFragment : AppBaseFragment(R.layout.fragment_my_project_det
     private val navArgs by navArgs<MyProjectDetailFragmentArgs>()
 
     private val viewModel: MyProjectDetailViewModel by viewModels()
+    private var projectDetail = ""
 
     @Inject
     lateinit var preferences: Preferences
@@ -46,7 +49,7 @@ class MyProjectDetailFragment : AppBaseFragment(R.layout.fragment_my_project_det
     }
 
     private fun setListeners() {
-        // binding.btnAddProject.setOnClickListener(this)
+         binding.imgEdit.setOnClickListener(this)
     }
 
 
@@ -84,6 +87,8 @@ class MyProjectDetailFragment : AppBaseFragment(R.layout.fragment_my_project_det
     }
 
     private fun setDetail(myProjectResponse: MyProjectDetailResponse) {
+        val gson = Gson()
+        projectDetail = gson.convertToJsonString(myProjectResponse)
         binding.tvTitle.text = myProjectResponse.data[0].projectDetails.title
         binding.tvAgeDetail.text = myProjectResponse.data[0].projectDetails.age
         if (myProjectResponse.data[0].projectDetails.heightFt.isEmpty())
@@ -108,9 +113,14 @@ class MyProjectDetailFragment : AppBaseFragment(R.layout.fragment_my_project_det
     }
 
     override fun onClick(v: View?) {
-        when (v) {
-            //   binding.btnAddProject -> {
+        when (v!!.id) {
+            R.id.imgEdit -> {
+                sharedViewModel.setDirection(
+                    MyProjectDetailFragmentDirections.navigateToUpdateProject(
+                        projectDetail
+                    )
+                )
         }
     }
-    //  }
+      }
 }

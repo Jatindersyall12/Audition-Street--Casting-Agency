@@ -21,6 +21,7 @@ object AppConstants {
     const val SPEED ="speed"
     const val FPS ="fps"
     const val SETTING_CHANGED = "setting_changed"
+    const val SECOND_TIME_HERE = "second_time_herre"
     var APPLICATIONID = ""
     var ARTISTID = ""
 
