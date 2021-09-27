@@ -83,6 +83,8 @@ class MyProjectListAdapter(
             val color: Int = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
             itemView.btnViewDetail.background.setTint(color)
             itemView.tvProject.setTextColor(color)
+            itemView.tvApplicationsNo.text = mContext.resources.getString(R.string.total_applications_received)+
+                    " : "+ item.totalUsers
 
         }
     }

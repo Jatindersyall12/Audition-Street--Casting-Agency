@@ -17,6 +17,7 @@ import com.auditionstreet.castingagency.ui.projects.repository.AddProjectReposit
 import com.leo.wikireviews.utils.livedata.Event
 import com.silo.model.request.AddGroupRequest
 import com.silo.model.request.AddProjectRequest
+import com.silo.model.request.UpdateProjectRequest
 import com.silo.utils.network.NetworkHelper
 import com.silo.utils.network.Resource
 import kotlinx.coroutines.launch
@@ -41,6 +42,7 @@ class AddProjectViewModel @ViewModelInject constructor(
     private val project = MutableLiveData<Event<Resource<AddProjectResponse>>>()
     val addProject: LiveData<Event<Resource<AddProjectResponse>>>
         get() = project
+
 
     fun getAllAdmin(url: String) {
         viewModelScope.launch {
@@ -244,6 +246,44 @@ class AddProjectViewModel @ViewModelInject constructor(
             }
 
             else -> return true
+        }
+    }
+
+    fun updateProject(request: UpdateProjectRequest) {
+        viewModelScope.launch {
+            this@AddProjectViewModel.project.postValue(
+                Event(
+                    Resource.loading(
+                        ApiConstant.UPDATE_PROJECT,
+                        null
+                    )
+                )
+            )
+            if (networkHelper.isNetworkConnected()) {
+                addProjectRepository.updateProject(request).let {
+                    if (it.isSuccessful && it.body() != null) {
+                        this@AddProjectViewModel.project.postValue(
+                            Event(
+                                Resource.success(
+                                    ApiConstant.UPDATE_PROJECT,
+                                    it.body()
+                                )
+                            )
+                        )
+                    } else {
+                        this@AddProjectViewModel.project.postValue(
+                            Event(
+                                Resource.error(
+                                    ApiConstant.UPDATE_PROJECT,
+                                    it.code(),
+                                    it.errorBody().toString(),
+                                    null
+                                )
+                            )
+                        )
+                    }
+                }
+            }
         }
     }
 }

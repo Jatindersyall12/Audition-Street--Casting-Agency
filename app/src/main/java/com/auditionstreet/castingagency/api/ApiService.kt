@@ -8,6 +8,7 @@ import com.auditionstreet.castingagency.api.ApiConstant.Companion.BLOCK_ARTIST
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.GET_PROJECTS
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.LOGIN
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.SIGN_UP
+import com.auditionstreet.castingagency.api.ApiConstant.Companion.UPDATE_PROJECT
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.UPLOAD_MEDIA
 import com.auditionstreet.castingagency.model.response.*
 import com.silo.model.request.*
@@ -26,6 +27,9 @@ interface ApiService {
 
     @POST(ADD_PROJECT)
     suspend fun addProject(@Body request: AddProjectRequest): Response<AddProjectResponse>
+
+    @POST(UPDATE_PROJECT)
+    suspend fun updateProject(@Body request: UpdateProjectRequest): Response<AddProjectResponse>
 
     @GET
     suspend fun getMyProjects(@Url url: String): Response<MyProjectResponse>
@@ -82,4 +86,7 @@ interface ApiService {
 
     @GET
     suspend fun getOtherProfile(@Url url: String): Response<OtherProfileResponse>
+
+    @GET
+    suspend fun deleteProject(@Url url: String): Response<CommonResponse>
 }

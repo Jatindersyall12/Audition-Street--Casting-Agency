@@ -21,6 +21,7 @@ import com.google.gson.Gson
 import com.leo.wikireviews.utils.livedata.EventObserver
 import com.silo.model.request.AddGroupRequest
 import com.silo.model.request.AddProjectRequest
+import com.silo.model.request.UpdateProjectRequest
 import com.silo.utils.AppBaseFragment
 import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
@@ -50,6 +51,7 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
     private var projectDetailResponse: MyProjectDetailResponse ?= null
     private var languageList: ArrayList<LanguageModel> ?= null
     private var bodyTypeList: ArrayList<BodyTypeModel> ?= null
+    private var isUpdateCase = false
 
     private val navArgs by navArgs<AddProjectFragmentArgs>()
 
@@ -74,6 +76,9 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
                 )!!
             )
             binding.btnSubmit.text = resources.getString(R.string.update)
+            isUpdateCase = true
+        }else{
+            isUpdateCase = false
         }
         languageList = ArrayList()
         bodyTypeList = ArrayList()
@@ -194,6 +199,11 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
                         allUserResponse = apiResponse.data as AllUsersResponse
                     }
                     ApiConstant.ADD_PROJECT -> {
+                        addProjectResponse = apiResponse.data as AddProjectResponse
+                        showToast(requireActivity(), addProjectResponse.msg.toString())
+                        findNavController().popBackStack()
+                    }
+                    ApiConstant.UPDATE_PROJECT -> {
                         addProjectResponse = apiResponse.data as AddProjectResponse
                         showToast(requireActivity(), addProjectResponse.msg.toString())
                         findNavController().popBackStack()
@@ -353,34 +363,48 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
     }
 
     private fun addProjectRequest(binding: FragmentAddProjectBinding) {
-        val request = AddProjectRequest()
-        request.castingId = preferences.getString(AppConstants.USER_ID)
-        request.title = binding.etxTitle.text.toString()
-        request.description = binding.etxDescription.text.toString()
-        if (binding.chkMale.isChecked)
-            request.gender = resources.getString(R.string.str_male)
-        else
-            request.gender = resources.getString(R.string.str_female)
-        request.age = "$minAge-$maxAge"
 
-        /*if (etxHeightFt.text.toString().isNotEmpty() && etxHeightIn.text.toString().isNotEmpty())
-            request.height = etxHeightFt.text.toString() + "'" + etxHeightIn.text.toString()
-        else if(etxHeightFt.text.toString().isNotEmpty() && etxHeightIn.text.toString().isEmpty())
-            request.height = etxHeightFt.text.toString() + "'"
-        else
-        request.height = ""*/
-        request.heightFt = etxHeightFt.text.toString()
-        request.heightIn = etxHeightIn.text.toString()
-
-
-        request.bodyType = etxBodyType.text.toString()
-        request.exp = etxExperiance.text.toString()
-        request.lang = etxLanguages.text.toString()
-        request.fromDate = tvStartDate.text.toString()
-        request.toDate = tvEndDate.text.toString()
-        request.location = etxLocation.text.toString()
-        request.admins = adminList
-        viewModel.addProject(request)
-
+        if (isUpdateCase){
+        val request = UpdateProjectRequest()
+            request.castingId = preferences.getString(AppConstants.USER_ID)
+            request.title = binding.etxTitle.text.toString()
+            request.description = binding.etxDescription.text.toString()
+            if (binding.chkMale.isChecked)
+                request.gender = resources.getString(R.string.str_male)
+            else
+                request.gender = resources.getString(R.string.str_female)
+            request.age = "$minAge-$maxAge"
+            request.heightFt = etxHeightFt.text.toString()
+            request.heightIn = etxHeightIn.text.toString()
+            request.bodyType = etxBodyType.text.toString()
+            request.exp = etxExperiance.text.toString()
+            request.lang = etxLanguages.text.toString()
+            request.fromDate = tvStartDate.text.toString()
+            request.toDate = tvEndDate.text.toString()
+            request.location = etxLocation.text.toString()
+          //  request.admins = adminList
+            request.projectId = projectDetailResponse!!.data[0].projectDetails.id.toString()
+            viewModel.updateProject(request)
+        }else {
+            val request = AddProjectRequest()
+            request.castingId = preferences.getString(AppConstants.USER_ID)
+            request.title = binding.etxTitle.text.toString()
+            request.description = binding.etxDescription.text.toString()
+            if (binding.chkMale.isChecked)
+                request.gender = resources.getString(R.string.str_male)
+            else
+                request.gender = resources.getString(R.string.str_female)
+            request.age = "$minAge-$maxAge"
+            request.heightFt = etxHeightFt.text.toString()
+            request.heightIn = etxHeightIn.text.toString()
+            request.bodyType = etxBodyType.text.toString()
+            request.exp = etxExperiance.text.toString()
+            request.lang = etxLanguages.text.toString()
+            request.fromDate = tvStartDate.text.toString()
+            request.toDate = tvEndDate.text.toString()
+            request.location = etxLocation.text.toString()
+            request.admins = adminList
+            viewModel.addProject(request)
+        }
     }
 }

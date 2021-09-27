@@ -22,7 +22,7 @@
                 android:textSize="@dimen/_18sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imgEdit"
+                app:layout_constraintEnd_toStartOf="@+id/imgDelete"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,6 +35,18 @@
                 android:background="@drawable/ic_edit"
                 android:contentDescription="@string/str_year"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imgDelete"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:src="@drawable/ic_delete"
+                app:tint="@color/black"
+                android:contentDescription="@string/str_year"
+                app:layout_constraintEnd_toStartOf="@+id/imgEdit"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.auditionstreet.castingagency.customviews.CustomTextViewBold
@@ -146,23 +158,23 @@
                 android:id="@+id/tvtvLocationDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_18sdp"
+                android:layout_marginEnd="@dimen/_18sdp"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:text="@string/str_location"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_16sdp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvDatesDetail" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
             <com.auditionstreet.castingagency.customviews.CustomTextViewBold
                 android:id="@+id/tvLocationDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_18sdp"
+                android:layout_marginEnd="@dimen/_18sdp"
                 android:layout_marginTop="@dimen/_7sdp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14sdp"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvtvLocationDetail" />
 
             <com.auditionstreet.castingagency.customviews.CustomTextViewBold
@@ -175,7 +187,7 @@
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_16sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvLocationDetail" />
+                app:layout_constraintTop_toBottomOf="@+id/tvDatesDetail" />
 
             <com.auditionstreet.castingagency.customviews.CustomTextViewBold
                 android:id="@+id/tvDescDetail"
@@ -189,6 +201,30 @@
                 android:textSize="@dimen/_14sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvDesc" />
+
+            <com.auditionstreet.castingagency.customviews.CustomTextViewBold
+                android:id="@+id/tvApplicants"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:text="@string/applicants"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_16sdp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDescDetail" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvApplicant"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:visibility="visible"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginStart="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_45sdp"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@+id/tvApplicants" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

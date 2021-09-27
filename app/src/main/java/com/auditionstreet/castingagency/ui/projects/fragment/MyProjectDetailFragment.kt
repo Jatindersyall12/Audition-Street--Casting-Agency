@@ -1,16 +1,24 @@
 package com.auditionstreet.castingagency.ui.projects.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.auditionstreet.castingagency.BuildConfig
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentMyProjectDetailBinding
 import com.auditionstreet.castingagency.model.response.MyProjectDetailResponse
+import com.auditionstreet.castingagency.model.response.ProjectResponse
 import com.auditionstreet.castingagency.storage.preference.Preferences
+import com.auditionstreet.castingagency.ui.home.activity.OtherUserProfileActivity
+import com.auditionstreet.castingagency.ui.home.adapter.ShortListAdapter
+import com.auditionstreet.castingagency.ui.projects.adapter.ApplicantListAdapter
 import com.auditionstreet.castingagency.ui.projects.viewmodel.MyProjectDetailViewModel
+import com.auditionstreet.castingagency.utils.AppConstants
 import com.auditionstreet.castingagency.utils.convertToJsonString
 import com.auditionstreet.castingagency.utils.showToast
 import com.google.gson.Gson
@@ -29,6 +37,7 @@ class MyProjectDetailFragment : AppBaseFragment(R.layout.fragment_my_project_det
     private val navArgs by navArgs<MyProjectDetailFragmentArgs>()
 
     private val viewModel: MyProjectDetailViewModel by viewModels()
+    private lateinit var applicantListAdapter: ApplicantListAdapter
     private var projectDetail = ""
 
     @Inject
@@ -36,6 +45,7 @@ class MyProjectDetailFragment : AppBaseFragment(R.layout.fragment_my_project_det
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        init()
         setListeners()
         setObservers()
         getMyProjectDetail(navArgs.projectId)
@@ -50,6 +60,7 @@ class MyProjectDetailFragment : AppBaseFragment(R.layout.fragment_my_project_det
 
     private fun setListeners() {
          binding.imgEdit.setOnClickListener(this)
+        binding.imgDelete.setOnClickListener(this)
     }
 
 
@@ -57,6 +68,31 @@ class MyProjectDetailFragment : AppBaseFragment(R.layout.fragment_my_project_det
         viewModel.users.observe(viewLifecycleOwner, EventObserver {
             handleApiCallback(it)
         })
+        viewModel.deleteProject.observe(viewLifecycleOwner, EventObserver {
+            handleApiCallback(it)
+        })
+    }
+
+    private fun init() {
+        binding.rvApplicant.apply {
+            layoutManager = LinearLayoutManager(activity)
+            applicantListAdapter = ApplicantListAdapter(requireActivity())
+            { position: Int ->
+
+            }
+            adapter = applicantListAdapter
+        }
+    }
+
+    private fun setAdapter(projectList: ArrayList<MyProjectDetailResponse.Data.ProjectRequests>) {
+        if (!projectList.isNullOrEmpty()) {
+            applicantListAdapter.submitList(projectList)
+            binding.rvApplicant.visibility = View.VISIBLE
+           // binding.tvNoDataFound.visibility = View.GONE
+        } else {
+            binding.rvApplicant.visibility = View.GONE
+         //   binding.tvNoDataFound.visibility = View.VISIBLE
+        }
     }
 
     private fun handleApiCallback(apiResponse: Resource<Any>) {
@@ -66,6 +102,9 @@ class MyProjectDetailFragment : AppBaseFragment(R.layout.fragment_my_project_det
                 when (apiResponse.apiConstant) {
                     ApiConstant.GET_MY_PROJECTS_DETAILS -> {
                         setDetail(apiResponse.data as MyProjectDetailResponse)
+                    }
+                    ApiConstant.DELETE_PROJECT -> {
+                       findNavController().popBackStack()
                     }
                 }
             }
@@ -89,6 +128,7 @@ class MyProjectDetailFragment : AppBaseFragment(R.layout.fragment_my_project_det
     private fun setDetail(myProjectResponse: MyProjectDetailResponse) {
         val gson = Gson()
         projectDetail = gson.convertToJsonString(myProjectResponse)
+        setAdapter(myProjectResponse.data[0].projectRequests)
         binding.tvTitle.text = myProjectResponse.data[0].projectDetails.title
         binding.tvAgeDetail.text = myProjectResponse.data[0].projectDetails.age
         if (myProjectResponse.data[0].projectDetails.heightFt.isEmpty())
@@ -121,6 +161,11 @@ class MyProjectDetailFragment : AppBaseFragment(R.layout.fragment_my_project_det
                     )
                 )
         }
+            R.id.imgDelete->{
+                viewModel.deleteProject(
+                    BuildConfig.BASE_URL + ApiConstant.DELETE_PROJECT + "/" + navArgs.projectId
+                )
+            }
     }
       }
 }

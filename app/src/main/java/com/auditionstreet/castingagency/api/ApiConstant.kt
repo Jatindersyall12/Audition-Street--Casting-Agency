@@ -49,6 +49,8 @@ class ApiConstant {
         const val GET_HOME_DATA = "casting/homeAPI/"
         const val  GET_OTHER_PROFILE = "artistDetail"
         const val GET_SHORTLISTED_LIST = "casting/acceptedApplication"
+        const val  DELETE_PROJECT = "casting/projectDelete"
+        const val UPDATE_PROJECT = "projectUpdate"
 
     }
 }

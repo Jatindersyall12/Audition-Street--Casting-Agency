@@ -1,5 +1,6 @@
 package com.auditionstreet.castingagency.ui.projects.repository
 
+import com.auditionstreet.castingagency.model.response.CommonResponse
 import com.auditionstreet.castingagency.model.response.MyProjectDetailResponse
 import com.auditionstreet.castingagency.model.response.MyProjectResponse
 import com.auditionstreet.castingagency.model.response.ProjectResponse
@@ -13,5 +14,6 @@ import javax.inject.Inject
 
 class MyProjectDetailRepository @Inject constructor(val apiService: ApiService) {
    suspend fun getMyProjectDetail(url: String):Response<MyProjectDetailResponse> =apiService.getMyProjectDetail(url)
+   suspend fun deleteProject(url: String):Response<CommonResponse> =apiService.deleteProject(url)
 
 }

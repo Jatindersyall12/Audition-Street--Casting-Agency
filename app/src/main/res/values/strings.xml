@@ -215,6 +215,8 @@
     <string name="str_first_time_here">First Time Here</string>
     <string name="swipe_to_continue">Swipe to continue</string>
     <string name="swipe_to_complete">Swipe to Complete</string>
+    <string name="total_applications_received">Total Applications Received</string>
+    <string name="applicants">Applicants</string>
 
 
 </resources>

@@ -14,6 +14,8 @@ data class MyProjectDetailResponse(
     data class Data(
         @SerializedName("admins")
         val admins: ArrayList<Admin>,
+        @SerializedName("projectRequests")
+        val projectRequests: ArrayList<ProjectRequests>,
         @SerializedName("projectDetails")
         val projectDetails: ProjectDetails
     ) {
@@ -44,6 +46,37 @@ data class MyProjectDetailResponse(
             val updatedAt: String,
             @SerializedName("year")
             val year: String
+        )
+
+        data class ProjectRequests(
+            @SerializedName("title")
+            val title: String,
+            @SerializedName("id")
+            val id: Int,
+            @SerializedName("projectId")
+            val projectId: String,
+            @SerializedName("artistId")
+            val artistId: String,
+            @SerializedName("castingId")
+            val castingId: String,
+            @SerializedName("artistStatus")
+            val artistStatus: String,
+            @SerializedName("castingStatus")
+            val castingStatus: String,
+            @SerializedName("artistName")
+            val artistName: String,
+            @SerializedName("artistImage")
+            val artistImage: String,
+            @SerializedName("heightFt")
+            val heightFt: String,
+            @SerializedName("heightIn")
+            val heightIn: String,
+            @SerializedName("age")
+            val age: String,
+            @SerializedName("gender")
+            val gender: String,
+            @SerializedName("video")
+            val video: String,
         )
 
         data class ProjectDetails(
