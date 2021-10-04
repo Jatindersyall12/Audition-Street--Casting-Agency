@@ -10,4 +10,11 @@
         android:label="@string/str_profile"
         tools:layout="@layout/fragment_profile">
     </fragment>
+
+    <fragment
+        android:id="@+id/blockedUserListFragment"
+        android:name="com.auditionstreet.castingagency.ui.profile.fragment.BlockUserListingFragment"
+        android:label="@string/str_blocked_user"
+        tools:layout="@layout/fragment_block_user_listing">
+    </fragment>
 </navigation>

@@ -36,6 +36,7 @@ import com.auditionstreet.castingagency.model.BodyTypeModel
 import com.auditionstreet.castingagency.model.LanguageModel
 import com.auditionstreet.castingagency.model.response.AllAdminResponse
 import com.auditionstreet.castingagency.model.response.AllUsersResponse
+import com.auditionstreet.castingagency.model.response.GetBodyTypeLanguageResponse
 import com.auditionstreet.castingagency.model.response.MyProjectResponse
 import com.auditionstreet.castingagency.ui.home.adapter.SelectProjectListAdapter
 import com.auditionstreet.castingagency.ui.projects.adapter.AllAdminListAdapter
@@ -689,7 +690,7 @@ fun showProgressDialog(
 
 fun showLanguageSelectionDialog(
     mContext: Context,
-    languageList: ArrayList<LanguageModel>,
+    languageList: ArrayList<GetBodyTypeLanguageResponse.Data.Language>,
     mCallback: (year: String) -> Unit
 ): Dialog {
     lateinit var rvLanguageAdapter: LanguageListAdapter
@@ -738,7 +739,7 @@ fun showLanguageSelectionDialog(
 
 fun showBodyTypeSelectionDialog(
     mContext: Context,
-    bodyTypeList: ArrayList<BodyTypeModel>,
+    bodyTypeList: ArrayList<GetBodyTypeLanguageResponse.Data.BodyType>,
     mCallback: (year: String) -> Unit
 ): Dialog {
     lateinit var rvBodyTypeAdapter: BodyTypeListAdapter

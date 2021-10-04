@@ -158,10 +158,7 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
             { position: Int ->
                 AppConstants.APPLICATIONID = applicationList[position].id.toString()
                 val i = Intent(requireActivity(), AllApplicationActivity::class.java)
-                //  i.putExtra("applicationId", applicationList[position].id.toString())
                 startActivity(i)
-                /*val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
-                startActivity(i)*/
             }
             adapter = applicationListAdapter
             binding.rvApplication.setLayoutManager(

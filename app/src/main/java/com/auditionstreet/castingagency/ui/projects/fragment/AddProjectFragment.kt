@@ -48,9 +48,10 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
     private lateinit var allUserResponse: AllUsersResponse
     private lateinit var groupResponse: AddGroupResponse
     private lateinit var addProjectResponse: AddProjectResponse
+    private lateinit var getBodyTypeLanguageResponse: GetBodyTypeLanguageResponse
     private var projectDetailResponse: MyProjectDetailResponse ?= null
-    private var languageList: ArrayList<LanguageModel> ?= null
-    private var bodyTypeList: ArrayList<BodyTypeModel> ?= null
+    private var languageList: ArrayList<GetBodyTypeLanguageResponse.Data.Language> ?= null
+    private var bodyTypeList: ArrayList<GetBodyTypeLanguageResponse.Data.BodyType> ?= null
     private var isUpdateCase = false
 
     private val navArgs by navArgs<AddProjectFragmentArgs>()
@@ -77,39 +78,12 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
             )
             binding.btnSubmit.text = resources.getString(R.string.update)
             isUpdateCase = true
+            disableViews()
         }else{
             isUpdateCase = false
         }
         languageList = ArrayList()
         bodyTypeList = ArrayList()
-        for (i in 0 until 4){
-            val bodyTypeModel = BodyTypeModel()
-            bodyTypeModel.isChecked = false
-            if (i==0)
-                bodyTypeModel.bodyType = "Muscular"
-            if (i==1)
-                bodyTypeModel.bodyType = "Skinny"
-            if (i==2)
-                bodyTypeModel.bodyType = "Normal"
-            if (i==3)
-                bodyTypeModel.bodyType = "Fat"
-            bodyTypeList!!.add(bodyTypeModel)
-        }
-        for (i in 0 until 5){
-            val languageModel = LanguageModel()
-            languageModel.isChecked = false
-            if (i==0)
-            languageModel.language = "Hindi"
-            if (i==1)
-                languageModel.language = "English"
-            if (i==2)
-                languageModel.language = "Punjabi"
-            if (i==3)
-                languageModel.language = "Bhojpuri"
-            if (i==4)
-                languageModel.language = "Gujrati"
-            languageList!!.add(languageModel)
-        }
 
         setListeners()
         setObservers()
@@ -141,6 +115,7 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
                 AppConstants.USER_ID
             )
         )
+        viewModel.getLanguageBodyType(BuildConfig.BASE_URL + ApiConstant.GET_LANGUAGE_BODY_TYPE)
     }
 
     private fun setListeners() {
@@ -166,6 +141,9 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
             handleApiCallback(it)
         })
         viewModel.addGroup.observe(viewLifecycleOwner, EventObserver {
+            handleApiCallback(it)
+        })
+        viewModel.bodyTypeLanguage.observe(viewLifecycleOwner, EventObserver {
             handleApiCallback(it)
         })
     }
@@ -219,6 +197,12 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
                             )
                         )
                     }
+                    ApiConstant.GET_LANGUAGE_BODY_TYPE -> {
+                        getBodyTypeLanguageResponse = apiResponse.data as GetBodyTypeLanguageResponse
+                      //  showToast(requireActivity(), getBodyTypeLanguageResponse.msg.toString())
+                        languageList = getBodyTypeLanguageResponse.data.languages
+                        bodyTypeList = getBodyTypeLanguageResponse.data.bodyTypes
+                    }
                 }
             }
             Status.LOADING -> {
@@ -268,8 +252,8 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
                     var user = ""
                     for (i in 0 until languageList!!.size) {
                         if (languageList!![i].isChecked) {
-                            languageStringList.add(languageList!![i].language)
-                            user += languageList!![i].language + " ,"
+                            languageStringList.add(languageList!![i].name)
+                            user += languageList!![i].name + " ,"
                         }
                     }
                     if (user.length >= 1)
@@ -285,8 +269,8 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
                     var user = ""
                     for (i in 0 until bodyTypeList!!.size) {
                         if (bodyTypeList!![i].isChecked) {
-                            bodyTypeStringList.add(bodyTypeList!![i].bodyType)
-                            user += bodyTypeList!![i].bodyType + " ,"
+                            bodyTypeStringList.add(bodyTypeList!![i].name)
+                            user += bodyTypeList!![i].name + " ,"
                         }
                     }
                     if (user.length >= 1)
@@ -406,5 +390,20 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
             request.admins = adminList
             viewModel.addProject(request)
         }
+    }
+
+    private fun disableViews(){
+        binding.chkMale.isEnabled = false
+        binding.chkFemale.isEnabled = false
+        binding.rangeSeekbar.isEnabled = false
+        binding.etxHeightFt.isEnabled = false
+        binding.etxHeightIn.isEnabled = false
+        binding.etxLanguages.isEnabled = false
+        binding.tvStartDate.isEnabled = false
+        binding.tvEndDate.isEnabled = false
+        binding.etxLocation.isEnabled = false
+        binding.etxExperiance.isEnabled = false
+        binding.etxBodyType.isEnabled = false
+        binding.etxSubDomain.isEnabled = false
     }
 }

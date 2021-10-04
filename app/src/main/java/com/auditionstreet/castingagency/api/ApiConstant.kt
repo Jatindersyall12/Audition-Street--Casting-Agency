@@ -51,6 +51,8 @@ class ApiConstant {
         const val GET_SHORTLISTED_LIST = "casting/acceptedApplication"
         const val  DELETE_PROJECT = "casting/projectDelete"
         const val UPDATE_PROJECT = "projectUpdate"
+        const val GET_LANGUAGE_BODY_TYPE = "common/getList"
+        const val GET_BLOCK_ARTIST = "blockArtistList"
 
     }
 }

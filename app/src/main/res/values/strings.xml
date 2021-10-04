@@ -160,6 +160,8 @@
     <string name="str_date_end">Select End Date</string>
     <string name="str_no_admin_found">No admin found.Please add admin first.</string>
     <string name="str_no_user">No user found to create group admin</string>
+    <string name="str_no_language_found">No language found.Please add language first.</string>
+    <string name="str_no_body_type_found">No body type found.Please add body type first.</string>
 
     <string name="str_divider">-</string>
     <string name="str_locatn">Add Location</string>
@@ -217,6 +219,11 @@
     <string name="swipe_to_complete">Swipe to Complete</string>
     <string name="total_applications_received">Total Applications Received</string>
     <string name="applicants">Applicants</string>
+    <string name="no_blocked_user_found">No Blocked User Found</string>
+
+    <!--Blocked User List-->
+    <string name="str_blocked_user">Blocked User List Fragment</string>
+    <string name="blocked_users">Blocked Users</string>
 
 
 </resources>

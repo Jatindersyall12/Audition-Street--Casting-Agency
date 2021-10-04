@@ -9,10 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentAddProjectBinding
-import com.auditionstreet.castingagency.model.response.AddGroupResponse
-import com.auditionstreet.castingagency.model.response.AddProjectResponse
-import com.auditionstreet.castingagency.model.response.AllAdminResponse
-import com.auditionstreet.castingagency.model.response.AllUsersResponse
+import com.auditionstreet.castingagency.model.response.*
 import com.auditionstreet.castingagency.ui.projects.repository.AddProjectRepository
 import com.leo.wikireviews.utils.livedata.Event
 import com.silo.model.request.AddGroupRequest
@@ -42,6 +39,10 @@ class AddProjectViewModel @ViewModelInject constructor(
     private val project = MutableLiveData<Event<Resource<AddProjectResponse>>>()
     val addProject: LiveData<Event<Resource<AddProjectResponse>>>
         get() = project
+
+    private val body_Type_Language = MutableLiveData<Event<Resource<GetBodyTypeLanguageResponse>>>()
+    val bodyTypeLanguage: LiveData<Event<Resource<GetBodyTypeLanguageResponse>>>
+        get() = body_Type_Language
 
 
     fun getAllAdmin(url: String) {
@@ -275,6 +276,37 @@ class AddProjectViewModel @ViewModelInject constructor(
                             Event(
                                 Resource.error(
                                     ApiConstant.UPDATE_PROJECT,
+                                    it.code(),
+                                    it.errorBody().toString(),
+                                    null
+                                )
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    fun getLanguageBodyType(url: String) {
+        viewModelScope.launch {
+            user.postValue(Event(Resource.loading(ApiConstant.GET_LANGUAGE_BODY_TYPE, null)))
+            if (networkHelper.isNetworkConnected()) {
+                addProjectRepository.getLanguageBodyType(url).let {
+                    if (it.isSuccessful && it.body() != null) {
+                        body_Type_Language.postValue(
+                            Event(
+                                Resource.success(
+                                    ApiConstant.GET_LANGUAGE_BODY_TYPE,
+                                    it.body()
+                                )
+                            )
+                        )
+                    } else {
+                        body_Type_Language.postValue(
+                            Event(
+                                content = Resource.error(
+                                    ApiConstant.GET_LANGUAGE_BODY_TYPE,
                                     it.code(),
                                     it.errorBody().toString(),
                                     null

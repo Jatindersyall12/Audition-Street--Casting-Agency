@@ -11,6 +11,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.auditionstreet.castingagency.BuildConfig
@@ -90,6 +91,7 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
         binding.imgEdit.setOnClickListener(this)
         binding.tvDone.setOnClickListener(this)
         binding.imgProfile.setOnClickListener(this)
+        binding.imgUnBlock.setOnClickListener(this)
     }
 
 
@@ -215,6 +217,9 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
             }
             R.id.imgProfile -> {
                 pickImage(picker, true, 1)
+            }
+            R.id.imgUnBlock ->{
+                findNavController().navigate(R.id.blockedUserListFragment)
             }
         }
     }

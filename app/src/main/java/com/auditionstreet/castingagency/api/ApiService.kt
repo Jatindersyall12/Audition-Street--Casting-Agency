@@ -89,4 +89,11 @@ interface ApiService {
 
     @GET
     suspend fun deleteProject(@Url url: String): Response<CommonResponse>
+
+    @GET
+    suspend fun getLanguageBodyType(@Url url: String): Response<GetBodyTypeLanguageResponse>
+
+    @GET
+    suspend fun getBlockUserList(@Url url: String): Response<BlockUserListResponse>
+
 }

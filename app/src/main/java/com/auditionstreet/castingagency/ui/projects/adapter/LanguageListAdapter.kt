@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.model.LanguageModel
 import com.auditionstreet.castingagency.model.response.AllAdminResponse
+import com.auditionstreet.castingagency.model.response.GetBodyTypeLanguageResponse
 import kotlinx.android.synthetic.main.all_admin_item.view.*
 
 class LanguageListAdapter(
@@ -20,11 +21,11 @@ class LanguageListAdapter(
     ) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<LanguageModel>() {
+    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<GetBodyTypeLanguageResponse.Data.Language>() {
 
         override fun areItemsTheSame(
-            oldItem: LanguageModel,
-            newItem: LanguageModel
+            oldItem: GetBodyTypeLanguageResponse.Data.Language,
+            newItem: GetBodyTypeLanguageResponse.Data.Language
         ): Boolean {
             return oldItem == newItem
 
@@ -33,8 +34,8 @@ class LanguageListAdapter(
 
         @SuppressLint("DiffUtilEquals")
         override fun areContentsTheSame(
-            oldItem: LanguageModel,
-            newItem: LanguageModel
+            oldItem: GetBodyTypeLanguageResponse.Data.Language,
+            newItem: GetBodyTypeLanguageResponse.Data.Language
         ): Boolean {
             return oldItem == newItem
             // return false
@@ -74,7 +75,7 @@ class LanguageListAdapter(
         return differ.currentList.size
     }
 
-    fun submitList(projectResponse: ArrayList<LanguageModel>) {
+    fun submitList(projectResponse: ArrayList<GetBodyTypeLanguageResponse.Data.Language>) {
         differ.submitList(projectResponse)
         notifyDataSetChanged()
     }
@@ -84,12 +85,12 @@ class LanguageListAdapter(
         val mContext: Context
     ) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(item: LanguageModel) = with(itemView) {
+        fun bind(item: GetBodyTypeLanguageResponse.Data.Language) = with(itemView) {
             itemView.chkUser.setOnCheckedChangeListener { buttonView, isChecked ->
                 differ.currentList[adapterPosition].isChecked = isChecked
             }
             itemView.chkUser.isChecked = differ.currentList[adapterPosition].isChecked
-            itemView.tvAdmin.text = item.language
+            itemView.tvAdmin.text = item.name
         }
     }
 }
