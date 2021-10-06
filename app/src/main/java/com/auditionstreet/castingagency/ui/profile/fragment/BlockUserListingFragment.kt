@@ -9,6 +9,7 @@ import com.auditionstreet.castingagency.BuildConfig
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentBlockUserListingBinding
+import com.auditionstreet.castingagency.model.response.AddGroupResponse
 import com.auditionstreet.castingagency.model.response.BlockUserListResponse
 import com.auditionstreet.castingagency.storage.preference.Preferences
 import com.auditionstreet.castingagency.ui.profile.adapter.BlockedUserListAdapter
@@ -17,6 +18,7 @@ import com.auditionstreet.castingagency.ui.projects.viewmodel.MyProjectViewModel
 import com.auditionstreet.castingagency.utils.AppConstants
 import com.auditionstreet.castingagency.utils.showToast
 import com.leo.wikireviews.utils.livedata.EventObserver
+import com.silo.model.request.BlockArtistRequest
 import com.silo.utils.AppBaseFragment
 import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
@@ -33,6 +35,7 @@ class BlockUserListingFragment : AppBaseFragment(R.layout.fragment_block_user_li
 
     private val viewModel: BlockUserViewModel by viewModels()
     private var blockedUserList : ArrayList<BlockUserListResponse.Data> ?= null
+    private var blockUserSelectedPosition = 0
 
     @Inject
     lateinit var preferences: Preferences
@@ -63,6 +66,9 @@ class BlockUserListingFragment : AppBaseFragment(R.layout.fragment_block_user_li
         viewModel.getBlockUserList.observe(viewLifecycleOwner, EventObserver {
             handleApiCallback(it)
         })
+        viewModel.blockArtist.observe(viewLifecycleOwner, EventObserver {
+            handleApiCallback(it)
+        })
     }
 
     private fun handleApiCallback(apiResponse: Resource<Any>) {
@@ -74,6 +80,10 @@ class BlockUserListingFragment : AppBaseFragment(R.layout.fragment_block_user_li
                         val response = apiResponse.data as BlockUserListResponse
                         blockedUserList =  response.data
                         setAdapter(blockedUserList!!)
+                    }
+                    ApiConstant.BLOCK_ARTIST -> {
+                        getBlockUserList()
+                        showToast(requireActivity(), "Unblocked Successfully")
                     }
                 }
             }
@@ -96,11 +106,13 @@ class BlockUserListingFragment : AppBaseFragment(R.layout.fragment_block_user_li
             layoutManager = LinearLayoutManager(activity)
             blockedUserListAdapter = BlockedUserListAdapter(requireActivity())
             { position: String ->
-                /*sharedViewModel.setDirection(
-                    MyProjectsListingFragmentDirections.navigateToProjectDetail(
-                        projectId
-                    )
-                )*/
+                blockUserSelectedPosition = position.toInt()
+                val blockArtistRequest = BlockArtistRequest()
+                blockArtistRequest.artistId = blockedUserList!![position.toInt()].artistId
+                blockArtistRequest.castingId =  preferences.getString(AppConstants.USER_ID)
+                // Status 1 = Block, 2 = Unblock
+                blockArtistRequest.status = "2"
+                viewModel.blockArtist(blockArtistRequest)
             }
             adapter = blockedUserListAdapter
         }

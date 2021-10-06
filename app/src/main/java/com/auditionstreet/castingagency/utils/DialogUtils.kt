@@ -39,10 +39,7 @@ import com.auditionstreet.castingagency.model.response.AllUsersResponse
 import com.auditionstreet.castingagency.model.response.GetBodyTypeLanguageResponse
 import com.auditionstreet.castingagency.model.response.MyProjectResponse
 import com.auditionstreet.castingagency.ui.home.adapter.SelectProjectListAdapter
-import com.auditionstreet.castingagency.ui.projects.adapter.AllAdminListAdapter
-import com.auditionstreet.castingagency.ui.projects.adapter.AllUserListAdapter
-import com.auditionstreet.castingagency.ui.projects.adapter.BodyTypeListAdapter
-import com.auditionstreet.castingagency.ui.projects.adapter.LanguageListAdapter
+import com.auditionstreet.castingagency.ui.projects.adapter.*
 import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.DefaultLoadControl
 import com.google.android.exoplayer2.ExoPlayerFactory
@@ -772,6 +769,56 @@ fun showBodyTypeSelectionDialog(
     rvBodyType.apply {
         layoutManager = LinearLayoutManager(mContext)
         rvBodyTypeAdapter = BodyTypeListAdapter(mContext as FragmentActivity)
+        { projectId: String ->
+
+        }
+        adapter = rvBodyTypeAdapter
+        rvBodyTypeAdapter.submitList(bodyTypeList)
+    }
+
+    dialogView.show()
+    val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
+    val height = (mContext.getResources().getDisplayMetrics().heightPixels * 0.65)
+    dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
+    return dialogView
+}
+
+
+fun showSkinToneSelectionDialog(
+    mContext: Context,
+    bodyTypeList: ArrayList<GetBodyTypeLanguageResponse.Data.SkinTone>,
+    mCallback: (year: String) -> Unit
+): Dialog {
+    lateinit var rvBodyTypeAdapter: SkinToneListAdapter
+    val dialogView = Dialog(mContext)
+    dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    val binding =
+        DataBindingUtil.inflate<ViewDataBinding>(
+            LayoutInflater.from(mContext),
+            R.layout.popup_skin_tone,
+            null,
+            false
+        )
+    dialogView.setContentView(binding.root)
+    dialogView.setCancelable(false)
+    val rvBodyType = dialogView.findViewById<RecyclerView>(R.id.rvSkinTone)
+    val btnDone = dialogView.findViewById<CustomButton>(R.id.btnDone)
+    val tvNoRecord = dialogView.findViewById<CustomTextView>(R.id.tvNoRecord)
+
+    btnDone.setOnClickListener {
+        dialogView.cancel()
+        mCallback.invoke("Sd")
+    }
+    if (bodyTypeList.size > 0) {
+        rvBodyType.visibility = View.VISIBLE
+        tvNoRecord.visibility = View.GONE
+    } else {
+        rvBodyType.visibility = View.GONE
+        tvNoRecord.visibility = View.VISIBLE
+    }
+    rvBodyType.apply {
+        layoutManager = LinearLayoutManager(mContext)
+        rvBodyTypeAdapter = SkinToneListAdapter(mContext as FragmentActivity)
         { projectId: String ->
 
         }

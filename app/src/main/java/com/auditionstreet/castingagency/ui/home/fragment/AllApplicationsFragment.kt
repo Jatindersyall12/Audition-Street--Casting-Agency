@@ -180,6 +180,8 @@ class AllApplicationsFragment : AppBaseFragment(R.layout.fragment_all_applicatio
                     val blockArtistRequest = BlockArtistRequest()
                     blockArtistRequest.artistId = applicationListResponse.data[mPosition].artistId
                     blockArtistRequest.castingId =  preferences.getString(AppConstants.USER_ID)
+                    // Status 1 = Block, 2 = Unblock
+                    blockArtistRequest.status = "1"
                     viewModel.blockArtist(blockArtistRequest)
                 }else if(isProfileClicked){
                     AppConstants.ARTISTID = applicationListResponse.data[mPosition].artistId.toString()

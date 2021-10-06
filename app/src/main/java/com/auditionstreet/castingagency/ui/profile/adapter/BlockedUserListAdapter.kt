@@ -58,9 +58,9 @@ class BlockedUserListAdapter(
         when (holder) {
             is ConnectionHolder -> {
                 holder.bind(differ.currentList[position])
-              /*  holder.itemView.btnViewDetail.setOnClickListener {
-                    mCallback.invoke(differ.currentList[position].id.toString())
-                }*/
+                holder.itemView.btnUnblock.setOnClickListener {
+                    mCallback.invoke(position.toString())
+                }
             }
         }
     }

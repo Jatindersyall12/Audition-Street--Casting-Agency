@@ -12,7 +12,6 @@ import com.auditionstreet.castingagency.ui.home.repository.HomeRepository
 import com.auditionstreet.castingagency.ui.home.repository.ProjectRepository
 import com.leo.wikireviews.utils.livedata.Event
 import com.silo.model.request.AcceptRejectArtistRequest
-import com.silo.model.request.BlockArtistRequest
 import com.silo.model.request.LoginRequest
 import com.silo.model.request.ProjectRequest
 import com.silo.utils.network.NetworkHelper

@@ -28,7 +28,6 @@ import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerView
 import com.leo.wikireviews.utils.livedata.EventObserver
 import com.silo.model.request.AcceptRejectArtistRequest
-import com.silo.model.request.BlockArtistRequest
 import com.silo.utils.AppBaseFragment
 import com.silo.utils.network.Resource
 import com.silo.utils.network.Status

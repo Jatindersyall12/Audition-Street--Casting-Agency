@@ -153,6 +153,7 @@
     <string name="str_height_ft">Height(Ft)</string>
     <string name="str_height_In">Height(In)</string>
     <string name="str_body_type">Body Type</string>
+    <string name="str_skin_tone">Skin Tone</string>
     <string name="str_experiance">Experiance</string>
     <string name="str_language">Language</string>
     <string name="str_shooting_Date">Shooting Date</string>
@@ -162,6 +163,7 @@
     <string name="str_no_user">No user found to create group admin</string>
     <string name="str_no_language_found">No language found.Please add language first.</string>
     <string name="str_no_body_type_found">No body type found.Please add body type first.</string>
+    <string name="str_no_skin_tone_found">No skin tone found.Please add skin tone first.</string>
 
     <string name="str_divider">-</string>
     <string name="str_locatn">Add Location</string>
@@ -187,6 +189,7 @@
     <string name="str_height_ft_msg">Please enter height in FT </string>
     <string name="select_language">Select Language</string>
     <string name="select_body_type">Select Body Type</string>
+    <string name="select_skin_tone">Select Skin Tone</string>
     <string name="update">Update</string>
 
     <!-- Exit Popup -->

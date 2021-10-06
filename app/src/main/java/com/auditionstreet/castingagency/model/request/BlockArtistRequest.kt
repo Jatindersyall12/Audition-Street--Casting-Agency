@@ -8,4 +8,7 @@ class BlockArtistRequest {
     @SerializedName("artistId")
     var artistId: String=""
 
+    @SerializedName("status")
+    var status: String=""
+
 }

@@ -10,7 +10,7 @@ class UpdateProjectRequest {
     var age: String = ""
 
     @SerializedName("bodyType")
-    var bodyType: String = ""
+    lateinit var bodyType: ArrayList<Int>
 
     @SerializedName("projectId")
     var projectId: String = ""
@@ -37,7 +37,10 @@ class UpdateProjectRequest {
     var heightIn: String = ""
 
     @SerializedName("lang")
-    var lang: String = ""
+    lateinit var lang: ArrayList<Int>/* = ""*/
+
+    @SerializedName("skinTone")
+    lateinit var skinTone: ArrayList<Int>
 
     @SerializedName("location")
     var location: String = ""

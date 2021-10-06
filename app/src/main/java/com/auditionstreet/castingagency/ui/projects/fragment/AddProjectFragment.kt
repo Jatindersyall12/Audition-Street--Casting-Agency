@@ -52,6 +52,7 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
     private var projectDetailResponse: MyProjectDetailResponse ?= null
     private var languageList: ArrayList<GetBodyTypeLanguageResponse.Data.Language> ?= null
     private var bodyTypeList: ArrayList<GetBodyTypeLanguageResponse.Data.BodyType> ?= null
+    private var skinToneList: ArrayList<GetBodyTypeLanguageResponse.Data.SkinTone> ?= null
     private var isUpdateCase = false
 
     private val navArgs by navArgs<AddProjectFragmentArgs>()
@@ -84,6 +85,7 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
         }
         languageList = ArrayList()
         bodyTypeList = ArrayList()
+        skinToneList = ArrayList()
 
         setListeners()
         setObservers()
@@ -126,6 +128,7 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
         this.binding.tvAddOrEditAdmin.setOnClickListener(this)
         this.binding.etxLanguages.setOnClickListener(this)
         this.binding.etxBodyType.setOnClickListener(this)
+        this.binding.etxSkinType.setOnClickListener(this)
 
     }
 
@@ -279,6 +282,23 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
                         binding.etxBodyType.text = ""
                 }
             }
+            R.id.etxSkinType ->{
+                showSkinToneSelectionDialog(requireActivity(), skinToneList!!)
+                {
+                    val bodyTypeStringList = arrayListOf<String>()
+                    var user = ""
+                    for (i in 0 until skinToneList!!.size) {
+                        if (skinToneList!![i].isChecked) {
+                            bodyTypeStringList.add(skinToneList!![i].name)
+                            user += skinToneList!![i].name + " ,"
+                        }
+                    }
+                    if (user.length >= 1)
+                        binding.etxSkinType.text = user.substring(0, user.length - 1)
+                    else
+                        binding.etxSkinType.text = ""
+                }
+            }
             R.id.tvAddOrEditAdmin -> {
                 showAllUser(requireActivity(), allUserResponse)
                 {
@@ -347,7 +367,24 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
     }
 
     private fun addProjectRequest(binding: FragmentAddProjectBinding) {
-
+        var bodyTypeIdList = ArrayList<Int>()
+        var languageIdList = ArrayList<Int>()
+        var skinToneIdList = ArrayList<Int>()
+        for (i in 0 until skinToneList!!.size){
+            if (skinToneList!![i].isChecked){
+                skinToneIdList.add(skinToneList!![i].id)
+            }
+        }
+        for (i in 0 until bodyTypeList!!.size){
+            if (bodyTypeList!![i].isChecked){
+                bodyTypeIdList.add(bodyTypeList!![i].id)
+            }
+        }
+        for (i in 0 until languageList!!.size){
+            if (languageList!![i].isChecked){
+                languageIdList.add(languageList!![i].id)
+            }
+        }
         if (isUpdateCase){
         val request = UpdateProjectRequest()
             request.castingId = preferences.getString(AppConstants.USER_ID)
@@ -360,9 +397,10 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
             request.age = "$minAge-$maxAge"
             request.heightFt = etxHeightFt.text.toString()
             request.heightIn = etxHeightIn.text.toString()
-            request.bodyType = etxBodyType.text.toString()
+            request.bodyType = bodyTypeIdList
             request.exp = etxExperiance.text.toString()
-            request.lang = etxLanguages.text.toString()
+            request.lang = languageIdList
+            request.skinTone = skinToneIdList
             request.fromDate = tvStartDate.text.toString()
             request.toDate = tvEndDate.text.toString()
             request.location = etxLocation.text.toString()
@@ -381,9 +419,10 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
             request.age = "$minAge-$maxAge"
             request.heightFt = etxHeightFt.text.toString()
             request.heightIn = etxHeightIn.text.toString()
-            request.bodyType = etxBodyType.text.toString()
+            request.bodyType = bodyTypeIdList
             request.exp = etxExperiance.text.toString()
-            request.lang = etxLanguages.text.toString()
+            request.lang = languageIdList
+            request.skinTone = skinToneIdList
             request.fromDate = tvStartDate.text.toString()
             request.toDate = tvEndDate.text.toString()
             request.location = etxLocation.text.toString()
