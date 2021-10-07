@@ -83,7 +83,7 @@ data class MyProjectDetailResponse(
             @SerializedName("age")
             val age: String,
             @SerializedName("bodyType")
-            val bodyType: String,
+            val bodyType: ArrayList<BodyType>,
             @SerializedName("castingId")
             val castingId: String,
             @SerializedName("created_at")
@@ -103,7 +103,9 @@ data class MyProjectDetailResponse(
             @SerializedName("id")
             val id: Int,
             @SerializedName("lang")
-            val lang: String,
+            val lang: ArrayList<Lang>,
+            @SerializedName("skinTone")
+            val skinTone: ArrayList<SkinTone>,
             @SerializedName("location")
             val location: String,
             @SerializedName("title")
@@ -112,6 +114,27 @@ data class MyProjectDetailResponse(
             val toDate: String,
             @SerializedName("updated_at")
             val updatedAt: String
-        )
+        ){
+            data class BodyType(
+                @SerializedName("id")
+                val id: Int,
+                @SerializedName("name")
+                val name: String
+            )
+
+            data class Lang(
+                @SerializedName("id")
+                val id: Int,
+                @SerializedName("name")
+                val name: String
+            )
+
+            data class SkinTone(
+                @SerializedName("id")
+                val id: Int,
+                @SerializedName("name")
+                val name: String
+            )
+        }
     }
 }

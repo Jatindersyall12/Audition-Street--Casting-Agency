@@ -290,7 +290,7 @@ class AddProjectViewModel @ViewModelInject constructor(
 
     fun getLanguageBodyType(url: String) {
         viewModelScope.launch {
-            user.postValue(Event(Resource.loading(ApiConstant.GET_LANGUAGE_BODY_TYPE, null)))
+            body_Type_Language.postValue(Event(Resource.loading(ApiConstant.GET_LANGUAGE_BODY_TYPE, null)))
             if (networkHelper.isNetworkConnected()) {
                 addProjectRepository.getLanguageBodyType(url).let {
                     if (it.isSuccessful && it.body() != null) {

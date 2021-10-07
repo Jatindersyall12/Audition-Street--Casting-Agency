@@ -202,9 +202,53 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
                     }
                     ApiConstant.GET_LANGUAGE_BODY_TYPE -> {
                         getBodyTypeLanguageResponse = apiResponse.data as GetBodyTypeLanguageResponse
-                      //  showToast(requireActivity(), getBodyTypeLanguageResponse.msg.toString())
                         languageList = getBodyTypeLanguageResponse.data.languages
                         bodyTypeList = getBodyTypeLanguageResponse.data.bodyTypes
+                        skinToneList = getBodyTypeLanguageResponse.data.skinTones
+                        var languageString = ""
+                        var bodyTypeString = ""
+                        var skinToneString = ""
+                        if (projectDetailResponse != null){
+                            for (i in 0 until projectDetailResponse!!.data[0].projectDetails.lang.size){
+                                for (y in 0 until languageList!!.size){
+                                    if (projectDetailResponse!!.data[0].projectDetails.lang[i].id.toInt() ==
+                                        languageList!![y].id){
+                                        languageList!![y].isChecked = true
+                                        languageString += languageList!![y].name + " ,"
+                                        if (languageString.length >= 1)
+                                            binding.etxLanguages.text = languageString.substring(0, languageString.length - 1)
+                                        else
+                                            binding.etxLanguages.text = ""
+                                    }
+                                }
+                            }
+                            for (i in 0 until projectDetailResponse!!.data[0].projectDetails.bodyType.size){
+                                for (y in 0 until bodyTypeList!!.size){
+                                    if (projectDetailResponse!!.data[0].projectDetails.bodyType[i].id.toInt() ==
+                                        bodyTypeList!![y].id){
+                                        bodyTypeList!![y].isChecked = true
+                                        bodyTypeString += bodyTypeList!![y].name + " ,"
+                                        if (bodyTypeString.length >= 1)
+                                            binding.etxBodyType.text = bodyTypeString.substring(0, bodyTypeString.length - 1)
+                                        else
+                                            binding.etxBodyType.text = ""
+                                    }
+                                }
+                            }
+                            for (i in 0 until projectDetailResponse!!.data[0].projectDetails.skinTone.size){
+                                for (y in 0 until skinToneList!!.size){
+                                    if (projectDetailResponse!!.data[0].projectDetails.skinTone[i].id.toInt() ==
+                                        skinToneList!![y].id){
+                                        skinToneList!![y].isChecked = true
+                                        skinToneString += skinToneList!![y].name + " ,"
+                                        if (skinToneString.length >= 1)
+                                            binding.etxSkinType.text = skinToneString.substring(0, skinToneString.length - 1)
+                                        else
+                                            binding.etxSkinType.text = ""
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -346,13 +390,11 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
         binding.tvAge.setText(myProjectResponse.data[0].projectDetails.age)
         binding.etxHeightFt.setText(myProjectResponse.data[0].projectDetails.heightFt)
         binding.etxHeightIn.setText(myProjectResponse.data[0].projectDetails.heightIn)
-        binding.etxLanguages.setText(myProjectResponse.data[0].projectDetails.lang)
         binding.tvStartDate.text = myProjectResponse.data[0].projectDetails.fromDate
         binding.tvEndDate.text = myProjectResponse.data[0].projectDetails.toDate
         binding.etxLocation.setText(myProjectResponse.data[0].projectDetails.location)
         binding.etxDescription.setText(myProjectResponse.data[0].projectDetails.description)
         binding.etxExperiance.setText(myProjectResponse.data[0].projectDetails.exp)
-        binding.etxBodyType.setText(myProjectResponse.data[0].projectDetails.bodyType)
         val separate1 = myProjectResponse.data[0].projectDetails.age.split("-")[0]
         val separate2 = myProjectResponse.data[0].projectDetails.age.split("-")[1]
         binding.rangeSeekbar.setMinValue(separate1.toFloat())
@@ -367,9 +409,9 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
     }
 
     private fun addProjectRequest(binding: FragmentAddProjectBinding) {
-        var bodyTypeIdList = ArrayList<Int>()
-        var languageIdList = ArrayList<Int>()
-        var skinToneIdList = ArrayList<Int>()
+        val bodyTypeIdList = ArrayList<Int>()
+        val languageIdList = ArrayList<Int>()
+        val skinToneIdList = ArrayList<Int>()
         for (i in 0 until skinToneList!!.size){
             if (skinToneList!![i].isChecked){
                 skinToneIdList.add(skinToneList!![i].id)
@@ -443,6 +485,7 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
         binding.etxLocation.isEnabled = false
         binding.etxExperiance.isEnabled = false
         binding.etxBodyType.isEnabled = false
+        binding.etxSkinType.isEnabled = false
         binding.etxSubDomain.isEnabled = false
     }
 }

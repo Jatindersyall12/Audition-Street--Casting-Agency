@@ -70,10 +70,8 @@ import kotlin.collections.ArrayList
 fun showImageOrVideoDialog(
     mContext: Context, url: String, isImage: Boolean
 ): Dialog {
-    val dialogView = Dialog(mContext, android.R.style.Theme_Translucent_NoTitleBar)
+    val dialogView = Dialog(mContext)
     dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
-    val window: Window = dialogView.getWindow()!!
-    val wlp: WindowManager.LayoutParams = window.attributes
     val binding =
         DataBindingUtil.inflate<ViewDataBinding>(
             LayoutInflater.from(mContext),
@@ -103,9 +101,6 @@ fun showImageOrVideoDialog(
             playerView.player = null
         }
     }
-    wlp.gravity = Gravity.CENTER;
-    wlp.flags = WindowManager.LayoutParams.FLAG_BLUR_BEHIND;
-    window.setAttributes(wlp)
   //  val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
    // val height = 750
     dialogView.getWindow()!!.setLayout(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT)
