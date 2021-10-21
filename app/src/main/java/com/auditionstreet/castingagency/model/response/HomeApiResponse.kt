@@ -83,7 +83,9 @@ data class HomeApiResponse(
             @SerializedName("image")
             val image: String,
             @SerializedName("video")
-            val video: String
+            val video: String,
+            @SerializedName("email")
+            val email: String
         )
     }
 }

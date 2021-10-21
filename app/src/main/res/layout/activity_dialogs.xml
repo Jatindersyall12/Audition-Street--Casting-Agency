@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_root"
+    style="@style/MatchParent"
+    tools:ignore="RtlHardcoded,RtlSymmetry">
+
+    <include
+        android:id="@+id/layToolBar"
+        layout="@layout/toolbar" />
+
+    <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
+        android:id="@+id/swipy_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:srl_direction="top"
+        app:layout_constraintTop_toBottomOf="@+id/layToolBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ListView
+            android:id="@+id/list_dialogs_chats"
+            style="@style/ListViewWithoutDividerStyle" />
+    </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_chat_empty"
+       android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@+id/layToolBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            style="@style/WrapContent"
+            android:text="@string/chat_empty_you_are_alone_here"
+            android:textColor="@color/orange"
+            android:textSize="20sp"
+            android:gravity="center"
+            app:robotoTypeface="roboto_medium" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/pb_dialogs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        tools:visibility="visible"
+        android:outlineSpotShadowColor="@color/orange"
+       app:layout_constraintTop_toBottomOf="@+id/layToolBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

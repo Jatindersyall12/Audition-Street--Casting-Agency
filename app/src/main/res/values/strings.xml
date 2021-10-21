@@ -228,5 +228,80 @@
     <string name="str_blocked_user">Blocked User List Fragment</string>
     <string name="blocked_users">Blocked Users</string>
 
+    <!--Chat-->
+    <string name="chat">Chat</string>
+    <string name="dlg_choose_file_from">Select file from…</string>
+    <string name="connection_error">Chat connection has been dropped</string>
+    <string name="reconnect_alert">Reconnecting in %s seconds</string>
+    <string name="reconnect_failed">Reconnecting Failed</string>
+    <string name="public_group_chat_cannot_be_deleted">Public Group chat can be deleted only by owner</string>
+    <string name="error_leave_chat">Error leaving room</string>
+    <string name="dlg_login">Login…</string>
+    <string name="dlg_logout">Logout…</string>
+    <string name="dlg_retry">Retry</string>
+    <string name="dlg_hide">Hide</string>
+    <string name="error_joining_chat">Unable to Join chat</string>
+    <string name="error_getting_chat_service">Unable to get Chat Service</string>
+    <string name="error_chat_credentails_empty">Some parameter for Chat Settings is wrong. Please check the Chat Settings</string>
+    <string name="error_connection">Connection failed. Please check your internet connection.</string>
+    <string name="error_response_timeout">No response received within reply timeout</string>
+    <string name="no_server_connection">Server connection timeout</string>
+    <string name="error_load_video">Can not play video file. It might be corrupt</string>
+    <string name="error_qb_credentials_empty">Credentials are wrong or empty. You have to set:
+        Application ID, Authentification Key, Authentification Secret, Account Key in constants in App.java
+        and you have to set Sender ID in the string resources to launch application.
+        If you haven\'t them you can register new account and application at https://admin.quickblox.com
+        then put Application credentials from Overview page + Account key from https://admin.quickblox.com/account/settings</string>
+
+    <string name="you">You</string>
+    <string name="chat_send">Send</string>
+    <string name="chat_edit_text_hint">Send message…</string>
+    <string name="chat_me">Me</string>
+    <string name="chat_send_message_error">Failed to send a message</string>
+    <string name="chat_load_users_error">Load chat users errors</string>
+    <string name="chat_attachment">Attachment</string>
+    <string name="chat_empty_you_are_alone_here">You\'re all alone out here.</string>
+    <string name="chat_unsupported_type">Unsupported dialog type</string>
+    <string name="chat_wait_for_attachments_to_upload">Wait for all attachments to upload</string>
+    <string name="notification_title">Quickblox Chat Notification</string>
+
+    <string name="new_chat_created">%s created the group chat \"%s\"</string>
+    <string name="occupant_added">%s added %s</string>
+    <string name="occupant_left">%s has left</string>
+    <string name="error_attachment_size">The uploaded file exceeds maximum file size (100MB)</string>
+    <string name="update_dialog_error">Update Dialog error</string>
+    <string name="error_attachment_count">You can send 1 attachment per message</string>
+    <string name="dlg_loading">Loading</string>
+    <string name="dlg_relogin">Relogin</string>
+    <string name="chat_still_joining">You\'re still joining a group chat, please wait a bit</string>
+    <string name="chat_error_send_message">Can\'t send a message, You are not connected to chat</string>
+    <string name="chat_info_add_people_error">Add people errors</string>
+    <string name="dialogs_deletion_error">Dialog deletion errors</string>
+    <string name="typing_postfix_singular">is typing…</string>
+    <string name="typing_postfix_plural">are typing…</string>
+    <string name="typing_ellipsis">…</string>
+
+    <string name="message_forwarded_from">Forwarded from\u0020</string>
+    <string name="message_info_delivered_to">Message Delivered to</string>
+    <string name="message_info_read_by">Message Viewed by</string>
+
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+
+    <string name="field_name_user_login">User name</string>
+    <string name="field_name_user_fullname">User Full Name</string>
+    <string name="error_attachment_corrupted">Attachment is corrupted</string>
+
+    <string name="dialogs_logged_in_as">Logged in as %s</string>
+    <string name="login_chat_login_error">Login to Chat error. Please relogin. </string>
+    <string name="dialogs_actionmode_title">Delete Chats</string>
+    <string name="dialogs_actionmode_subtitle">%s chats selected</string>
+    <string name="dialogs_actionmode_subtitle_single">%s chat selected</string>
+    <string name="dlg_deleting_chats">Deleting chats…</string>
+    <string name="dialogs_cannot_delete_chat">You can not leave from dialog %s</string>
+
+    <string name="dialogs_creation_error">Dialog creation errors</string>
+
+
 
 </resources>

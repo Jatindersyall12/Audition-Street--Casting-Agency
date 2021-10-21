@@ -23,7 +23,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-        buildConfigField 'String', 'BASE_URL', '"http://auditionstreet.in/bigrocks/public/index.php/api/"'
+        buildConfigField 'String', 'BASE_URL', '"http://auditionstreet.in/api/"'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -45,6 +45,16 @@ android {
         dataBinding = true
         viewBinding = true
     }
+}
+
+repositories {
+    google()
+    jcenter()
+    maven {
+        url "https://github.com/QuickBlox/quickblox-android-sdk-releases/raw/master/"
+    }
+    maven { url 'https://maven.fabric.io/public' }
+    flatDir { dirs 'libs' }
 }
 
 dependencies {
@@ -118,5 +128,21 @@ dependencies {
 
     // Circular image view
     implementation 'com.mikhaellopez:circularimageview:4.3.0'
+
+    // Chat
+    implementation "com.quickblox:quickblox-android-sdk-messages:3.9.+"
+    implementation "com.quickblox:quickblox-android-sdk-chat:3.9.+"
+    implementation "com.quickblox:quickblox-android-sdk-content:3.9.+"
+
+    //robototextview
+    implementation 'com.github.johnkil.android-robototextview:robototextview:4.0.0'
+
+    //Sticky recyclerview
+    implementation 'com.timehop.stickyheadersrecyclerview:library:0.4.2'
+
+    //Swiperefresh layout
+    implementation 'com.github.orangegangsters:swipy:1.2.3@aar'
+
+    //http://auditionstreet.in/bigrocks/public/index.php/api/
 
 }

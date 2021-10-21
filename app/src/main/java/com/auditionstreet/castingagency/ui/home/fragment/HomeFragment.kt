@@ -2,6 +2,8 @@ package com.auditionstreet.castingagency.ui.home.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +14,9 @@ import com.auditionstreet.castingagency.databinding.FragmentHomeBinding
 import com.auditionstreet.castingagency.model.response.HomeApiResponse
 import com.auditionstreet.castingagency.model.response.MyProjectResponse
 import com.auditionstreet.castingagency.storage.preference.Preferences
+import com.auditionstreet.castingagency.ui.chat.DialogsActivity
+import com.auditionstreet.castingagency.ui.chat.ORDER_RULE
+import com.auditionstreet.castingagency.ui.chat.ORDER_VALUE_UPDATED_AT
 import com.auditionstreet.castingagency.ui.home.activity.AllApplicationActivity
 import com.auditionstreet.castingagency.ui.home.activity.OtherUserProfileActivity
 import com.auditionstreet.castingagency.ui.home.activity.ShortlistedActivity
@@ -21,8 +26,17 @@ import com.auditionstreet.castingagency.ui.home.adapter.ProjectListAdapter
 import com.auditionstreet.castingagency.ui.home.viewmodel.HomeViewModel
 import com.auditionstreet.castingagency.ui.home.viewmodel.ProjectViewModel
 import com.auditionstreet.castingagency.utils.AppConstants
+import com.auditionstreet.castingagency.utils.chat.ChatHelper
+import com.auditionstreet.castingagency.utils.chat.TOTAL_PAGES_BUNDLE_PARAM
 import com.auditionstreet.castingagency.utils.showToast
 import com.leo.wikireviews.utils.livedata.EventObserver
+import com.quickblox.chat.model.QBChatDialog
+import com.quickblox.core.QBEntityCallback
+import com.quickblox.core.exception.QBResponseException
+import com.quickblox.core.request.GenericQueryRule
+import com.quickblox.core.request.QBPagedRequestBuilder
+import com.quickblox.users.QBUsers
+import com.quickblox.users.model.QBUser
 import com.silo.utils.AppBaseFragment
 import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
@@ -30,6 +44,7 @@ import com.silo.utils.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+const val EXTRA_QB_USERS = "qb_users"
 @AndroidEntryPoint
 class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListener {
     private val binding by viewBinding(FragmentHomeBinding::bind)
@@ -42,6 +57,7 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
     private var projectList = ArrayList<MyProjectResponse.Data>()
     private var applicationList = ArrayList<HomeApiResponse.Data.Request>()
     private var shortListedList = ArrayList<HomeApiResponse.Data.Accept>()
+    private var qbChatDialog: QBChatDialog? = null
 
     @Inject
     lateinit var preferences: Preferences
@@ -173,10 +189,14 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
         binding.rvShortlist.apply {
             layoutManager = LinearLayoutManager(activity)
             shortListAdapter = HomeShortListAdapter(requireActivity())
-            { position: Int ->
-                AppConstants.ARTISTID = shortListedList[position].artistId.toString()
-                val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
-                startActivity(i)
+            { position: Int, isViewProfileClicked: Boolean ->
+                if (isViewProfileClicked) {
+                    AppConstants.ARTISTID = shortListedList[position].artistId.toString()
+                    val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
+                    startActivity(i)
+                }else{
+                    loadChatUsersFromQB(shortListedList[position].email)
+                }
             }
             adapter = shortListAdapter
             binding.rvShortlist.setLayoutManager(
@@ -244,4 +264,30 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
             }
         }
     }
+
+    /**
+     * Get Chat User List
+     */
+
+    private fun loadChatUsersFromQB(email: String) {
+            loadUsersWithoutQuery(email)
+    }
+
+    private fun loadUsersWithoutQuery(email: String) {
+        QBUsers.getUserByLogin(email).performAsync(object : QBEntityCallback<QBUser>{
+            override fun onSuccess(qbUser: QBUser, params: Bundle?) {
+                Log.e("user", "yes")
+                val i = Intent(requireActivity(), DialogsActivity::class.java)
+                i.putExtra(EXTRA_QB_USERS, qbUser)
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(i)
+                activity!!.finish()
+            }
+
+            override fun onError(e: QBResponseException) {
+                Log.e("user", "No")
+                showToast(requireActivity(),"No User Found")           }
+        })
+    }
+
 }

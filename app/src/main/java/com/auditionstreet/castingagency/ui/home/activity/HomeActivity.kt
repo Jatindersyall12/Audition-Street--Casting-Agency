@@ -9,6 +9,8 @@ import androidx.navigation.fragment.NavHostFragment
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.databinding.ActivityHomeBinding
 import com.auditionstreet.castingagency.storage.preference.Preferences
+import com.auditionstreet.castingagency.ui.chat.ChatActivity
+import com.auditionstreet.castingagency.ui.chat.DialogsActivity
 import com.auditionstreet.castingagency.ui.projects.activity.ProfileActivity
 import com.auditionstreet.castingagency.ui.projects.activity.ProjectsActivity
 import com.auditionstreet.castingagency.utils.AppConstants
@@ -98,7 +100,10 @@ class HomeActivity : BaseActivity() {
             )
         }
         binding.footerHome.llChat.setOnClickListener {
-            showToast(this, resources.getString(R.string.str_coming_soon))
+            val intent = Intent(this, DialogsActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
+            finish()
             changeIcons(
                 imageIcons,
                 activeIcons,
