@@ -26,7 +26,6 @@
                 android:layout_centerInParent="true"
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="@dimen/_10sdp"
-                android:background="@drawable/edittext_round_layout"
                 android:paddingLeft="@dimen/_25sdp"
                 android:paddingRight="@dimen/_25sdp"
                 android:visibility="visible"

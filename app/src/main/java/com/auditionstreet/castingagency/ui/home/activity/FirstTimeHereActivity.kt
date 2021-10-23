@@ -38,16 +38,6 @@ class FirstTimeHereActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.navhostfirstTimeHere) as NavHostFragment
-        val navController: NavController = navHostFragment.navController
-        if (navController.graph.startDestination == navController.currentDestination?.id){
-        val i = Intent(this, HomeActivity::class.java)
-        startActivity(i)
-        finish()
-        }
-        // closeAppDialog(this)
-        else
             super.onBackPressed()
     }
 

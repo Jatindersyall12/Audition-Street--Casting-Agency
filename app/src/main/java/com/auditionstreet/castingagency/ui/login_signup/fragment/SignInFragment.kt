@@ -9,6 +9,7 @@ import com.auditionstreet.castingagency.USER_DEFAULT_PASSWORD
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentSigninBinding
 import com.auditionstreet.castingagency.storage.preference.Preferences
+import com.auditionstreet.castingagency.ui.home.activity.FirstTimeHereActivity
 import com.auditionstreet.castingagency.ui.home.activity.HomeActivity
 import com.auditionstreet.castingagency.ui.login_signup.viewmodel.LoginViewModel
 import com.auditionstreet.castingagency.utils.AppConstants
@@ -43,6 +44,7 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
     private val binding by viewBinding(FragmentSigninBinding::bind)
     private val viewModel: LoginViewModel by viewModels()
     private var callbackManager: CallbackManager? = null
+    private var email = ""
 
     @Inject
     lateinit var preferences: Preferences
@@ -66,6 +68,7 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
     override fun onClick(v: View?) {
         when (v) {
             binding.btnSignIn -> {
+                email =  binding.etxEmail.text.toString()
                 viewModel.isValidate(
                     binding.etxEmail.text!!.trim().toString(),
                     binding.etxPassword.text!!.trim().toString(),
@@ -103,7 +106,7 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
                             AppConstants.USER_IMAGE,
                             loginResponse.data[0]!!.image.toString()
                         )
-                       // showProgressDialog(requireActivity())
+                        // CHat Login
                         prepareUser(loginResponse.data[0]!!.name!!)
                        /* startActivity(Intent(requireActivity(), HomeActivity::class.java))
                         requireActivity().finish()*/
@@ -176,6 +179,7 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
             loginResult.accessToken
         ) { _, response ->
             try {
+                email = response.jsonObject.getString(resources.getString(R.string.str_social_email))
                 val loginRequest = LoginRequest()
                 loginRequest.email =
                     response.jsonObject.getString(resources.getString(R.string.str_social_email))
@@ -211,14 +215,14 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
 
     private fun prepareUser(userName: String) {
         val qbUser = QBUser()
-        qbUser.login = "vishavdeep.saini16@gmail.com"/*binding.etxEmail.text.toString().trim { it <= ' ' }*/
-        qbUser.fullName = "vishav"
+        qbUser.login = email/*binding.etxEmail.text.toString().trim { it <= ' ' }*/
+        qbUser.fullName = userName
         qbUser.password = USER_DEFAULT_PASSWORD
         signIn(qbUser)
     }
 
     private fun signIn(user: QBUser) {
-        showProgressDialog(requireActivity())
+        showProgress()
         ChatHelper.login(user, object : QBEntityCallback<QBUser> {
             override fun onSuccess(userFromRest: QBUser, bundle: Bundle?) {
                 if (userFromRest.fullName != null && userFromRest.fullName == user.fullName) {
@@ -265,9 +269,10 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
                 //}
                 QbUsersHolder.putUser(user)
                 hideProgress()
-
-                startActivity(Intent(requireActivity(), HomeActivity::class.java))
+                startActivity(Intent(requireActivity(), FirstTimeHereActivity::class.java))
                 requireActivity().finish()
+               /* startActivity(Intent(requireActivity(), HomeActivity::class.java))
+                requireActivity().finish()*/
             }
 
             override fun onError(e: QBResponseException) {

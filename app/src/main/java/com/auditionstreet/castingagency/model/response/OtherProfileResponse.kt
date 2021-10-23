@@ -2,84 +2,86 @@ package com.auditionstreet.castingagency.model.response
 
 import com.google.gson.annotations.SerializedName
 
-data class OtherProfileResponse(
+ data class OtherProfileResponse(
     @SerializedName("code")
-    val code: Int?,
+    val code: Int,
     @SerializedName("data")
-    val `data`: List<Data?>?,
+    val `data`: List<Data>,
     @SerializedName("msg")
-    val msg: String?
+    val msg: String
 ) {
     data class Data(
-        @SerializedName("artistDetails")
-        val artistDetails: ArtistDetails?,
-        @SerializedName("totalApplication")
-        val totalApplication: Int?,
         @SerializedName("acceptedApplication")
-        val acceptedApplication: Int?,
+        val acceptedApplication: Int,
+        @SerializedName("artistDetails")
+        val artistDetails: ArtistDetails,
         @SerializedName("media")
-        val media: List<Media?>?
+        val media: List<Media>,
+        @SerializedName("totalApplication")
+        val totalApplication: Int
     ) {
         data class ArtistDetails(
             @SerializedName("age")
-            val age: String?,
-            @SerializedName("heightFt")
-            val heightFt: String?,
-            @SerializedName("heightIn")
-            val heightIn: String?,
+            val age: String,
             @SerializedName("bio")
-            val bio: String?,
+            val bio: String,
             @SerializedName("bodyType")
-            val bodyType: String?,
+            val bodyType: List<Any>,
             @SerializedName("created_at")
-            val createdAt: String?,
+            val createdAt: String,
             @SerializedName("deviceToken")
-            val deviceToken: String?,
+            val deviceToken: String,
             @SerializedName("email")
-            val email: String?,
-            @SerializedName("height")
-            val height: String?,
-            @SerializedName("id")
-            val id: Int?,
-            @SerializedName("image")
-            val image: String?,
-            @SerializedName("language")
-            val language: String?,
-            @SerializedName("name")
-            val name: String?,
+            val email: String,
             @SerializedName("gender")
-            val gender: String?,
+            val gender: String,
+            @SerializedName("heightFt")
+            val heightFt: String,
+            @SerializedName("heightIn")
+            val heightIn: String,
+            @SerializedName("id")
+            val id: Int,
+            @SerializedName("image")
+            val image: String,
+            @SerializedName("language")
+            val language: List<Any>,
+            @SerializedName("name")
+            val name: String,
             @SerializedName("phoneNumber")
-            val phoneNumber: String?,
+            val phoneNumber: String,
+            @SerializedName("planPurchase")
+            val planPurchase: String,
             @SerializedName("skinTone")
-            val skinTone: String?,
+            val skinTone: List<Any>,
             @SerializedName("socialId")
-            val socialId: String?,
+            val socialId: String,
             @SerializedName("socialType")
-            val socialType: String?,
+            val socialType: String,
+            @SerializedName("trialRequest")
+            val trialRequest: String,
             @SerializedName("updated_at")
-            val updatedAt: String?,
+            val updatedAt: String,
             @SerializedName("video")
-            val video: String?,
+            val video: String,
             @SerializedName("year")
-            val year: String?
+            val year: String
         )
 
         data class Media(
             @SerializedName("created_at")
-            val createdAt: String?,
+            val createdAt: String,
             @SerializedName("id")
-            val id: Int?,
+            val id: Int,
             @SerializedName("mediaType")
-            val mediaType: String?,
+            val mediaType: String,
             @SerializedName("mediaUrl")
-            val mediaUrl: String?,
+            val mediaUrl: String,
             @SerializedName("updated_at")
-            val updatedAt: String?,
+            val updatedAt: String,
             @SerializedName("userId")
-            val userId: String?,
+            val userId: String,
             @SerializedName("userType")
-            val userType: String?
+            val userType: String
         )
     }
 }

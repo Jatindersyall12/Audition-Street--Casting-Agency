@@ -54,7 +54,7 @@ class FirstTsimeHereFragment : AppBaseFragment(R.layout.fragment_first_time_here
                 positionOffsetPixels: Int
             ) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                if(mstate==2&&position==9) {
+                if(mstate==2&&position==5) {
                     val i = Intent(requireActivity(), HomeActivity::class.java)
                     startActivity(i)
                     requireActivity().finish()

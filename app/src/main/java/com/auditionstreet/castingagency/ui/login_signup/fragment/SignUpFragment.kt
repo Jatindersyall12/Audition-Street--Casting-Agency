@@ -7,13 +7,18 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import com.auditionstreet.castingagency.R
+import com.auditionstreet.castingagency.USER_DEFAULT_PASSWORD
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.databinding.FragmentSignupBinding
 import com.auditionstreet.castingagency.storage.preference.Preferences
+import com.auditionstreet.castingagency.ui.home.activity.FirstTimeHereActivity
 import com.auditionstreet.castingagency.ui.home.activity.HomeActivity
 import com.auditionstreet.castingagency.ui.login_signup.viewmodel.SignUpViewModel
 import com.auditionstreet.castingagency.utils.AppConstants
 import com.auditionstreet.castingagency.utils.CompressFile
+import com.auditionstreet.castingagency.utils.chat.ChatHelper
+import com.auditionstreet.castingagency.utils.chat.QbUsersHolder
+import com.auditionstreet.castingagency.utils.chat.SharedPrefsHelper
 import com.auditionstreet.castingagency.utils.showToast
 import com.bumptech.glide.Glide
 import com.esafirm.imagepicker.features.ImagePicker
@@ -22,6 +27,10 @@ import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.leo.wikireviews.utils.livedata.EventObserver
+import com.quickblox.core.QBEntityCallback
+import com.quickblox.core.exception.QBResponseException
+import com.quickblox.users.QBUsers
+import com.quickblox.users.model.QBUser
 import com.silo.model.response.SignUpResponse
 import com.silo.utils.AppBaseFragment
 import com.silo.utils.network.Resource
@@ -35,7 +44,9 @@ import org.json.JSONException
 import java.io.File
 import java.util.*
 import javax.inject.Inject
-
+private const val UNAUTHORIZED = 401
+private const val DRAFT_LOGIN = "draft_login"
+private const val DRAFT_USERNAME = "draft_username"
 @AndroidEntryPoint
 class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickListener {
     private val binding by viewBinding(FragmentSignupBinding::bind)
@@ -46,6 +57,8 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
     private val viewModel: SignUpViewModel by viewModels()
     private var compressImage = CompressFile()
     private var callbackManager: CallbackManager? = null
+    private var email = ""
+
 
     @Inject
     lateinit var preferences: Preferences
@@ -76,6 +89,7 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
             }
 
             binding.btnSignUp -> {
+                email =  binding.etxEmail.text.toString()
                 viewModel.isValidate(
                     binding.etxUserName.text.toString(),
                     binding.etxEmail.text.toString(),
@@ -118,8 +132,10 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
                             AppConstants.USER_IMAGE,
                             signUpResponse.data[0]!!.image
                         )
-                        startActivity(Intent(requireActivity(), HomeActivity::class.java))
-                        requireActivity().finish()
+                        // CHat Login Signup
+                        prepareUser(signUpResponse.data[0]!!.name!!)
+                        /*startActivity(Intent(requireActivity(), HomeActivity::class.java))
+                        requireActivity().finish()*/
                     }
                 }
             }
@@ -237,6 +253,7 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
             loginResult.accessToken
         ) { _, response ->
             try {
+                email = response.jsonObject.getString(resources.getString(R.string.str_social_email))
                 val first_name =
                     response.jsonObject.getString(resources.getString(R.string.str_social_first_name))
                 this.viewModel.signUp(
@@ -263,6 +280,101 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
         if (accessToken == null || accessToken.isExpired)
             LoginManager.getInstance()
                 .logInWithReadPermissions(this, listOf("public_profile", "email"))
+    }
+
+    /*private fun saveDrafts() {
+       SharedPrefsHelper.save(DRAFT_LOGIN, binding.etxEmail.text.toString())
+       SharedPrefsHelper.save(DRAFT_USERNAME, usernameEt.text.toString())
+   }*/
+
+    private fun clearDrafts() {
+        SharedPrefsHelper.save(DRAFT_LOGIN, "")
+        SharedPrefsHelper.save(DRAFT_USERNAME, "")
+    }
+
+    private fun prepareUser(userName: String) {
+        val qbUser = QBUser()
+        qbUser.login = email
+        qbUser.fullName = userName
+        qbUser.password = USER_DEFAULT_PASSWORD
+        signIn(qbUser)
+    }
+
+    private fun signIn(user: QBUser) {
+        showProgress()
+        ChatHelper.login(user, object : QBEntityCallback<QBUser> {
+            override fun onSuccess(userFromRest: QBUser, bundle: Bundle?) {
+                if (userFromRest.fullName != null && userFromRest.fullName == user.fullName) {
+                    loginToChat(user)
+                } else {
+                    //Need to set password NULL, because server will update user only with NULL password
+                    user.password = null
+                    updateUser(user)
+                }
+            }
+
+            override fun onError(e: QBResponseException) {
+                if (e.httpStatusCode == UNAUTHORIZED) {
+                    signUp(user)
+                } else {
+                    hideProgress()
+                    showToast(requireActivity(), "Chat login error")
+                }
+            }
+        })
+    }
+
+    private fun updateUser(user: QBUser) {
+        ChatHelper.updateUser(user, object : QBEntityCallback<QBUser> {
+            override fun onSuccess(qbUser: QBUser, bundle: Bundle?) {
+                loginToChat(user)
+            }
+
+            override fun onError(e: QBResponseException) {
+                hideProgress()
+                showToast(requireActivity(), "Chat login error")
+            }
+        })
+    }
+
+    private fun loginToChat(user: QBUser) {
+        //Need to set password, because the server will not register to chat without password
+        user.password = USER_DEFAULT_PASSWORD
+        ChatHelper.loginToChat(user, object : QBEntityCallback<Void> {
+            override fun onSuccess(void: Void?, bundle: Bundle?) {
+                SharedPrefsHelper.saveQbUser(user)
+                //if (!chbSave.isChecked) {
+                clearDrafts()
+                //}
+                QbUsersHolder.putUser(user)
+                hideProgress()
+
+                    startActivity(Intent(requireActivity(), FirstTimeHereActivity::class.java))
+                    requireActivity().finish()
+                    /*startActivity(Intent(requireActivity(), HomeActivity::class.java))
+                    requireActivity().finish()*/
+            }
+
+            override fun onError(e: QBResponseException) {
+                hideProgress()
+                showToast(requireActivity(), "Chat login error")
+            }
+        })
+    }
+
+    private fun signUp(user: QBUser) {
+        SharedPrefsHelper.removeQbUser()
+        QBUsers.signUp(user).performAsync(object : QBEntityCallback<QBUser> {
+            override fun onSuccess(p0: QBUser?, p1: Bundle?) {
+                hideProgress()
+                signIn(user)
+            }
+
+            override fun onError(exception: QBResponseException?) {
+                hideProgress()
+                showToast(requireActivity(), "Chat login error")
+            }
+        })
     }
 
 }

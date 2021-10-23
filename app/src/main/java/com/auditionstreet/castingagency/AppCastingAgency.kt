@@ -6,7 +6,7 @@ import com.quickblox.auth.session.QBSettings
 import dagger.hilt.android.HiltAndroidApp
 
 //Chat settings
-const val USER_DEFAULT_PASSWORD = "quickblox"
+        const val USER_DEFAULT_PASSWORD = "quickblox"
 const val CHAT_PORT = 5223
 const val SOCKET_TIMEOUT = 300
 const val KEEP_ALIVE: Boolean = true

@@ -48,6 +48,7 @@ import com.quickblox.sample.chat.kotlin.ui.adapter.listeners.MessageLongClickLis
 import com.quickblox.users.QBUsers
 import com.quickblox.users.model.QBUser
 import com.silo.ui.base.BaseActivity
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
 import org.jivesoftware.smack.ConnectionListener
 import org.jivesoftware.smack.SmackException
 import org.jivesoftware.smack.XMPPException
@@ -639,7 +640,7 @@ class ChatActivity : BaseActivity(), OnImagePickedListener, QBMessageStatusListe
         messagesList = ArrayList()
         chatAdapter = ChatAdapter(this, qbChatDialog, messagesList)
         chatAdapter.setPaginationHistoryListener(PaginationListener())
-     //   chatMessagesRecyclerView.addItemDecoration(StickyRecyclerHeadersDecoration(chatAdapter))
+        chatMessagesRecyclerView.addItemDecoration(StickyRecyclerHeadersDecoration(chatAdapter))
 
         chatMessagesRecyclerView.adapter = chatAdapter
         imageAttachClickListener = ImageAttachClickListener()

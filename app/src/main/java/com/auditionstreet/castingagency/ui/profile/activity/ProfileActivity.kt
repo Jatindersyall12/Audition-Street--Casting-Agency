@@ -10,6 +10,7 @@ import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.databinding.ActivityProfileBinding
 import com.auditionstreet.castingagency.databinding.ActivityProjectsBinding
 import com.auditionstreet.castingagency.storage.preference.Preferences
+import com.auditionstreet.castingagency.ui.chat.DialogsActivity
 import com.auditionstreet.castingagency.ui.home.activity.HomeActivity
 import com.auditionstreet.castingagency.utils.DataHelper
 import com.auditionstreet.castingagency.utils.showToast
@@ -81,7 +82,10 @@ class ProfileActivity : BaseActivity() {
             )
         }
         binding.footerHome.llChat.setOnClickListener {
-            showToast(this,resources.getString(R.string.str_coming_soon))
+            val intent = Intent(this, DialogsActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
+            finish()
             changeIcons(
                 imageIcons,
                 activeIcons,

@@ -21,16 +21,12 @@ class DataHelper @Inject constructor() {
         )
 
         var firstTimehere: ArrayList<Int> = arrayListOf(
-            R.drawable.ic_icon_home_unselected,
-            R.drawable.ic_icon_project_unselected,
-            R.drawable.ic_icon_chat_unselected,
-            R.drawable.ic_icon_account_unselected,
-            R.drawable.ic_icon_account_unselected,
-            R.drawable.ic_icon_account_unselected,
-            R.drawable.ic_icon_account_unselected,
-            R.drawable.ic_icon_account_unselected,
-            R.drawable.ic_icon_account_unselected,
-            R.drawable.ic_icon_account_unselected
+            R.drawable.first_time_here_1,
+            R.drawable.first_time_here_2,
+            R.drawable.first_time_here_3,
+            R.drawable.first_time_here_4,
+            R.drawable.first_time_here_5,
+            R.drawable.first_time_here_6,
         )
 
         var firstTimehereString: ArrayList<String> = arrayListOf(
@@ -39,11 +35,7 @@ class DataHelper @Inject constructor() {
             "3",
             "4",
             "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10"
+            "6"
         )
     }
 }

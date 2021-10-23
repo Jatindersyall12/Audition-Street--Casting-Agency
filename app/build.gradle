@@ -142,7 +142,6 @@ dependencies {
 
     //Swiperefresh layout
     implementation 'com.github.orangegangsters:swipy:1.2.3@aar'
-
     //http://auditionstreet.in/bigrocks/public/index.php/api/
 
 }
