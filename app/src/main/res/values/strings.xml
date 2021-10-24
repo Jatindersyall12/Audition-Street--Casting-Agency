@@ -17,6 +17,7 @@
     <string name="str_social_first_name">first_name</string>
     <string name="str_social_last_name">last_name</string>
     <string name="err_email_msg">Email address already exist</string>
+    <string name="str_token">deviceToken</string>
 
     <string name="str_confirm_password">Please enter password again</string>
     <string name="str_pwd">Please enter password</string>
@@ -301,7 +302,9 @@
     <string name="dialogs_cannot_delete_chat">You can not leave from dialog %s</string>
 
     <string name="dialogs_creation_error">Dialog creation errors</string>
-
+    <string name="skip">skip</string>
+    <string name="next">Next</string>
+    <string name="let_s_get_started">Let\'s Get Started</string>
 
 
 </resources>

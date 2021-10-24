@@ -207,6 +207,8 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
                 toRequestBody("")
             selectedImage = ""
         }
+        map[resources.getString(R.string.str_token)] =
+            toRequestBody(preferences.getString(AppConstants.FIREBASE_ID))
         map[resources.getString(R.string.str_social_type)] =
             toRequestBody(socialType)
         map[resources.getString(R.string.str_socialId)] =

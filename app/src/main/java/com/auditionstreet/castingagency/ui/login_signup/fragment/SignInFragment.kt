@@ -70,6 +70,7 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
             binding.btnSignIn -> {
                 email =  binding.etxEmail.text.toString()
                 viewModel.isValidate(
+                    preferences.getString(AppConstants.FIREBASE_ID),
                     binding.etxEmail.text!!.trim().toString(),
                     binding.etxPassword.text!!.trim().toString(),
                     resources.getString(R.string.str_false)
@@ -185,6 +186,7 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
                     response.jsonObject.getString(resources.getString(R.string.str_social_email))
                 loginRequest.password = ""
                 loginRequest.isSocial = resources.getString(R.string.str_true)
+                loginRequest.deviceToken=preferences.getString(AppConstants.FIREBASE_ID)
                 val first_name = response.jsonObject.getString(
                     resources.getString(R.string.str_social_first_name)
                 )

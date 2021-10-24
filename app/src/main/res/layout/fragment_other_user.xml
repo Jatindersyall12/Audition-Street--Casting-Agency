@@ -219,6 +219,56 @@
                 app:layout_constraintTop_toBottomOf="@+id/layLinear" />
 
             <com.auditionstreet.castingagency.customviews.CustomTextViewBold
+                android:id="@+id/tvArtistVideo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="Intro Video"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_17sdp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/viewTwo" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layConstraintIntroVideo"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_70ssp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvArtistVideo">
+
+                <com.github.siyamed.shapeimageview.RoundedImageView
+                    android:id="@+id/imgIntroVideo"
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:saveEnabled="false"
+                    android:src="@drawable/ic_dummy_profile_image"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:siBorderColor="@color/black"
+                    app:siBorderWidth="2dp"
+                    app:siRadius="6dp"
+                    app:siSquare="true" />
+
+
+                <ImageView
+                    android:id="@+id/imgPlay"
+                    android:layout_width="@dimen/_17sdp"
+                    android:layout_height="@dimen/_17sdp"
+                    android:src="@drawable/ic_play"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.auditionstreet.castingagency.customviews.CustomTextViewBold
                 android:id="@+id/textWork"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -228,7 +278,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_17sdp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/viewTwo" />
+                app:layout_constraintTop_toBottomOf="@id/layConstraintIntroVideo" />
 
             <com.auditionstreet.castingagency.customviews.CustomTextViewBold
                 android:id="@+id/tvAddMedia"

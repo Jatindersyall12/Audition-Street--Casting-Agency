@@ -18,6 +18,7 @@ import com.auditionstreet.castingagency.ui.projects.adapter.OtherUserImageAdapte
 import com.auditionstreet.castingagency.ui.projects.adapter.OtherUserVideoAdapter
 import com.auditionstreet.castingagency.ui.projects.adapter.WorkListAdapter
 import com.auditionstreet.castingagency.utils.AppConstants
+import com.auditionstreet.castingagency.utils.showImageOrVideoDialog
 import com.auditionstreet.castingagency.utils.showToast
 import com.bumptech.glide.Glide
 import com.leo.wikireviews.utils.livedata.EventObserver
@@ -37,6 +38,7 @@ class OtherUserProfileFragment : AppBaseFragment(R.layout.fragment_other_user),
     private lateinit var profileAdapter: WorkListAdapter
     var listGallery = ArrayList<WorkGalleryRequest>()
     var artistId = ""
+    private var introVideoPath: String = ""
 
     private val viewModel: OtherProfileViewModel by viewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,6 +59,7 @@ class OtherUserProfileFragment : AppBaseFragment(R.layout.fragment_other_user),
     private fun setListeners() {
         /*binding.tvViewAllImages.setOnClickListener(this)
         binding.tvViewAllVideos.setOnClickListener(this)*/
+        binding.imgPlay.setOnClickListener(this)
 
     }
 
@@ -138,16 +141,27 @@ class OtherUserProfileFragment : AppBaseFragment(R.layout.fragment_other_user),
         binding.tvAge.text = "Age: "+profileResponse.data[0]!!.artistDetails!!.age
         binding.tvHeight.text = "Height: "+profileResponse.data[0]!!.artistDetails!!.heightFt+"."+
                 profileResponse.data[0]!!.artistDetails!!.heightIn+" ft"
-        binding.tvLanguage.text = "Language: "+profileResponse.data[0]!!.artistDetails!!.language
+        var languages = ""
+        for (i in 0 until profileResponse.data[0]!!.artistDetails!!.language.size){
+                    languages += profileResponse.data[0]!!.artistDetails!!.language!![i].name + " ,"
+        }
+        if (languages.length >= 1)
+            binding.tvLanguage.text = languages.substring(0, languages.length - 1)
+        else
+            binding.tvLanguage.text = ""
         binding.headingExperiance.text = profileResponse.data[0]!!.artistDetails!!.year
         binding.headingAppliedProject.text = profileResponse.data[0]!!.totalApplication.toString()
         binding.headingSelectedProject.text = profileResponse.data[0]!!.acceptedApplication.toString()
-       /* if (profileResponse.data[0]!!.artistDetails!!.video!!.isNotEmpty()) {
+        if (profileResponse.data[0]!!.artistDetails!!.video!!.isNotEmpty()) {
             Glide.with(this).load(profileResponse.data[0]!!.artistDetails!!.video)
                 .into(binding.imgIntroVideo)
             binding.imgPlay.visibility = View.VISIBLE
             introVideoPath = profileResponse.data[0]!!.artistDetails!!.video.toString()
-        }*/
+        }else{
+            binding.imgPlay.visibility = View.GONE
+           // binding.layConstraintIntroVideo.visibility = View.GONE
+          //  binding.tvArtistVideo.visibility = View.GONE
+        }
         listGallery.clear()
         for (i in 0 until profileResponse.data[0]!!.media!!.size) {
             val request = WorkGalleryRequest()
@@ -181,6 +195,9 @@ class OtherUserProfileFragment : AppBaseFragment(R.layout.fragment_other_user),
     override fun onClick(p0: View?) {
         when(p0!!.id)
         {
+            R.id.imgPlay ->{
+                showImageOrVideoDialog(requireActivity(), introVideoPath, false)
+            }
           /* R.id.tvViewAllImages->
            {
                showToast(requireActivity(),resources.getString(R.string.str_coming_soon))

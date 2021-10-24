@@ -35,10 +35,8 @@ class SplashActivity : BaseActivity() {
                     val i = Intent(this@SplashActivity, FirstTimeHereActivity::class.java)
                     startActivity(i)
                 }else{
-                    val i = Intent(this@SplashActivity, FirstTimeHereActivity::class.java)
+                    val i = Intent(this@SplashActivity, HomeActivity::class.java)
                     startActivity(i)
-                   /* val i = Intent(this@SplashActivity, HomeActivity::class.java)
-                    startActivity(i)*/
                 }
             }
             finish()

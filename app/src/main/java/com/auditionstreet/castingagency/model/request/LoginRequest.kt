@@ -7,6 +7,7 @@ data class LoginRequest(
     var isSocial: String = "",
     var name: String = "",
     var socialType: String = "",
-    var socialId: String = ""
+    var socialId: String = "",
+    var deviceToken: String = ""
 
 )

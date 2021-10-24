@@ -3,7 +3,6 @@ package com.auditionstreet.castingagency.ui.firstTimeHere
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.databinding.FragmentFirstTimeHereBinding
@@ -42,10 +41,16 @@ class FirstTsimeHereFragment : AppBaseFragment(R.layout.fragment_first_time_here
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 mstate=0
-                if (position == binding.firstTimePager.adapter!!.itemCount - 1)
-                    binding.tvSwipeContinue.text = resources.getString(R.string.swipe_to_complete)
-                else
-                    binding.tvSwipeContinue.text = resources.getString(R.string.swipe_to_continue)
+                if (position == binding.firstTimePager.adapter!!.itemCount - 1) {
+                    binding.btnDone.visibility = View.VISIBLE
+                    binding.btnNext.visibility = View.GONE
+                    binding.btnSkip.visibility = View.GONE
+                }
+                else {
+                    binding.btnNext.visibility = View.VISIBLE
+                    binding.btnDone.visibility = View.GONE
+                    binding.btnSkip.visibility = View.VISIBLE
+                }
             }
 
             override fun onPageScrolled(
@@ -54,11 +59,11 @@ class FirstTsimeHereFragment : AppBaseFragment(R.layout.fragment_first_time_here
                 positionOffsetPixels: Int
             ) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                if(mstate==2&&position==5) {
+               /* if(mstate==2&&position==5) {
                     val i = Intent(requireActivity(), HomeActivity::class.java)
                     startActivity(i)
                     requireActivity().finish()
-                }
+                }*/
             }
 
             override fun onPageScrollStateChanged(state: Int) {
@@ -66,6 +71,11 @@ class FirstTsimeHereFragment : AppBaseFragment(R.layout.fragment_first_time_here
                 ++mstate;
             }
         })
+
+        binding.btnSkip.setOnClickListener(this)
+        binding.btnNext.setOnClickListener(this)
+        binding.btnDone.setOnClickListener(this)
+        binding.imgBack.setOnClickListener(this)
     }
 
     fun init() {
@@ -84,8 +94,27 @@ class FirstTsimeHereFragment : AppBaseFragment(R.layout.fragment_first_time_here
     }
 
     override fun onClick(v: View?) {
-
+        when (v!!.id) {
+            R.id.btnSkip ->{
+                val i = Intent(requireActivity(), HomeActivity::class.java)
+                startActivity(i)
+                requireActivity().finish()
+            }
+            R.id.btnNext ->{
+                jumpToPage()
+            }
+            R.id.btnDone ->{
+                val i = Intent(requireActivity(), HomeActivity::class.java)
+                startActivity(i)
+                requireActivity().finish()
+            }
+            R.id.imgBack ->{
+                requireActivity().onBackPressed()
+            }
+        }
     }
 
-
+    private fun jumpToPage() {
+        binding.firstTimePager.setCurrentItem( binding.firstTimePager.getCurrentItem() + 1, true)
+    }
 }

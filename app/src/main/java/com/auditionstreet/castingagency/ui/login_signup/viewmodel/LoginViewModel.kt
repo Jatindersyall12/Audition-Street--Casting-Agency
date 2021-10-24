@@ -46,10 +46,11 @@ class LoginViewModel @ViewModelInject constructor(
         }
     }
 
-    fun isValidate(email: String, password: String, isSocial: String) {
+    fun isValidate(deviceToken: String, email: String, password: String, isSocial: String) {
         loginRequest.email = email
         loginRequest.password = password
         loginRequest.isSocial=isSocial
+        loginRequest.deviceToken = deviceToken
         if (TextUtils.isEmpty(loginRequest.email)) {
             _users.postValue(
                 Resource.requiredResource(
