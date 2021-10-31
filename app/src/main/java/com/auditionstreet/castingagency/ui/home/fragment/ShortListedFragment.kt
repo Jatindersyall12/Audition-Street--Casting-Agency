@@ -14,6 +14,7 @@ import com.auditionstreet.castingagency.model.response.MyProjectDetailResponse
 import com.auditionstreet.castingagency.model.response.MyProjectResponse
 import com.auditionstreet.castingagency.model.response.ProjectResponse
 import com.auditionstreet.castingagency.storage.preference.Preferences
+import com.auditionstreet.castingagency.ui.chat.DialogsActivity
 import com.auditionstreet.castingagency.ui.home.activity.OtherUserProfileActivity
 import com.auditionstreet.castingagency.ui.home.adapter.ProjectListAdapter
 import com.auditionstreet.castingagency.ui.home.adapter.ShortListAdapter
@@ -22,6 +23,10 @@ import com.auditionstreet.castingagency.utils.AppConstants
 import com.auditionstreet.castingagency.utils.showSelectProjectDialog
 import com.auditionstreet.castingagency.utils.showToast
 import com.leo.wikireviews.utils.livedata.EventObserver
+import com.quickblox.core.QBEntityCallback
+import com.quickblox.core.exception.QBResponseException
+import com.quickblox.users.QBUsers
+import com.quickblox.users.model.QBUser
 import com.silo.utils.AppBaseFragment
 import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
@@ -113,10 +118,14 @@ class ShortListedFragment : AppBaseFragment(R.layout.fragment_short_list), View.
         binding.rvShortList.apply {
             layoutManager = LinearLayoutManager(activity)
             shortListAdapter = ShortListAdapter(requireActivity())
-            { position: Int ->
-                AppConstants.ARTISTID = shortListedList!![position].artistId.toString()
-                val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
-                startActivity(i)
+            { position: Int, isViewProfileClicked: Boolean ->
+                if (isViewProfileClicked) {
+                    AppConstants.ARTISTID = shortListedList!![position].artistId.toString()
+                    val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
+                    startActivity(i)
+                }else{
+                    loadChatUsersFromQB(shortListedList!![position].email)
+                }
             }
             adapter = shortListAdapter
         }
@@ -151,5 +160,33 @@ class ShortListedFragment : AppBaseFragment(R.layout.fragment_short_list), View.
                 showSelectProject()
             }
         }
+    }
+
+    /**
+     * Get Chat User List
+     */
+
+    private fun loadChatUsersFromQB(email: String) {
+        loadUsersWithoutQuery(email)
+    }
+
+    private fun loadUsersWithoutQuery(email: String) {
+        showProgress()
+        QBUsers.getUserByLogin(email).performAsync(object : QBEntityCallback<QBUser> {
+            override fun onSuccess(qbUser: QBUser, params: Bundle?) {
+                hideProgress()
+                Log.e("user", "yes")
+                val i = Intent(requireActivity(), DialogsActivity::class.java)
+                i.putExtra(EXTRA_QB_USERS, qbUser)
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(i)
+                activity!!.finish()
+            }
+
+            override fun onError(e: QBResponseException) {
+                hideProgress()
+                Log.e("user", "No")
+                showToast(requireActivity(),"No User Found")           }
+        })
     }
 }
