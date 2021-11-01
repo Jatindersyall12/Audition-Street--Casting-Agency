@@ -115,7 +115,7 @@ class ProfileViewModel @ViewModelInject constructor(
             var imageOrVideoUpload: MultipartBody.Part
             var profileImageUpload: MultipartBody.Part? = null
             if (networkHelper.isNetworkConnected()) {
-                if (!selectedProfileImage.isEmpty()) {
+                if (profileImageFile != null && !selectedProfileImage.isEmpty()) {
                     val profileImage =
                         RequestBody.create(
                             IMAGE_EXTENSION.toMediaTypeOrNull(),
