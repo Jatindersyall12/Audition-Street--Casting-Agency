@@ -1,14 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_chat_container"
-    style="@style/MatchParent"
-    tools:ignore="RtlHardcoded">
+    style="@style/MatchParent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_60sdp"
+        android:background="@color/white"
+        android:layout_marginEnd="@dimen/_6sdp">
+
+
+        <ImageView
+            android:id="@+id/imgBackChat"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:visibility="visible"
+            android:src="@drawable/ic_icon_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_chat_messages"
         style="@style/MatchParent"
         android:background="#F4F6F9"
+        android:layout_below="@+id/layToolBar"
         android:layout_above="@+id/tv_typing_status"
         android:listSelector="@android:color/transparent" />
 
@@ -24,13 +44,13 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/ll_attachment_preview_container"
         android:textSize="13sp"
-        android:textColor="@color/orange"
+        android:textColor="@color/white"
+        android:layout_marginStart="@dimen/_10sdp"
         android:paddingBottom="5dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:background="@drawable/chat_typing_status_background"
-        android:visibility="gone"
-        tools:text="Alexparvus is typing..."/>
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/ll_attachment_preview_container"
@@ -39,8 +59,7 @@
         android:layout_above="@+id/rl_chat_send_container"
         android:background="@color/white"
         android:orientation="vertical"
-        android:visibility="gone"
-        tools:visibility="visible">
+        android:visibility="gone">
 
         <View
             android:id="@+id/divider_chat_attachments"
@@ -64,7 +83,7 @@
     <RelativeLayout
         android:id="@+id/rl_chat_send_container"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="@color/white">
 
@@ -76,6 +95,7 @@
             android:paddingRight="9dp"
             android:paddingTop="7dp"
             android:paddingBottom="7dp"
+            android:layout_marginStart="@dimen/_5sdp"
             android:layout_alignParentLeft="true"
             android:src="@drawable/ic_add_attachment" />
 
@@ -102,6 +122,7 @@
             android:paddingLeft="2.5dp"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
+            android:layout_marginEnd="@dimen/_5sdp"
             android:src="@drawable/ic_send_message"
             android:tooltipText="@string/chat_send"
             android:onClick="onSendChatClick"/>

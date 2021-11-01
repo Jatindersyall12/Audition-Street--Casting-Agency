@@ -49,6 +49,7 @@ import com.quickblox.users.QBUsers
 import com.quickblox.users.model.QBUser
 import com.silo.ui.base.BaseActivity
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
+import kotlinx.android.synthetic.main.activity_chat.*
 import org.jivesoftware.smack.ConnectionListener
 import org.jivesoftware.smack.SmackException
 import org.jivesoftware.smack.XMPPException
@@ -126,6 +127,9 @@ class ChatActivity : BaseActivity(), OnImagePickedListener, QBMessageStatusListe
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
+        imgBackChat.setOnClickListener{
+            onBackPressed()
+        }
        // SharedPrefsHelper.delete(IS_IN_BACKGROUND)
         Log.v(TAG, "onCreate ChatActivity on Thread ID = " + Thread.currentThread().id)
 
