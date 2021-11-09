@@ -16,6 +16,7 @@
             app:controller_layout_id="@layout/item_player_controler"
             app:show_timeout="1000"
             app:surface_type="texture_view"
+            app:show_buffering="when_playing"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

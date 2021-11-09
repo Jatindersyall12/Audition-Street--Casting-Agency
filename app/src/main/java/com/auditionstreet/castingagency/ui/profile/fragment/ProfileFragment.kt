@@ -324,9 +324,9 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
             images = ImagePicker.getImages(data)
             profileImageFile = File(images[0].path)
             selectedImage = images[0].name
-            profileImageFile =
+            /*profileImageFile =
                 compressImage.getCompressedImageFile(profileImageFile!!, activity as Context)
-            Glide.with(this).load(profileImageFile)
+ */           Glide.with(this).load(profileImageFile)
                 .into(binding.imgProfile)
         } else if (requestCode == picker_gallery && resultCode == AppCompatActivity.RESULT_OK && data != null) {
             images = ImagePicker.getImages(data)

@@ -19,6 +19,7 @@
             app:show_timeout="1000"
             app:shutter_background_color="@color/transparent"
             app:surface_type="texture_view"
+            app:show_buffering="when_playing"
             app:unplayed_color="@color/transparent" />
 
         <ImageView
