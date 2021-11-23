@@ -41,4 +41,11 @@ class Preferences @Inject constructor(@ApplicationContext context: Context) {
         val value = sharedPreferences.getString(key, "")
         return GsonBuilder().create().fromJson(value, T::class.java)
     }
+
+    fun clearPreferences(){
+        with(sharedPreferences.edit()){
+            clear()
+            apply()
+        }
+    }
 }

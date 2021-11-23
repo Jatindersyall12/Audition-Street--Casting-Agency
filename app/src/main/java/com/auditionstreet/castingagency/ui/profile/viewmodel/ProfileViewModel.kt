@@ -5,16 +5,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.api.ApiConstant
 import com.auditionstreet.castingagency.model.response.DeleteMediaResponse
 import com.auditionstreet.castingagency.model.response.ProfileResponse
 import com.auditionstreet.castingagency.model.response.UploadMediaResponse
 import com.auditionstreet.castingagency.ui.profile.repository.ProfileRepository
 import com.leo.wikireviews.utils.livedata.Event
+import com.silo.model.request.LogoutRequest
+import com.silo.model.request.SupportRequest
 import com.silo.model.request.WorkGalleryRequest
 import com.silo.utils.network.NetworkHelper
 import com.silo.utils.network.Resource
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeout
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -38,6 +42,14 @@ class ProfileViewModel @ViewModelInject constructor(
     private val upload_media = MutableLiveData<Event<Resource<UploadMediaResponse>>>()
     val uploadMedia: LiveData<Event<Resource<UploadMediaResponse>>>
         get() = upload_media
+
+    private val need_support = MutableLiveData<Event<Resource<DeleteMediaResponse>>>()
+    val support: LiveData<Event<Resource<DeleteMediaResponse>>>
+        get() = need_support
+
+    private val log_out = MutableLiveData<Event<Resource<DeleteMediaResponse>>>()
+    val logout: LiveData<Event<Resource<DeleteMediaResponse>>>
+        get() = log_out
 
 
     fun getProfile(url: String) {
@@ -177,6 +189,130 @@ class ProfileViewModel @ViewModelInject constructor(
                     }
                 }
 
+            }
+        }
+    }
+
+    fun supportApi(supportRequest: SupportRequest) {
+        viewModelScope.launch {
+            try {
+                withTimeout(ApiConstant.API_TIMEOUT) {
+                    need_support.postValue(
+                        Event(
+                            Resource.loading(
+                                ApiConstant.SUPPORT,
+                                null
+                            )
+                        )
+                    )
+                    if (networkHelper.isNetworkConnected()) {
+                        profileRepository.addSupport(supportRequest).let {
+                            if (it.isSuccessful && it.body() != null) {
+                                need_support.postValue(
+                                    Event(
+                                        Resource.success(
+                                            ApiConstant.SUPPORT,
+                                            it.body()
+                                        )
+                                    )
+                                )
+                            } else {
+                                need_support.postValue(
+                                    Event(
+                                        Resource.error(
+                                            ApiConstant.SUPPORT,
+                                            it.code(),
+                                            it.errorBody().toString(),
+                                            null
+                                        )
+                                    )
+                                )
+                            }
+                        }
+                    } else {
+                        need_support.postValue(
+                            Event(
+                                Resource.requiredResource(
+                                    ApiConstant.SUPPORT,
+                                    R.string.err_no_network_available
+                                )
+                            )
+                        )
+                    }
+                }
+            }catch (e: Exception) {
+                need_support.postValue(
+                    Event(
+                        Resource.error(
+                            ApiConstant.SUPPORT,
+                            ApiConstant.STATUS_500,
+                            "",
+                            null
+                        )
+                    )
+                )
+            }
+        }
+    }
+
+    fun logout(logoutRequest: LogoutRequest) {
+        viewModelScope.launch {
+            try {
+                withTimeout(ApiConstant.API_TIMEOUT) {
+                    log_out.postValue(
+                        Event(
+                            Resource.loading(
+                                ApiConstant.LOGOUT,
+                                null
+                            )
+                        )
+                    )
+                    if (networkHelper.isNetworkConnected()) {
+                        profileRepository.logout(logoutRequest).let {
+                            if (it.isSuccessful && it.body() != null) {
+                                log_out.postValue(
+                                    Event(
+                                        Resource.success(
+                                            ApiConstant.LOGOUT,
+                                            it.body()
+                                        )
+                                    )
+                                )
+                            } else {
+                                log_out.postValue(
+                                    Event(
+                                        Resource.error(
+                                            ApiConstant.LOGOUT,
+                                            it.code(),
+                                            it.errorBody().toString(),
+                                            null
+                                        )
+                                    )
+                                )
+                            }
+                        }
+                    } else {
+                        log_out.postValue(
+                            Event(
+                                Resource.requiredResource(
+                                    ApiConstant.LOGOUT,
+                                    R.string.err_no_network_available
+                                )
+                            )
+                        )
+                    }
+                }
+            }catch (e: Exception) {
+                log_out.postValue(
+                    Event(
+                        Resource.error(
+                            ApiConstant.LOGOUT,
+                            ApiConstant.STATUS_500,
+                            "",
+                            null
+                        )
+                    )
+                )
             }
         }
     }

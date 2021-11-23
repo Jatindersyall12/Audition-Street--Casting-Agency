@@ -53,6 +53,8 @@ class ApiConstant {
         const val UPDATE_PROJECT = "projectUpdate"
         const val GET_LANGUAGE_BODY_TYPE = "common/getList"
         const val GET_BLOCK_ARTIST = "blockArtistList"
+        const val SUPPORT = "common/addSupport"
+        const val LOGOUT = "common/logout"
 
     }
 }

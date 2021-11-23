@@ -827,3 +827,75 @@ fun showSkinToneSelectionDialog(
     dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
     return dialogView
 }
+
+fun showLogoutDialog(
+    mContext: Activity,
+    mCallback: () -> Unit
+): Dialog {
+    val dialogView = Dialog(mContext)
+    dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialogView.getWindow()!!.setBackgroundDrawableResource(android.R.color.transparent)
+    val binding =
+        DataBindingUtil.inflate<ViewDataBinding>(
+            LayoutInflater.from(mContext),
+            R.layout.popup_logout,
+            null,
+            false
+        )
+    dialogView.setContentView(binding.root)
+    dialogView.setCancelable(false)
+    dialogView.show()
+    val tvYes = dialogView.findViewById<CustomTextView>(R.id.tvYes)
+    val tvNo = dialogView.findViewById<CustomTextView>(R.id.tvNo)
+    tvYes.setOnClickListener {
+        dialogView.dismiss()
+        mCallback.invoke()
+    }
+    tvNo.setOnClickListener {
+        dialogView.dismiss()
+    }
+
+    val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
+    val height = 450
+    dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
+    return dialogView
+}
+
+fun showSupportDialog(
+    mContext: Activity,
+    mCallback: (message: String) -> Unit
+): Dialog {
+    val dialogView = Dialog(mContext)
+    dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialogView.getWindow()!!.setBackgroundDrawableResource(android.R.color.transparent)
+    val binding =
+        DataBindingUtil.inflate<ViewDataBinding>(
+            LayoutInflater.from(mContext),
+            R.layout.popup_support,
+            null,
+            false
+        )
+    dialogView.setContentView(binding.root)
+    dialogView.setCancelable(false)
+    dialogView.show()
+    val etMessage = dialogView.findViewById<CustomEditText>(R.id.etMessage)
+    val tvYes = dialogView.findViewById<CustomTextView>(R.id.tvYes)
+    val tvNo = dialogView.findViewById<CustomTextView>(R.id.tvNo)
+    tvYes.setOnClickListener {
+        val message = etMessage.text.toString()
+        if (!message.isNullOrEmpty()) {
+            dialogView.dismiss()
+            mCallback.invoke(message)
+        }else{
+            showToast(mContext, "Please enter message")
+        }
+    }
+    tvNo.setOnClickListener {
+        dialogView.dismiss()
+    }
+
+    val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
+    dialogView.getWindow()!!.setLayout(width.toInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
+    return dialogView
+}
+

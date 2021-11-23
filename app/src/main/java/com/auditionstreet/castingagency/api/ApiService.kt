@@ -7,7 +7,9 @@ import com.auditionstreet.castingagency.api.ApiConstant.Companion.ADD_PROJECT
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.BLOCK_ARTIST
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.GET_PROJECTS
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.LOGIN
+import com.auditionstreet.castingagency.api.ApiConstant.Companion.LOGOUT
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.SIGN_UP
+import com.auditionstreet.castingagency.api.ApiConstant.Companion.SUPPORT
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.UPDATE_PROJECT
 import com.auditionstreet.castingagency.api.ApiConstant.Companion.UPLOAD_MEDIA
 import com.auditionstreet.castingagency.model.response.*
@@ -95,5 +97,11 @@ interface ApiService {
 
     @GET
     suspend fun getBlockUserList(@Url url: String): Response<BlockUserListResponse>
+
+    @POST(SUPPORT)
+    suspend fun addSupport(@Body supportRequest: SupportRequest): Response<DeleteMediaResponse>
+
+    @POST(LOGOUT)
+    suspend fun logout(@Body logoutRequest: LogoutRequest): Response<DeleteMediaResponse>
 
 }

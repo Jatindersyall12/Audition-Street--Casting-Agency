@@ -199,6 +199,7 @@
     <string name="str_yes">Yes</string>
     <string name="str_no">No</string>
     <string name="delete_dialog">Are you sure you want to delete ? </string>
+    <string name="str_logout">Do you want to logout ? </string>
 
     <!-- Choose Media -->
     <string name="str_choose_media">Choose Media</string>
@@ -306,5 +307,11 @@
     <string name="next">Next</string>
     <string name="let_s_get_started">Let\'s Get Started</string>
 
+    <string name="notification">Notification</string>
+    <string name="log_out">Logout</string>
+    <string name="support">Support</string>
+
+    <string name="enter_message">Enter Message</string>
+    <string name="str_submit">Submit</string>
 
 </resources>

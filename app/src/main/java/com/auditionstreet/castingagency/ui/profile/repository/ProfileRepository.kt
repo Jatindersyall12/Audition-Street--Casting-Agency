@@ -4,6 +4,8 @@ import com.auditionstreet.castingagency.model.response.DeleteMediaResponse
 import com.auditionstreet.castingagency.model.response.ProfileResponse
 import com.auditionstreet.castingagency.model.response.UploadMediaResponse
 import com.silo.api.ApiService
+import com.silo.model.request.LogoutRequest
+import com.silo.model.request.SupportRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -19,6 +21,12 @@ class ProfileRepository @Inject constructor(val apiService: ApiService) {
     ): Response<UploadMediaResponse> =
         apiService.uploadMedia(media,requestProfileUpdate,profileImageFile)
     suspend fun deleteMedia(url: String):Response<DeleteMediaResponse> =apiService.deleteMedia(url)
+
+    suspend fun addSupport(supportRequest: SupportRequest):
+            Response<DeleteMediaResponse> =apiService.addSupport(supportRequest)
+
+    suspend fun logout(logoutRequest: LogoutRequest):
+            Response<DeleteMediaResponse> =apiService.logout(logoutRequest)
 
 }
 

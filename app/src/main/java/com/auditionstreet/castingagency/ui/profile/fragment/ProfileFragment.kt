@@ -22,12 +22,15 @@ import com.auditionstreet.castingagency.model.response.DeleteMediaResponse
 import com.auditionstreet.castingagency.model.response.ProfileResponse
 import com.auditionstreet.castingagency.model.response.UploadMediaResponse
 import com.auditionstreet.castingagency.storage.preference.Preferences
+import com.auditionstreet.castingagency.ui.login_signup.AuthorizedUserActivity
 import com.auditionstreet.castingagency.ui.profile.viewmodel.ProfileViewModel
 import com.auditionstreet.castingagency.ui.projects.adapter.WorkListAdapter
 import com.auditionstreet.castingagency.utils.*
 import com.bumptech.glide.Glide
 import com.esafirm.imagepicker.features.ImagePicker
 import com.leo.wikireviews.utils.livedata.EventObserver
+import com.silo.model.request.LogoutRequest
+import com.silo.model.request.SupportRequest
 import com.silo.model.request.WorkGalleryRequest
 import com.silo.utils.AppBaseFragment
 import com.silo.utils.network.Resource
@@ -92,6 +95,8 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
         binding.tvDone.setOnClickListener(this)
         binding.imgProfile.setOnClickListener(this)
         binding.imgUnBlock.setOnClickListener(this)
+        binding.btnLogout.setOnClickListener(this)
+        binding.btnSupport.setOnClickListener(this)
     }
 
 
@@ -103,6 +108,12 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
             handleApiCallback(it)
         })
         viewModel.deleteMedia.observe(viewLifecycleOwner, EventObserver {
+            handleApiCallback(it)
+        })
+        viewModel.logout.observe(viewLifecycleOwner, EventObserver {
+            handleApiCallback(it)
+        })
+        viewModel.support.observe(viewLifecycleOwner, EventObserver {
             handleApiCallback(it)
         })
 
@@ -133,6 +144,13 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                             totalGalleryVideos--
                         listGallery.removeAt(deleteMediaPos)
                         profileAdapter.notifyDataSetChanged()
+                    }
+                    ApiConstant.LOGOUT ->{
+                        preferences.clearPreferences()
+                        val intent = Intent(requireContext(), AuthorizedUserActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        startActivity(intent)
+                        requireActivity().finish()
                     }
                 }
             }
@@ -220,6 +238,24 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
             }
             R.id.imgUnBlock ->{
                 findNavController().navigate(R.id.blockedUserListFragment)
+            }
+            R.id.btnSupport ->{
+                showSupportDialog(requireActivity()){
+                    val supportRequest = SupportRequest()
+                    supportRequest.message = it
+                    supportRequest.phoneNumber = ""
+                    supportRequest.userType = "Director"
+                    viewModel.supportApi(supportRequest)
+                }
+            }
+            R.id.btnLogout ->{
+                showLogoutDialog(requireActivity())
+                {
+                    val logoutRequest = LogoutRequest()
+                    logoutRequest.userId = preferences.getString(AppConstants.USER_ID)
+                    logoutRequest.userType = "casting"
+                    viewModel.logout(logoutRequest)
+                }
             }
         }
     }
