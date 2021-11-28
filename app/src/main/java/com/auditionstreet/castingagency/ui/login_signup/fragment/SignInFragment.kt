@@ -2,6 +2,8 @@ package com.auditionstreet.castingagency.ui.login_signup.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.auditionstreet.castingagency.R
@@ -18,9 +20,12 @@ import com.auditionstreet.castingagency.utils.chat.QbUsersHolder
 import com.auditionstreet.castingagency.utils.chat.SharedPrefsHelper
 import com.auditionstreet.castingagency.utils.showProgressDialog
 import com.auditionstreet.castingagency.utils.showToast
+import com.auditionstreet.castingagency.utils.verifyEmailDialog
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
+import com.google.android.gms.tasks.Task
+import com.google.firebase.messaging.FirebaseMessaging
 import com.quickblox.core.QBEntityCallback
 import com.quickblox.core.exception.QBResponseException
 import com.quickblox.users.QBUsers
@@ -51,6 +56,23 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Get firebase token after logout
+        FirebaseMessaging.getInstance().token.addOnSuccessListener { token: String ->
+            if (!TextUtils.isEmpty(token)) {
+                Log.d("Token", "retrieve token successful : $token")
+                if (preferences.getString(AppConstants.FIREBASE_ID).isNullOrEmpty()){
+                    preferences.setString(AppConstants.FIREBASE_ID, token)
+                }
+            } else {
+                Log.w("Token", "token should not be null...")
+            }
+        }.addOnFailureListener { e: java.lang.Exception? -> }.addOnCanceledListener {}
+            .addOnCompleteListener { task: Task<String> ->
+                Log.v(
+                    "Token",
+                    "This is the token : " + task.result
+                )
+            }
         LoginManager.getInstance().logOut()
         initializeFacebookCallback()
         setListeners()
@@ -122,6 +144,8 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
                 if(apiResponse.apiCode == 404){
                     val loginResponse = apiResponse.data as LoginResponse
                     showToast(requireContext(), loginResponse.msg!!)
+                }else if(apiResponse.apiCode == 205){
+                    verifyEmailDialog(requireActivity())
                 }else{
                     showToast(requireContext(), apiResponse.message!!)
                 }

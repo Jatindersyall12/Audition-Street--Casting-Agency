@@ -243,7 +243,7 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                 showSupportDialog(requireActivity()){
                     val supportRequest = SupportRequest()
                     supportRequest.message = it
-                    supportRequest.phoneNumber = ""
+                    supportRequest.phoneNumber = "Phone Number Is Not Available"
                     supportRequest.userType = "Director"
                     viewModel.supportApi(supportRequest)
                 }

@@ -47,9 +47,11 @@
                 android:layout_marginStart="@dimen/_40sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 android:text="@string/str_yes"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_14sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tvNo"
                 app:layout_constraintTop_toBottomOf="@+id/tvExit" />

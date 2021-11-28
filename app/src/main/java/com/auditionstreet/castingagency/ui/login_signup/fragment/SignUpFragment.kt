@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.auditionstreet.castingagency.R
 import com.auditionstreet.castingagency.USER_DEFAULT_PASSWORD
 import com.auditionstreet.castingagency.api.ApiConstant
@@ -124,7 +125,8 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
                     ApiConstant.SIGN_UP -> {
                         val signUpResponse = apiResponse.data as SignUpResponse
                         showToast(requireActivity(), signUpResponse.msg.toString())
-                        preferences.setString(
+                        findNavController().popBackStack()
+                       /* preferences.setString(
                             AppConstants.USER_ID,
                             signUpResponse.data!![0]!!.id.toString()
                         )
@@ -133,7 +135,7 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
                             signUpResponse.data[0]!!.image
                         )
                         // CHat Login Signup
-                        prepareUser(signUpResponse.data[0]!!.name!!)
+                        prepareUser(signUpResponse.data[0]!!.name!!)*/
                         /*startActivity(Intent(requireActivity(), HomeActivity::class.java))
                         requireActivity().finish()*/
                     }
