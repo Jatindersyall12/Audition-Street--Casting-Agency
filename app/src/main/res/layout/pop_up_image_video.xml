@@ -29,7 +29,6 @@
             android:contentDescription="@string/str_divider"
             android:src="@drawable/ic_image_diretor"
             android:visibility="gone"
-            android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
