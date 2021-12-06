@@ -549,7 +549,7 @@ fun processVideo(uri: Uri?, context: Context, mCallback: (path: String) -> Unit)
                             // make UI changes, cleanup, etc
                         }
                     },
-                    quality = VideoQuality.MEDIUM,
+                    quality = VideoQuality.HIGH,
                     isMinBitRateEnabled = false,
                     keepOriginalResolution = false,
                 )

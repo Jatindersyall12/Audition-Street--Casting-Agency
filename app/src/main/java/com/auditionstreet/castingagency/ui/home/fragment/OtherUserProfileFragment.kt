@@ -1,8 +1,10 @@
 package com.auditionstreet.castingagency.ui.home.fragment
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.annotation.Nullable
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +23,8 @@ import com.auditionstreet.castingagency.utils.AppConstants
 import com.auditionstreet.castingagency.utils.showImageOrVideoDialog
 import com.auditionstreet.castingagency.utils.showToast
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.leo.wikireviews.utils.livedata.EventObserver
 import com.silo.model.request.WorkGalleryRequest
 import com.silo.utils.AppBaseFragment
@@ -153,10 +157,37 @@ class OtherUserProfileFragment : AppBaseFragment(R.layout.fragment_other_user),
         binding.headingAppliedProject.text = profileResponse.data[0]!!.totalApplication.toString()
         binding.headingSelectedProject.text = profileResponse.data[0]!!.acceptedApplication.toString()
         if (profileResponse.data[0]!!.artistDetails!!.video!!.isNotEmpty()) {
-            Glide.with(this).load(profileResponse.data[0]!!.artistDetails!!.video)
+           /* Glide.with(this).load(profileResponse.data[0]!!.artistDetails!!.video)
+                .into(binding.imgIntroVideo)*/
+
+            Glide.with(this)
+                .load(profileResponse.data[0]!!.artistDetails!!.video)
+                .listener(object : RequestListener<Drawable?> {
+                    override fun onLoadFailed(
+                        @Nullable e: GlideException?,
+                        model: Any?,
+                        target: com.bumptech.glide.request.target.Target<Drawable?>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        showToast(requireActivity(), "Video loading failed")
+                        binding.progress.setVisibility(View.GONE)
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: com.bumptech.glide.request.target.Target<Drawable?>?,
+                        dataSource: com.bumptech.glide.load.DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        binding.imgPlay.visibility = View.VISIBLE
+                        introVideoPath = profileResponse.data[0]!!.artistDetails!!.video.toString()
+                        binding.progress.setVisibility(View.GONE)
+                        return false
+                    }
+                })
                 .into(binding.imgIntroVideo)
-            binding.imgPlay.visibility = View.VISIBLE
-            introVideoPath = profileResponse.data[0]!!.artistDetails!!.video.toString()
         }else{
             binding.imgPlay.visibility = View.GONE
            // binding.layConstraintIntroVideo.visibility = View.GONE
