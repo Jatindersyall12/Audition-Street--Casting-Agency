@@ -186,6 +186,7 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
         listGallery.clear()
         for (i in 0 until profileResponse.data[0]!!.media!!.size) {
             val request = WorkGalleryRequest()
+            request.id = profileResponse.data[0]!!.media!![i]!!.id!!
             request.path = profileResponse.data[0]!!.media!![i]!!.mediaUrl!!
             request.isShowDeleteImage = false
             request.isLocal = false
@@ -324,10 +325,9 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                     listGallery.removeAt(position)
                 } else {
                     viewModel.deleteMedia(
-                        BuildConfig.BASE_URL + ApiConstant.DELETE_MEDIA + "/" + preferences.getString(
-                            AppConstants.USER_ID
+                        BuildConfig.BASE_URL + ApiConstant.DELETE_MEDIA + "/" +
+                                listGallery[position].id.toString()
                         )
-                    )
                 }
                 profileAdapter.notifyDataSetChanged()
                 if (listGallery.size > 0) {
