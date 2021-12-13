@@ -520,10 +520,10 @@ class DialogsActivity : BaseActivity(), DialogsManager.ManagingDialogsCallbacks 
             mode.title = getString(R.string.dialogs_actionmode_title)
             mode.subtitle = getString(R.string.dialogs_actionmode_subtitle_single, "1")
 
-         /*   mode.menuInflater.inflate(R.menu.menu_activity_dialogs_action_mode, menu)
+            mode.menuInflater.inflate(R.menu.menu_activity_dialogs_action_mode, menu)
             val menuItem = menu.findItem(R.id.menu_dialogs_action_delete)
             if (menuItem != null && menuItem is TextView) {
-            }*/
+            }
             dialogsAdapter.prepareToSelect()
             return true
         }
@@ -534,11 +534,11 @@ class DialogsActivity : BaseActivity(), DialogsManager.ManagingDialogsCallbacks 
 
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             when (item.itemId) {
-               /* R.id.menu_dialogs_action_delete -> {
+                R.id.menu_dialogs_action_delete -> {
                     deleteSelected()
                     currentActionMode?.finish()
                     return true
-                }*/
+                }
             }
             return false
         }
@@ -549,7 +549,7 @@ class DialogsActivity : BaseActivity(), DialogsManager.ManagingDialogsCallbacks 
         }
 
         private fun deleteSelected() {
-         //   showProgressDialog(R.string.dlg_deleting_chats)
+            showProgressDialog(R.string.dlg_deleting_chats)
             val selectedDialogs = dialogsAdapter.selectedItems
             val groupDialogsToDelete = ArrayList<QBChatDialog>()
             val privateDialogsToDelete = ArrayList<QBChatDialog>()
@@ -572,7 +572,7 @@ class DialogsActivity : BaseActivity(), DialogsManager.ManagingDialogsCallbacks 
                 notifyDialogsLeave(groupDialogsToDelete)
                 leaveGroupDialogs(groupDialogsToDelete)
             } else {
-            //    hideProgressDialog()
+                hideProgressDialog()
             }
         }
 
@@ -582,9 +582,11 @@ class DialogsActivity : BaseActivity(), DialogsManager.ManagingDialogsCallbacks 
                     Log.d(TAG, "PRIVATE Dialogs Deleting Successful")
                     QbDialogHolder.deleteDialogs(dialogsIds)
                     updateDialogsAdapter()
+                    hideProgressDialog()
                 }
 
                 override fun onError(e: QBResponseException) {
+                    hideProgressDialog()
                     Log.d(TAG, "Deleting PRIVATE Dialogs Error: " + e.message)
                     showErrorSnackbar(R.string.dialogs_deletion_error, e,
                             View.OnClickListener { deletePrivateDialogs(privateDialogsToDelete) })
@@ -598,11 +600,11 @@ class DialogsActivity : BaseActivity(), DialogsManager.ManagingDialogsCallbacks 
                     Log.d(TAG, "GROUP Dialogs Deleting Successful")
                     QbDialogHolder.deleteDialogs(qbChatDialogs)
                     updateDialogsAdapter()
-                 //   hideProgressDialog()
+                    hideProgressDialog()
                 }
 
                 override fun onError(e: QBResponseException) {
-                  //  hideProgressDialog()
+                    hideProgressDialog()
                     Log.d(TAG, "Deleting GROUP Dialogs Error: " + e.message)
                     showToast(this@DialogsActivity, resources.getString(R.string.dialogs_deletion_error))
                 }
