@@ -100,7 +100,7 @@ class AddProjectFragment : AppBaseFragment(R.layout.fragment_add_project), View.
             minAge = minValue as Long
             maxAge = maxValue as Long
         }
-        binding.rangeSeekbar.setMinValue(18f).setMaxValue(50f).setMinStartValue(25f)
+        binding.rangeSeekbar.setMinValue(1f).setMaxValue(100f).setMinStartValue(25f)
             .setMaxStartValue(40f)
             .apply()
     }
