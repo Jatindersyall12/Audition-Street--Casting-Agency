@@ -313,6 +313,6 @@
 
     <string name="enter_message">Enter Message</string>
     <string name="str_submit">Submit</string>
-    <string name="verify_email_address">Please verify your email address.</string>
+    <string name="verify_email_address">Email verification link is sent to your registered email id. Please verify it before login.</string>
 
 </resources>
