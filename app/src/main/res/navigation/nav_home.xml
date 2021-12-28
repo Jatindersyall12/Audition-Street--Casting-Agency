@@ -26,6 +26,14 @@
             android:name="projectId"
             app:argType="string"
             android:defaultValue="" />
+
+        <action
+            android:id="@+id/navigateToUpdateProject"
+            app:destination="@id/addProjectFragment"
+            app:enterAnim="@anim/in_from_right"
+            app:exitAnim="@anim/out_to_left"
+            app:popEnterAnim="@anim/in_from_left"
+            app:popExitAnim="@anim/out_to_right" />
     </fragment>
 
     <fragment
@@ -33,5 +41,16 @@
         android:name="com.auditionstreet.castingagency.ui.firstTimeHere.FirstTsimeHereFragment"
         android:label="@string/str_first_time_here"
         tools:layout="@layout/fragment_first_time_here" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/addProjectFragment"
+        android:name="com.auditionstreet.castingagency.ui.projects.fragment.AddProjectFragment"
+        android:label="@string/str_add_project"
+        tools:layout="@layout/fragment_add_project" >
+        <argument
+            android:name="project_detail"
+            app:argType="string"
+            android:defaultValue="" />
     </fragment>
 </navigation>
