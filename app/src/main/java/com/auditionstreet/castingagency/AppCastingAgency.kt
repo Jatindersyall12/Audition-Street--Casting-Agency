@@ -17,10 +17,10 @@ const val RECONNECTION_ALLOWED: Boolean = true
 const val ALLOW_LISTEN_NETWORK: Boolean = true
 
 //App credentials
-private const val APPLICATION_ID = "93700"
-private const val AUTH_KEY = "yxjw3bVwzkphRYa"
-private const val AUTH_SECRET = "Lw7y4LA-mz-xmy4"
-private const val ACCOUNT_KEY = "P4bJAtyjB7KoLid9Hr6N"
+private const val APPLICATION_ID = /*"93700"*/"95941"
+private const val AUTH_KEY = /*"yxjw3bVwzkphRYa"*/"ag7uRXu7jqYhUvM"
+private const val AUTH_SECRET = /*"Lw7y4LA-mz-xmy4"*/"A2UBEb-Sc-9Ghvm"
+private const val ACCOUNT_KEY = /*"P4bJAtyjB7KoLid9Hr6N"*/"zFaFBXq48Z7ou4cxsH42"
 
 //Chat credentials range
 private const val MAX_PORT_VALUE = 65535

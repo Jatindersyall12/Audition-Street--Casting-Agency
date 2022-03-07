@@ -60,6 +60,8 @@ repositories {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    /*implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'*/
     testImplementation deps.kotlin.junit
     androidTestImplementation deps.kotlin.test
     androidTestImplementation deps.kotlin.espresso
@@ -131,9 +133,9 @@ dependencies {
     implementation 'com.mikhaellopez:circularimageview:4.3.0'
 
     // Chat
-    implementation "com.quickblox:quickblox-android-sdk-messages:3.9.+"
-    implementation "com.quickblox:quickblox-android-sdk-chat:3.9.+"
-    implementation "com.quickblox:quickblox-android-sdk-content:3.9.+"
+    implementation "com.quickblox:quickblox-android-sdk-messages:3.9.2"
+    implementation "com.quickblox:quickblox-android-sdk-chat:3.9.2"
+    implementation "com.quickblox:quickblox-android-sdk-content:3.9.2"
 
     //robototextview
     implementation 'com.github.johnkil.android-robototextview:robototextview:4.0.0'
