@@ -95,8 +95,9 @@
 
     <!-- Facebook -->
 
-    <string name="facebook_app_id">204922881173526</string>
-    <string name="fb_login_protocol_scheme">fb204922881173526</string>
+    <string name="facebook_app_id">1549035688801621</string>
+    <string name="fb_login_protocol_scheme">fb1549035688801621</string>
+    <string name="facebook_client_token">e92595d7bb4de201ca2e30fab6237c02</string>
 
     <!-- Profile Fragment -->
     <string name="str_profile">Profile Fragment</string>
